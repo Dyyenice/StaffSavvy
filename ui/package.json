@@ -16,6 +16,7 @@
     "bootstrap": "^4.6.2",
     "core-js": "^3.30.2",
     "echarts": "^5.4.2",
+    "intl-tel-input": "^18.1.6",
     "jquery": "^3.7.0",
     "popper.js": "^1.16.1",
     "vee-validate": "^4.9.4",
