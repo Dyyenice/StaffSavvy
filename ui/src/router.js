@@ -3,8 +3,9 @@ import Home from "./components/Home.vue";
 import Login from "./components/Login.vue";
 import Register from "./components/Register.vue";
 import ForgotPassword from "./components/ForgotPassword.vue";
+import Profile from "./components/Profile.vue";
 // lazy-loaded
-const Profile = () => import("./components/Profile.vue")
+
 const BoardAdmin = () => import("./components/BoardAdmin.vue")
 const BoardModerator = () => import("./components/BoardModerator.vue")
 const BoardUser = () => import("./components/BoardUser.vue")
@@ -33,8 +34,7 @@ const routes = [
     },
     {
         path: "/profile",
-        name: "profile",
-        // lazy-loaded
+        
         component: Profile,
     },
     {
@@ -63,7 +63,7 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-    const publicPages = ['/login', '/register', '/home','/forgotpassword'];
+    const publicPages = ['/login', '/register', '/home','/forgotpassword','/profile'];
     const authRequired = !publicPages.includes(to.path);
     const loggedIn = localStorage.getItem('user');
 

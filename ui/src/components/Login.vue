@@ -2,7 +2,7 @@
   <div class="background-img"></div> 
   <div class="col-md-12">
     <div class="card card-container">
-      <label class="labelLogin">LOGIN</label>
+      <label class="labelheader">LOGIN</label>
       <Form @submit="handleLogin" :validation-schema="schema">
         <div class="form-group">
           <label for="email" class="label">E-mail</label>
@@ -60,7 +60,7 @@
       </Form>
     </div>
   </div>
-  
+  <Copyright></Copyright>
 </template>
 
 <script>
@@ -69,13 +69,14 @@ import * as yup from "yup";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "./css/style.css";
-
+import Copyright from "./Footer/Copyright.vue";
 export default {
   name: "Login",
   components: {
     Form,
     Field,
     ErrorMessage,
+    Copyright,
   },
   data() {
     const schema = yup.object().shape({

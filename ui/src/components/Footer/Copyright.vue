@@ -8,7 +8,7 @@
     </div>
   </template>
 
-<style lang="scss">
+<style>
 .container--full .copyright {
   background-color:#065F9F;
   font-size: 1rem;
