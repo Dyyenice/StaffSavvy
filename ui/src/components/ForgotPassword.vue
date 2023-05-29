@@ -1,4 +1,5 @@
 <template>
+<<<<<<< HEAD
     <div class="background-img"></div> 
     <div class="col-md-12">
       <div class="card card-container">
@@ -117,3 +118,9 @@
 
   </script>
   
+=======
+    <div>
+        <text>Selam</text>
+    </div>
+</template>
+>>>>>>> 4cbc62f10cf60f9ac4109e4c9422a7f504d81547

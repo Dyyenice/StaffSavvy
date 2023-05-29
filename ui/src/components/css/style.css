@@ -44,9 +44,15 @@
     font-weight: bold;
     color: #065F9F;
   }
+<<<<<<< HEAD
   .labelheader {
     font-weight: bold;
     font-size: 1.8rem;
+=======
+  .labelLogin {
+    font-weight: bold;
+    font-size: 2rem;
+>>>>>>> 4cbc62f10cf60f9ac4109e4c9422a7f504d81547
     color: #065F9F;
     margin-block-end: 5%;
   }

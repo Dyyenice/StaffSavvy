@@ -22,6 +22,10 @@
     "vee-validate": "^4.9.4",
     "vue": "^3.3.2",
     "vue-charts": "^0.2.1",
+<<<<<<< HEAD
+=======
+    "vue-country-code-select": "^1.6.7",
+>>>>>>> 4cbc62f10cf60f9ac4109e4c9422a7f504d81547
     "vue-router": "^4.2.0",
     "vuetify": "^3.3.1",
     "vuex": "^4.1.0",

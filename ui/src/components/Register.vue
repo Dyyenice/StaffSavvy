@@ -13,6 +13,10 @@
         />
       </div>
     </label>
+<<<<<<< HEAD
+=======
+
+>>>>>>> 4cbc62f10cf60f9ac4109e4c9422a7f504d81547
       <Form @submit="handleRegister" :validation-schema="schema">
         <div v-if="!successful">
           <div class="form-row">
@@ -33,6 +37,7 @@
             <Field id="email" name="email" type="text" class="form-control" />
             <ErrorMessage name="email" class="error-feedback" />
           </div>
+<<<<<<< HEAD
           <div class="form-group col-md-6">
             <label for="password">Password</label>
             <Field id="password" name="password" type="text" class="form-control" />
@@ -56,6 +61,28 @@
 
           <div class="form-group">
             <button class="btn btn-primary btn-block" :disabled="loading">
+=======
+           <div class="form-row">
+             <div class="form-group col-md-6">
+               <label for="phone">Phone Number</label>
+               <Field id="phone" type="tel" name="phone"  class="form-control" />
+               <ErrorMessage name="phone" class="error-feedback" />
+             </div>
+          <div class="form-group col-md-6">
+            <label for="password">Password</label>
+            <Field id="password" name="password" type="password" class="form-control" />
+            <ErrorMessage name="password" class="error-feedback" />
+          </div>
+         </div>
+
+
+
+
+         </div>
+
+          <div class="form-group">
+            <button class="btn btn-primary btn-block"  :disabled="loading">
+>>>>>>> 4cbc62f10cf60f9ac4109e4c9422a7f504d81547
               <span
                   v-show="loading"
                   class="spinner-border spinner-border-sm"
@@ -78,11 +105,17 @@
 </template>
 
 <script>
+<<<<<<< HEAD
 import { Form, Field, ErrorMessage } from "vee-validate";
 import * as yup from "yup";
 import intlTelInput from 'intl-tel-input';
 import 'intl-tel-input/build/css/intlTelInput.css';
 import 'intl-tel-input/build/js/utils';
+=======
+import {ErrorMessage, Field, Form} from "vee-validate";
+import * as yup from "yup";
+
+>>>>>>> 4cbc62f10cf60f9ac4109e4c9422a7f504d81547
 
 export default {
   name: "Register",
@@ -96,6 +129,7 @@ export default {
       name: yup
           .string()
           .required("name is required!")
+<<<<<<< HEAD
           .min(3, "Must be at least 3 characters!")
           .max(20, "Must be maximum 20 characters!"),
       surname: yup
@@ -103,16 +137,31 @@ export default {
           .required("surname is required!")
           .min(3, "Must be at least 3 characters!")
           .max(20, "Must be maximum 20 characters!"),    
+=======
+          ,
+      surname: yup
+          .string()
+          .required("surname is required!")
+          ,
+>>>>>>> 4cbc62f10cf60f9ac4109e4c9422a7f504d81547
       email: yup
           .string()
           .required("Email is required!")
           .email("Email is invalid!")
           .max(50, "Must be maximum 50 characters!"),
+<<<<<<< HEAD
+=======
+      phone: yup
+          .number()
+          .required("Phone number is required!")
+          ,
+>>>>>>> 4cbc62f10cf60f9ac4109e4c9422a7f504d81547
       password: yup
           .string()
           .required("Password is required!")
           .min(6, "Must be at least 6 characters!")
           .max(40, "Must be maximum 40 characters!"),
+<<<<<<< HEAD
       phonenumber: yup
           .number("Phone number is required!")
           .required("Phone number is required!")
@@ -123,6 +172,10 @@ export default {
           .required("Company Name is required!")
           .min(2, "Must be at least 2 characters!")
           .max(40, "Must be maximum 40 characters!"),
+=======
+
+
+>>>>>>> 4cbc62f10cf60f9ac4109e4c9422a7f504d81547
     });
   
     return {
@@ -130,8 +183,14 @@ export default {
       loading: false,
       message: "",
       schema,
+<<<<<<< HEAD
       phoneInput: null,
       defaultCountryCode: '+90',
+=======
+
+      defaultCountryCode: '+90',
+
+>>>>>>> 4cbc62f10cf60f9ac4109e4c9422a7f504d81547
     };
   },
   computed: {
@@ -143,6 +202,7 @@ export default {
     if (this.loggedIn) {
       this.$router.push("/profile");
     }
+<<<<<<< HEAD
     const phoneInputField = this.$refs.phoneInput;
     const inputOptions = {
       utilsScript: 'https://cdnjs.cloudflare.com/ajax/libs/intl-tel-input/17.0.8/js/utils.js',
@@ -154,13 +214,20 @@ export default {
 
     // Store the intlTelInput instance for later use
     this.$data.phoneInput = phoneInput;
+=======
+
+>>>>>>> 4cbc62f10cf60f9ac4109e4c9422a7f504d81547
   },
   methods: {
     handleRegister(user) {
       this.message = "";
       this.successful = false;
       this.loading = true;
+<<<<<<< HEAD
 
+=======
+      console.log("asdasd")
+>>>>>>> 4cbc62f10cf60f9ac4109e4c9422a7f504d81547
       this.$store.dispatch("auth/register", user).then(
           (data) => {
             this.message = data.message;
@@ -179,12 +246,16 @@ export default {
           }
       );
     },
+<<<<<<< HEAD
     handleInputChange() {
       // Access the selected country code using the `getSelectedCountryData` method
       const selectedCountryData = this.phoneInput.getSelectedCountryData();
       const selectedCountryCode = selectedCountryData.dialCode;
       console.log('Selected Country Code:', selectedCountryCode);
     },
+=======
+
+>>>>>>> 4cbc62f10cf60f9ac4109e4c9422a7f504d81547
     handleImageChange(event) {
       const file = event.target.files[0];
       // Seçilen dosyayı işleme devam ettirin

@@ -1,4 +1,5 @@
 <template>
+<<<<<<< HEAD
   <div id="myCarousel" class="carousel slide" data-ride="carousel">
   <!-- Indicators -->
   <ol class="carousel-indicators">
@@ -33,11 +34,33 @@
   </a>
 </div>
 <FooterComponent></FooterComponent>
+=======
+  <div>
+    <h1>Başvuran Şirketler</h1>
+    <table>
+      <thead>
+        <tr>
+          <th>Şirket Adı</th>
+          <th>İletişim</th>
+          <th>Ülke</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr v-for="(company, index) in companies" :key="index">
+          <td>{{ company.name }}</td>
+          <td>{{ company.contact }}</td>
+          <td>{{ company.country }}</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+>>>>>>> 4cbc62f10cf60f9ac4109e4c9422a7f504d81547
 </template>
 
 
 <script>
 import UserService from "../services/user.service";
+<<<<<<< HEAD
 import FooterComponent from "./Footer/FooterComponent.vue";
 
 export default {
@@ -48,6 +71,19 @@ export default {
   data() {
     return {
       
+=======
+
+export default {
+  name: "Home",
+  data() {
+    return {
+      companies: [
+        { name: 'Şirket 1', contact: 'info@company1.com', country: 'Türkiye' },
+        { name: 'Şirket 2', contact: 'info@company2.com', country: 'ABD' },
+        { name: 'Şirket 3', contact: 'info@company3.com', country: 'İngiltere' },
+        // Diğer şirketler
+      ]
+>>>>>>> 4cbc62f10cf60f9ac4109e4c9422a7f504d81547
     };
   },
   mounted() {
@@ -66,4 +102,8 @@ export default {
     );
   },
 };
+<<<<<<< HEAD
 </script>
+=======
+</script>
+>>>>>>> 4cbc62f10cf60f9ac4109e4c9422a7f504d81547
