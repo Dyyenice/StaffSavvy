@@ -1,66 +1,51 @@
 <template>
   <div class="col-md-12">
-    <div class="card card-container">
-      <input type="file" id="profile-image-input" style="display: none" @change="handleImageChange" />
-    <label for="profile-image-input">
-      <div class="profile-img-wrapper">
-        <img
-          id="profile-img"
-          src="//ssl.gstatic.com/accounts/ui/avatar_2x.png"
-          class="profile-img-card"
-          @mouseover="addShadow"
-          @mouseout="removeShadow"
-        />
-      </div>
-    </label>
-
+    <div class="card card-container-register">
+      <label class="labelheader">SIGN UP</label>
       <Form @submit="handleRegister" :validation-schema="schema">
         <div v-if="!successful">
           <div class="form-row">
           <div class="form-group col-md-6">
-            <label for="name">Name</label>
+            <label for="name" class="label">Name</label>
             <Field id="name" name="name" type="text" class="form-control" />
             <ErrorMessage name="name" class="error-feedback" />
           </div>
           <div class="form-group col-md-6">
-            <label for="surname">Surname</label>
+            <label for="surname" class="label">Surname</label>
             <Field id="surname" name="surname" type="text" class="form-control" />
             <ErrorMessage name="surname" class="error-feedback" />
           </div>
          </div>
          <div class="form-row">
-          <div class="form-group col-md-6">
-            <label for="email">Email</label>
+          <div class="form-group col-md-12">
+            <label for="email" class="label" >Email</label>
             <Field id="email" name="email" type="text" class="form-control" />
             <ErrorMessage name="email" class="error-feedback" />
           </div>
            <div class="form-row">
              <div class="form-group col-md-6">
-               <label for="phone">Phone Number</label>
+               <label for="phone" class="label">Phone Number</label>
                <Field id="phone" type="tel" name="phone"  class="form-control" />
                <ErrorMessage name="phone" class="error-feedback" />
              </div>
           <div class="form-group col-md-6">
-            <label for="password">Password</label>
+            <label for="password" class="label">Password</label>
             <Field id="password" name="password" type="password" class="form-control" />
             <ErrorMessage name="password" class="error-feedback" />
           </div>
          </div>
+       </div>
 
+       <div class="form-group">
+          <button class="btn btn-primary btn-block" :disabled="loading">
+            <span v-show="loading" class="spinner-border spinner-border-sm"></span>
+            <span>Sign Up</span>
+          </button>
+        </div>
 
-
-
-         </div>
-
-          <div class="form-group">
-            <button class="btn btn-primary btn-block"  :disabled="loading">
-              <span
-                  v-show="loading"
-                  class="spinner-border spinner-border-sm"
-              ></span>
-              Sign Up
-            </button>
-          </div>
+        <div class="form-group text-align" >
+        <router-link to="/login" >Already have an account? Sign in. </router-link>
+        </div>
         </div>
       </Form>
 
@@ -161,17 +146,6 @@ export default {
       );
     },
 
-    handleImageChange(event) {
-      const file = event.target.files[0];
-      // Seçilen dosyayı işleme devam ettirin
-      console.log('Seçilen dosya:', file);
-    },
-    addShadow(event) {
-      event.target.classList.add('hover-shadow');
-    },
-    removeShadow(event) {
-      event.target.classList.remove('hover-shadow');
-    },
   },
 };
 
@@ -199,15 +173,5 @@ export default {
     margin-top: 20px;
   }
 
-  .profile-img-card {
-  width: 150px;
-  height: 150px;
-  object-fit: cover;
-  border-radius: 50%;
-  transition: box-shadow 0.3s ease-in-out;
-}
 
-.hover-shadow {
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-}
 </style>

@@ -44,6 +44,18 @@ class AuthService {
             user_type: 0
         });
     }
+    
+    
+      editProfile(user) {
+        return axios.post(API_URL + 'profile', {
+            name: user.name,
+            surname: user.surname,
+            email: user.email,
+            phone: user.phone,
+            password: user.password,
+            user_type: 0
+        });
+      }
 }
 
 export default new AuthService();

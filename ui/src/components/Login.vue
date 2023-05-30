@@ -2,7 +2,7 @@
   <div class="background-img"></div> 
   <div class="col-md-12">
     <div class="card card-container">
-      <label class="labelLogin">LOGIN</label>
+      <label class="labelheader">LOGIN</label>
       <Form @submit="handleLogin" :validation-schema="schema">
         <div class="form-group">
           <label for="email" class="label">E-mail</label>
@@ -48,7 +48,7 @@
           </button>
         </div>
 
-        <div class="form-group">
+        <div class="form-group text-align" >
         <router-link to="/forgotpassword" >Forgot Password? </router-link>
         </div>
 
@@ -60,7 +60,6 @@
       </Form>
     </div>
   </div>
-  
 </template>
 
 <script>
@@ -69,7 +68,6 @@ import * as yup from "yup";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "./css/style.css";
-
 export default {
   name: "Login",
   components: {

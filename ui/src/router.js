@@ -3,6 +3,8 @@ import Home from "./components/Home.vue";
 import Login from "./components/Login.vue";
 import Register from "./components/Register.vue";
 import ForgotPassword from "./components/ForgotPassword.vue";
+import CompanyRegister from "./components/CompanyRegister.vue";
+
 // lazy-loaded
 const Profile = () => import("./components/Profile.vue")
 const BoardAdmin = () => import("./components/BoardAdmin.vue")
@@ -28,13 +30,16 @@ const routes = [
         component: Register,
     },
     {
+        path: "/companyregister",
+        component: CompanyRegister,
+    },
+    {
         path: "/forgotpassword",
         component: ForgotPassword,
     },
     {
         path: "/profile",
-        name: "profile",
-        // lazy-loaded
+        name:"profile",
         component: Profile,
     },
     {
@@ -42,6 +47,12 @@ const routes = [
         name: "admin",
         // lazy-loaded
         component: BoardAdmin,
+    },
+    {
+        path: "/profile",
+        name: "profile",
+        // lazy-loaded
+        component: Profile,
     },
     {
         path: "/mod",
@@ -63,7 +74,7 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-    const publicPages = ['/login', '/register', '/home','/forgotpassword'];
+    const publicPages = ['/login', '/register', '/home','/forgotpassword','/companyregister',];
     const authRequired = !publicPages.includes(to.path);
     const loggedIn = localStorage.getItem('user');
 
