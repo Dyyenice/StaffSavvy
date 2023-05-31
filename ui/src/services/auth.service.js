@@ -29,6 +29,8 @@ class AuthService {
             surname: user.surname,
             email: user.email,
             phone: user.phone,
+            date_of_birth: user.date_of_birth,
+            identification: user.identification,
             password: user.password,
             user_type: 0
         });
@@ -47,13 +49,17 @@ class AuthService {
     
     
       editProfile(user) {
-        return axios.post(API_URL + 'profile', {
+        return axios.post(API_URL + 'editProfile', {
+            email: user.email,
             name: user.name,
             surname: user.surname,
-            email: user.email,
             phone: user.phone,
-            password: user.password,
-            user_type: 0
+        }) .then(response => {
+            if (response.data.accessToken) {
+                localStorage.setItem('user', JSON.stringify(response.data));
+            }
+
+            return response.data;
         });
       }
 }

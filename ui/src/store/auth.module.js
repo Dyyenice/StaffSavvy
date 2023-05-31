@@ -40,9 +40,9 @@ export const auth = {
         
         saveProfile({ commit }, user) {
             return AuthService.editProfile(user).then(
-                response => {
-                    commit('saveProfile');
-                    return Promise.resolve(response.data);
+                user => {
+                    commit('editProfileSuccessful');
+                    return Promise.resolve(user);
                 },
                 error => {
                     commit('editProfileFailure');
@@ -50,6 +50,7 @@ export const auth = {
                 }
             );
         },
+
     },
     mutations: {
         loginSuccess(state, user) {
@@ -70,11 +71,13 @@ export const auth = {
         registerFailure(state) {
             state.status.loggedIn = false;
         },
-        saveProfile(state) {
+        editProfileSuccessful(state, user) {
+            state.status.loggedIn = true;
             state.user = user;
         },
         editProfileFailure(state) {
-            state.user = user;
+            state.status.loggedIn = true;
+
         },
     }
 };

@@ -4,7 +4,7 @@ const User = db.user;
 const Company = db.company
 const Personnel = db.personnel
 const Role = db.role;
-
+var token;
 const Op = db.Sequelize.Op;
 
 var jwt = require("jsonwebtoken");
@@ -23,6 +23,8 @@ exports.signup = (req, res) => {
                 name: req.body.name,
                 surname: req.body.surname,
                 phone: req.body.phone,
+                date_of_birth:  req.body.date_of_birth,
+                identification: req.body.identification,
                 company: 1,
             })
         } else {
@@ -80,7 +82,7 @@ exports.signin = (req, res) => {
                 });
             }
 
-            var token = jwt.sign({ id: user.id }, config.secret, {
+            token = jwt.sign({ id: user.id }, config.secret, {
                 expiresIn: 86400 // 24 hours
             });
 
@@ -89,15 +91,112 @@ exports.signin = (req, res) => {
                 for (let i = 0; i < roles.length; i++) {
                     authorities.push("ROLE_" + roles[i].name.toUpperCase());
                 }
-                res.status(200).send({
-                    id: user.id,
-                    email: user.email,
-                    roles: authorities,
-                    accessToken: token
-                });
+                if(user.user_type === 0){
+                    Personnel.findOne({
+                        where: {
+                            id : user.id,
+                        }
+                    }).then(personnel =>{
+                        res.status(200).send({
+                            id: user.id,
+                            email: user.email,
+                            name: personnel.name,
+                            surname: personnel.surname,
+                            phone: personnel.phone,
+                            company: personnel.company,
+                            date_of_birth: personnel.date_of_birth,
+                            identification: personnel.identification,
+                            roles: authorities,
+                            accessToken: token
+                        });
+                    })
+                }
+
             });
         })
         .catch(err => {
             res.status(500).send({ message: err.message });
         });
 };
+
+/*exports.editProfile = (req, res) => {
+    User.findOne({
+        where: {
+            email: req.body.email
+        }
+    })
+        .then(user => {
+            if (!user) {
+                return res.status(404).send({ message: "User Not found." });
+            }
+                if(user.user_type === 0){
+                    Personnel.update({
+                        name: req.body.name,
+                        surname: req.body.surname,
+                        phone: req.body.phone
+                    },
+                        { where: {id: user.id } }).then(personnel =>{
+                        res.status(200).send({
+
+                            name: personnel.name,
+                            surname: personnel.surname,
+                            phone: personnel.phone,
+
+                        });
+                    })
+}
+
+        })
+        .catch(err => {
+            res.status(500).send({ message: err.message });
+        });
+};*/
+exports.editProfile = (req, res) => {
+    User.findOne({
+        where: {
+            email: req.body.email
+        }
+    })
+        .then(user => {
+            if (!user) {
+                return res.status(404).send({ message: "User Not found." });
+            }
+            var authorities = [];
+            user.getRoles().then(roles => {
+                for (let i = 0; i < roles.length; i++) {
+                    authorities.push("ROLE_" + roles[i].name.toUpperCase());
+                }
+                if(user.user_type === 0){
+                    Personnel.update({
+                            name: req.body.name,
+                            surname: req.body.surname,
+                            phone: req.body.phone
+                        },
+                        { where: {id: user.id } });
+                    Personnel.findOne({
+                        where: {
+                            id : user.id,
+                        }
+                    }).then(personnel =>{
+                        res.status(200).send({
+                            id: user.id,
+                            email: user.email,
+                            name: personnel.name,
+                            surname: personnel.surname,
+                            phone: personnel.phone,
+                            company: personnel.company,
+                            date_of_birth: personnel.date_of_birth,
+                            identification: personnel.identification,
+                            roles: authorities,
+                            accessToken: token
+                        });
+                    })
+
+                }
+
+            });
+        })
+        .catch(err => {
+            res.status(500).send({ message: err.message });
+        });
+}

@@ -22,19 +22,34 @@
             <Field id="email" name="email" type="text" class="form-control" />
             <ErrorMessage name="email" class="error-feedback" />
           </div>
+         </div>
+          <div class="form-row">
+              <div class="form-group col-md-12">
+              <label for="password" class="label">Password</label>
+              <Field id="password" name="password" type="password" class="form-control" />
+              <ErrorMessage name="password" class="error-feedback" />
+            </div>
+          </div>
            <div class="form-row">
              <div class="form-group col-md-6">
                <label for="phone" class="label">Phone Number</label>
                <Field id="phone" type="tel" name="phone"  class="form-control" />
                <ErrorMessage name="phone" class="error-feedback" />
              </div>
-          <div class="form-group col-md-6">
-            <label for="password" class="label">Password</label>
-            <Field id="password" name="password" type="password" class="form-control" />
-            <ErrorMessage name="password" class="error-feedback" />
-          </div>
+             <div class="form-group col-md-6">
+               <label for="date_of_birth" class="label">Date of Birth</label>
+               <Field id="date_of_birth" type="date" name="date_of_birth"  class="form-control" />
+               <ErrorMessage name="date_of_birth" class="error-feedback" />
+             </div>
          </div>
-       </div>
+           <div class="form-row">
+             <div class="form-group col-md-12">
+               <label for="identification" class="label">Identification</label>
+               <Field id="identification" type="text" name="identification"  class="form-control" />
+               <ErrorMessage name="identification" class="error-feedback" />
+             </div>
+           </div>
+
 
        <div class="form-group">
           <button class="btn btn-primary btn-block" :disabled="loading">
@@ -42,11 +57,11 @@
             <span>Sign Up</span>
           </button>
         </div>
-
+        </div>
         <div class="form-group text-align" >
         <router-link to="/login" >Already have an account? Sign in. </router-link>
         </div>
-        </div>
+
       </Form>
 
       <div
@@ -91,6 +106,14 @@ export default {
           .number()
           .required("Phone number is required!")
           ,
+      date_of_birth: yup
+          .date()
+          .required("Date of Birth is required!")
+      ,
+      identification: yup
+          .number()
+          .required("Identification is required!")
+      ,
       password: yup
           .string()
           .required("Password is required!")
