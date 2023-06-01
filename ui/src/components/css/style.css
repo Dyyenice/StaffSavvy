@@ -1,12 +1,12 @@
 
   .card {
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    background-color: #E3EAF9; 
+    background-color: #fff;
     position: relative; 
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    border: #fff;
     
   }
   
@@ -16,8 +16,9 @@
     padding: 20px;
     margin: 0 auto;
     border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    margin-top: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.81);
+    margin-top: 10%;
+    margin-bottom: 10%;
   }
   .card-container-register {
     max-width: 385px;
@@ -25,25 +26,23 @@
     padding: 20px;
     margin: 0 auto;
     border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    margin-top: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.81);
+    margin-top: 10%;
+    margin-bottom: 10%;
     position: relative;
     margin-inline: auto;
   }
 
-  .card-container-step{
-    
-  }
 
   .card-container-profile {
     padding: 20px;
     margin: 0 auto;
     border-radius: 5px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.81);
     margin-top: 20px;
   }
   
-  .background-img {
+  /*.background-img {
     position: absolute;
     top: 0;
     left: 0;
@@ -55,7 +54,7 @@
     background-position: center;
     opacity: 0.6;
     z-index: -1;
-  }
+  }*/
   
   
   .form-group {
@@ -68,12 +67,12 @@
   
   .label {
     font-weight: bold;
-    color: #065F9F;
+    color: #fbdf7e;
   }
   .labelheader {
     font-weight: bold;
     font-size: 1.8rem;
-    color: #065F9F;
+    color: #fbdf7e;
     margin-block-end: 5%;
   }
   
@@ -89,7 +88,7 @@
   .btn-block {
     margin: auto;
     width: 60%;
-    background-color: #065F9F;
+    background-color: #f0c62f;
     
   }
 

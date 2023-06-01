@@ -138,8 +138,7 @@
   </script>
   <style scoped>
    .card {
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      background-color: #E3EAF9; 
+      background-color: #fff;
       position: relative; 
       display: flex;
       flex-direction: column;

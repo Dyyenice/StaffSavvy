@@ -48,18 +48,14 @@ class AuthService {
     }
     
     
-      editProfile(user) {
+    async editProfile(user) {
         return axios.post(API_URL + 'editProfile', {
-            email: user.email,
-            name: user.name,
-            surname: user.surname,
-            phone: user.phone,
-        }) .then(response => {
-            if (response.data.accessToken) {
-                localStorage.setItem('user', JSON.stringify(response.data));
-            }
-
-            return response.data;
+          email: user.email,
+          name: user.name,
+          surname: user.surname,
+          phone: user.phone,
+        }).then(response => {
+          return response.data; 
         });
       }
 }

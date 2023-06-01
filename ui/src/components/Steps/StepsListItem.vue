@@ -1,23 +1,36 @@
 <template>
+  <div class="form-row">
   <div class="card">
-  <div class="card__side card__side--front" :style="{'background-image': `url(https://images.unsplash.com/photo-1432888498266-38ffec3eaf0a?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=874&q=80)`, 'border': `0.4rem solid #065F9F`}" ></div>
-  <div class="card__side card__side--back" :style="{'background-color': `#fff`, 'border': `0.4rem solid #065F9F`}" >
+  <div class="card__side card__side--front" :style="{'background-image': `url(https://images.unsplash.com/photo-1585435465945-bef5a93f8849?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80)`, 'border': `0.4rem solid #fbdf7e`}" ></div>
+  <div class="card__side card__side--back" :style="{'background-color': `black`, 'border': `0.4rem solid #fff`}" >
     <div>
-      <h3 class="card__side__title">For Steps</h3>
-      <p class="card__side__description">Yousmdlkfsldsdlkmlksdmvslkmvlsmfvlfm</p>
-      
+      <h3 class="card__side__title">Manage Your Projects</h3>
+      <p class="card__side__description">Lorem ipsum dolor sit amet,consectetur</p>
     </div>
   </div>
 </div>
+<div class="card">
+  <div class="card__side card__side--front" :style="{'background-image': `url(https://images.unsplash.com/photo-1620608968572-eb721f7851f6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80)`, 'border': `0.4rem solid #fbdf7e`}" ></div>
+  <div class="card__side card__side--back" :style="{'background-color': `black`, 'border': `0.4rem solid #fff`}" >
+    <div>
+      <h3 class="card__side__title">Follow Up Work</h3>
+      <p class="card__side__description">Lorem ipsum dolor sit amet,consectetur</p>
+    </div>
+  </div>
+</div>
+<div class="card">
+  <div class="card__side card__side--front" :style="{'background-image': `url(https://images.unsplash.com/photo-1535957998253-26ae1ef29506?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=436&q=80)`, 'border': `0.4rem solid #fbdf7e`}" ></div>
+  <div class="card__side card__side--back" :style="{'background-color': `black`, 'border': `0.4rem solid #fff`}" >
+    <div>
+      <h3 class="card__side__title">Teamwork</h3>
+      <p class="card__side__description">Lorem ipsum dolor sit amet,consectetur</p>
+    </div>
+  </div>
+</div>
+</div>
 </template>
 
-<script setup>
 
-
-// const categoryItemLayerClass = reactive({
-//   'category-style':
-// })
-</script>
 <style>
 .card {
     background-color: #fff; 
@@ -27,7 +40,7 @@
     align-items: center;
     justify-content: center;
     margin: 35px;
- 
+
 }
 
 .card__side {
@@ -41,6 +54,7 @@
   background-size: cover;
   border-radius: 50%;
   position: relative;
+  color: #fbdf7e;
 }
 
 .card__side--front {
@@ -52,6 +66,7 @@
   background-size: cover;
   border-radius: 50%;
   width: 100%;
+  
 }
 
 .card__side--front:hover {

@@ -51,6 +51,9 @@
         <div class="form-group text-align" >
         <router-link to="/forgotpassword" >Forgot Password? </router-link>
         </div>
+        <div class="form-group text-align" >
+        <router-link to="/register" >Don't you have an account? Sign in. </router-link>
+        </div>
 
         <div class="form-group">
           <div v-if="message" class="alert alert-danger" role="alert">

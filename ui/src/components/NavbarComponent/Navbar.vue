@@ -100,10 +100,10 @@ export default {
 </script>
 <style scoped>
 .navbar-expand{
-  background-color: #E3EAF9;
+  background-color: black;
 }
 .nav-link{
-  color: #065F9F;
+  color: #fbdf7e;
 }
 .mr-auto{
   margin: auto;

@@ -28,7 +28,7 @@ import StepsListItem from './StepsListItem.vue';
   }
 
   .category__title span {
-    color: var(--color-primary-green);
+    color: #fff;
     font-weight: 800;
   }
 

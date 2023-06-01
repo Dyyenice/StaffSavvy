@@ -4,7 +4,7 @@
   <div class="card card-container-profile">
     <div v-if="currentUser">
       <Form @submit="saveData" :validation-schema="schema" >
-        <label class="labelheader">{{currentUser.email}} </label>
+        <label class="labelheader">{{currentUser.name}} {{ currentUser.surname }} </label>
         <div >
           <div class="form-row">
             <div class="form-group col-md-6">
@@ -68,7 +68,7 @@
             </button>
           </div>
           <div class="form-group">
-            <button class="btn btn-primary " :disabled="loading" type="submit"  v-if="isEditMode">
+            <button class="btn btn-primary " :disabled="loading" type="submit"  v-if="isEditMode" >
               <span v-show="loading" class="spinner-border spinner-border-sm"></span>
               <span>Save</span>
             </button>
@@ -153,7 +153,6 @@ export default {
       const file = event.target.files[0];
       // Seçilen dosyayı işleme devam ettirin
       console.log('Seçilen dosya:', file);
-      this.isEditMode = false;
     },
     addShadow(event) {
       event.target.classList.add('hover-shadow');
@@ -184,7 +183,7 @@ export default {
             this.successful = false;
             this.loading = false;
           },
-
+          this.$router.go(0)
 
       )
 

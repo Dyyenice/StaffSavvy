@@ -1,4 +1,13 @@
+.card {
+  background-color: #fff; 
+  position: relative; 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: 35px;
 
+}
 .slider-container {
   position: relative;
   width: 100%;
@@ -43,7 +52,7 @@
   background: none;
   border: none;
   font-size: 50px;
-  color: #065F9F;
+  color: #f0c62f;
   cursor: pointer;
   margin-inline: 550px;
   transform: translateY(-150px);
@@ -65,4 +74,9 @@
 
 .dots span.active {
   background-color: #333;
+}
+
+.container--full {
+  margin-top: 15%;
+  margin-bottom: 10px;
 }

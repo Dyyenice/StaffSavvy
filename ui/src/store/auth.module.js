@@ -71,9 +71,8 @@ export const auth = {
         registerFailure(state) {
             state.status.loggedIn = false;
         },
-        editProfileSuccessful(state, user) {
+        editProfileSuccessful(state) {
             state.status.loggedIn = true;
-            state.user = user;
         },
         editProfileFailure(state) {
             state.status.loggedIn = true;

@@ -25,96 +25,34 @@
       ></span>
     </div>
 
-    <!-- Hakkımızda bölümü -->
-    <v-container>
-      <h2>About Us</h2>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam dignissim tellus eu lacus ultrices, vel auctor dui iaculis. Sed semper massa ut ultrices malesuada. Aenean ac orci ac ipsum congue lobortis. Sed tincidunt ligula ut scelerisque cursus. Nam eget nisl semper, ullamcorper lectus vitae, fringilla est. Proin dignissim, urna sed ullamcorper interdum, mi lectus blandit velit, vitae tincidunt lectus lectus a nulla. Duis varius tortor ut sapien tempus eleifend. Sed nec ligula ut nunc gravida lobortis vitae sit amet nunc. Nam hendrerit urna sit amet sem lacinia, id malesuada erat ultrices.</p>
-      <p>Etiam id neque ligula. Suspendisse et mauris id augue convallis semper. Integer sed sagittis dolor, at condimentum odio. Fusce a purus eget felis consectetur dapibus. Nam id ultrices enim. Sed porttitor, lacus ut facilisis malesuada, leo risus varius turpis, in feugiat quam nulla id nulla. Pellentesque quis eros eros. Ut eu fringilla arcu. Sed a ex nec risus iaculis dignissim.</p>
+    <div class="head">
+    <v-container style="position:relative" >
+      <h2 class="labelheader text">About Us</h2>
+      <p class="label text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam dignissim tellus eu lacus ultrices, vel auctor dui iaculis. Sed semper massa ut ultrices malesuada. Aenean ac orci ac ipsum congue lobortis. Sed tincidunt ligula ut scelerisque cursus. Nam eget nisl semper, ullamcorper lectus vitae, fringilla est. Proin dignissim, urna sed ullamcorper interdum, mi lectus blandit velit, vitae tincidunt lectus lectus a nulla. Duis varius tortor ut sapien tempus eleifend. Sed nec ligula ut nunc gravida lobortis vitae sit amet nunc. Nam hendrerit urna sit amet sem lacinia, id malesuada erat ultrices.</p>
+      <p class="label text">Etiam id neque ligula. Suspendisse et mauris id augue convallis semper. Integer sed sagittis dolor, at condimentum odio. Fusce a purus eget felis consectetur dapibus. Nam id ultrices enim. Sed porttitor, lacus ut facilisis malesuada, leo risus varius turpis, in feugiat quam nulla id nulla. Pellentesque quis eros eros. Ut eu fringilla arcu. Sed a ex nec risus iaculis dignissim.</p>
     </v-container>
+    </div>
   </div>
+  
+  
+  
   <div class="container container--full category">
-    <h2 class="category__title">What you can <span>do</span> with <span>StaffSavvy</span></h2>
+    <h2 class="category__title">What you can do with StaffSavvy</h2>
      <div class="form-row">
      <StepsListComponent></StepsListComponent>
-     <StepsListComponent></StepsListComponent>
-     <StepsListComponent></StepsListComponent>
      </div>
-
+    
+     
+    
   </div>
-<div class="form-row">
-  <div class="col">
-        <div class="child">
-          <h1>Contact info.</h1>
-          <v-btn
-            icon="fas fa-map-marker-alt"
-            color=""
-            class="mt-10"
-            variant="outlined"
-          ></v-btn>
-          <br />
-          <span class="text-caption">Your Street SYO,yourArea Dream</span>
-          <br />
-          <v-btn
-            icon="fas fa-phone-alt"
-            color=""
-            class="mt-10"
-            variant="outlined"
-          ></v-btn>
-          <br />
-          <span class="text-caption">00235 - 6521</span> <br />
-          <span class="text-caption">00235 - 6521</span> <br />
-          <v-btn
-            icon="fas fa-envelope"
-            color=""
-            class="mt-10"
-            variant="outlined"
-          ></v-btn>
-          <br />
-          <span class="text-caption">staffsavvy@gmail.com</span> <br />
-          <span class="text-caption">staffsavvy@gmail.com</span> <br />
-        </div>
-      </div>
-     <div class="col">
-        <h1 class="mt-8">Send your message</h1>
-        <v-divider></v-divider>
-        <span class="text-caption">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt fugiat
-          officia, odio eaque exercitationem libero nesciunt placeat, repellat
-          obcaecati sed tenetur! Est labore aliquam amet consequatur
-          necessitatibus fugit obcaecati facilis!
-        </span>
-        <div class="form-row">
-            <div class="form-group col-md-6">
-              <label for="email" class="label" >Email</label>
-              <Field id="email" name="email" type="text" class="form-control"/>
-              <ErrorMessage name="email" class="error-feedback" />
-            </div>
-            <div class="form-group col-md-6">
-              <label for="phone" class="label">Phone Number</label>
-              <Field id="phone" type="tel" name="phone"  class="form-control"/>
-              <ErrorMessage name="phone" class="error-feedback" />
-            </div>
-          </div>
-        
-        <div class="form-row">
-            <label for="message" class="label">Message</label>
-            <textarea class="form-group col-md-12" label for="message" >
-            </textarea>
-            
-          </div>
-       
-        <button color="#FBDF7E" class="mt-2">Submit Now</button>
-   
-   </div>
- 
-</div>
+  <FooterComponent></FooterComponent>
 
 </template>
 
 
 <script>
 import UserService from "../services/user.service";
-import { Field } from "vee-validate";
+import FooterComponent from "./Footer/FooterComponent.vue";
 import './css/home.css';
 import StepsListComponent from "./Steps/StepsListComponent.vue";
 
@@ -122,7 +60,7 @@ export default {
   name: "Home",
   components: {
     StepsListComponent,
-    Field,
+    FooterComponent,
 
   },
   data() {
@@ -162,9 +100,9 @@ export default {
   },
   methods: {
     startSlideShow() {
-      setInterval(() => {
+      
         this.nextSlide();
-      }, 6000);
+      
     },
     previousSlide() {
       if (this.currentSlideIndex === 0) {
@@ -191,5 +129,59 @@ export default {
   justify-content: center;
   margin: 50px;
   padding: 30px;
+}
+.v-container {
+  padding: 16px 0 16px 0;
+ 
+}
+.head {
+  position: relative;
+  text-align: center;
+  padding: 12px;
+  margin-bottom: 6px;
+  height: 400px;
+  width: 100%;
+  color: white;
+ 
+  
+}
+.head:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 120%;
+  width: 50%;
+  background: black;
+  transform: skew(0deg, 6deg);
+}
+.head:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 120%;
+  width: 50%;
+  background: black;
+  transform: skew(0deg, -6deg);
+  
+  
+}
+.egg {
+  display: block;
+  margin-left: 100px;
+  margin-top: 50px;
+  width: 356px;
+  height: 300px;
+  background-color: #fbdf7e;
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+
+}
+.text{
+  position: relative;
+  z-index: 9999;
+  top: 0;
+  right: 0;
+  padding: 20px;
 }
 </style>
