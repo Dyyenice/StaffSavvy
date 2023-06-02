@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import UserService from "../services/user.service";
+import CompanyService from "../services/company.service";
 
 export default {
   name: "User",
@@ -16,8 +16,10 @@ export default {
       content: "",
     };
   },
-  mounted() {
-    UserService.getAdminBoard().then(
+
+  mounted()
+      {
+    CompanyService.getPendingPersonnels(this.$store.state.auth.user).then(
         (response) => {
           this.content = response.data;
         },
@@ -30,6 +32,6 @@ export default {
               error.toString();
         }
     );
-  },
+  }
 };
 </script>

@@ -17,19 +17,21 @@ checkDuplicateEmail = (req, res, next) => {
             });
 
         }
+if(req.user_type === 0){
+    Personnel.findOne({
+        where: {
+            identification: req.body.identification
+        }
+    }).then(personnel => {
+        if (personnel) {
+            res.status(400).send({
+                message: "Failed! Identification is already in use!"
+            });
 
-        Personnel.findOne({
-            where: {
-                identification: req.body.identification
-            }
-        }).then(personnel => {
-            if (personnel) {
-                res.status(400).send({
-                    message: "Failed! Identification is already in use!"
-                });
+        }
+    });
+}
 
-            }
-        });
     });
     next();
 };

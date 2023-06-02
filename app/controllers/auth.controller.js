@@ -10,51 +10,53 @@ const Op = db.Sequelize.Op;
 var jwt = require("jsonwebtoken");
 var bcrypt = require("bcryptjs");
 
+
+
+function generate_token(length){
+    var a = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890".split("");
+    var b = [];
+    for (var i=0; i<length; i++) {
+        var j = (Math.random() * (a.length-1)).toFixed(0);
+        b[i] = a[j];
+    }
+    return b.join("");
+}
 exports.signup = (req, res) => {
-    console.log("you reached here!")
     User.create({
         email: req.body.email,
         user_type: req.body.user_type,
         password: bcrypt.hashSync(req.body.password, 8)
     }).then(user => {
         if (req.body.user_type === 0) {
-            Personnel.create({
-                id: user.id,
-                name: req.body.name,
-                surname: req.body.surname,
-                phone: req.body.phone,
-                date_of_birth:  req.body.date_of_birth,
-                identification: req.body.identification,
-                company: 1,
+            Company.findOne({
+                where: {
+                    token: req.body.companyToken
+                }
+            }).then(company =>{
+                Personnel.create({
+                    id: user.id,
+                    name: req.body.name,
+                    surname: req.body.surname,
+                    phone: req.body.phone,
+                    date_of_birth:  req.body.date_of_birth,
+                    identification: req.body.identification,
+                    company: company.id,
+                });
+            })
+            user.setRoles([4]).then(() =>{
+                res.send({message: "User was registered successfully!"});
             })
         } else {
             Company.create({
                 id: user.id,
                 name: req.body.name,
+                token: generate_token(16)
             })
-        }
-        if (req.body.roles) {
-            Role.findAll({
-                where: {
-                    name: {
-                        [Op.or]: req.body.roles
-                    }
-                }
-            }).then(roles => {
-                user.setRoles(roles).then(() => {
-                    res.send({message: "User was registered successfully!"});
-                });
-            });
-        } else {
-            // user role = 1
-            user.setRoles([1]).then(() => {
+            user.setRoles([3]).then(() =>{
                 res.send({message: "User was registered successfully!"});
             })
-                .catch(err => {
-                    res.status(500).send({message: err.message});
-                });
-
         }
+
 
     });
 };
@@ -97,16 +99,39 @@ exports.signin = (req, res) => {
                             id : user.id,
                         }
                     }).then(personnel =>{
+                        Company.findOne({
+                            where: {
+                                id: personnel.company
+                            }
+                        }).then(company =>{
+                            res.status(200).send({
+                                id: user.id,
+                                email: user.email,
+                                name: personnel.name,
+                                surname: personnel.surname,
+                                phone: personnel.phone,
+                                company: company.name,
+                                date_of_birth: personnel.date_of_birth,
+                                identification: personnel.identification,
+                                user_type: user.user_type,
+                                roles: authorities,
+                                accessToken: token
+                            });
+                        })
+
+                    })
+                }else{
+                    Company.findOne({
+                        where: {
+                            id: user.id
+                        }
+                    }).then(company =>{
                         res.status(200).send({
                             id: user.id,
                             email: user.email,
-                            name: personnel.name,
-                            surname: personnel.surname,
-                            phone: personnel.phone,
-                            company: personnel.company,
-                            date_of_birth: personnel.date_of_birth,
-                            identification: personnel.identification,
-                            roles: authorities,
+                            name: company.name,
+                            token: company.token,
+                            user_type: user.user_type,
                             accessToken: token
                         });
                     })

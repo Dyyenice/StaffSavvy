@@ -1,5 +1,5 @@
-const { verifySignUp } = require("../middleware");
-const controller = require("../controllers/company.controller.js");
+const { authJwt } = require("../middleware");
+const controller = require("../controllers/company.controller");
 
 module.exports = function(app) {
     app.use(function(req, res, next) {
@@ -10,14 +10,11 @@ module.exports = function(app) {
         next();
     });
 
-    app.post(
-        "/api/auth/signupcompany",
-        [
-            verifySignUp.checkDuplicateCompany,
+   /* app.post(
+        "/api/company/pendingPersonnels",
+        [authJwt.verifyToken, authJwt.isAdmin],
+        controller.pendingPersonnelRequests()
+    );*/
 
-        ],
-        controller.signup
-    );
 
-    app.post("/api/auth/signincompany", controller.signin);
 };

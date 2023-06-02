@@ -1,7 +1,7 @@
 <template>
   <div class="col-md-12">
     <div class="card card-container-register">
-      <label class="labelheader">SIGN UP</label>
+      <label class="labelheader">PERSONNEL SIGN UP</label>
       <Form @submit="handleRegister" :validation-schema="schema">
         <div v-if="!successful">
           <div class="form-row">
@@ -47,6 +47,11 @@
                <label for="identification" class="label">Identification</label>
                <Field id="identification" type="text" name="identification"  class="form-control" />
                <ErrorMessage name="identification" class="error-feedback" />
+             </div>
+             <div class="form-group col-md-12">
+               <label for="companyToken" class="label">Company Token</label>
+               <Field id="companyToken" type="text" name="companyToken"  class="form-control" />
+               <ErrorMessage name="companyToken" class="error-feedback" />
              </div>
            </div>
 
@@ -114,6 +119,10 @@ export default {
           .number()
           .required("Identification is required!")
       ,
+      companyToken: yup
+          .string()
+          .required("Identification is required!")
+      ,
       password: yup
           .string()
           .required("Password is required!")
@@ -165,6 +174,7 @@ export default {
                 error.toString();
             this.successful = false;
             this.loading = false;
+            this.$router.go("/register")
           }
       );
     },

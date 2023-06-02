@@ -7,6 +7,9 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.INTEGER,
             primaryKey: true
         },
+        token: {
+            type: Sequelize.STRING
+        }
 
     });
 

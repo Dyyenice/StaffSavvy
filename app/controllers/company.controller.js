@@ -1,51 +1,47 @@
-const db = require("../models");
 const config = require("../config/auth.config");
+const db = require("../models");
 const Company = db.company;
-const Role = db.role;
+const User = db.user;
+const Personnel = db.personnel;
 
-const Op = db.Sequelize.Op;
+/*exports.pendingPersonnelRequests = (req, res) => {
 
-var jwt = require("jsonwebtoken");
-var bcrypt = require("bcryptjs");
-
-exports.signup = (req, res) => {
-    // Save User to Database
-    Company.create({
-        name: req.body.name,
-        username: req.body.surname,
-        password: bcrypt.hashSync(req.body.password, 8)
-    })
-        .catch(err => {
-            res.status(500).send({ message: err.message });
-        });
-};
-
-exports.signin = (req, res) => {
+    var pendingPersonnels = [];
     Company.findOne({
         where: {
-            username: req.body.username
+            id: 1
         }
-    })
-        .then(company => {
-            if (!company) {
-                return res.status(404).send({ message: "Company Not found." });
+    }).then(company =>{
+        Personnel.findAll({
+            where: {
+                company: company.id
             }
-
-            var passwordIsValid = bcrypt.compareSync(
-                req.body.password,
-                user.password
-            );
-
-            if (!passwordIsValid) {
-                return res.status(401).send({
-                    accessToken: null,
-                    message: "Invalid Password!"
-                });
-            }
-
-
+        }).then(personnel =>{
+            for (let i = 0; i < personnel.length; i++) {
+                User.findOne({
+                    where: {
+                        id: personnel[i].id
+                    }
+            }).then(user =>{
+                pendingPersonnels.push({
+                    email: user.email,
+                    name: personnel[i].name,
+                    surname: personnel[i].surname,
+                    phone: personnel[i].phone
+                })
+                })
+                }
+            })
         })
-        .catch(err => {
-            res.status(500).send({ message: err.message });
-        });
-};
+    res.status(200).send(pendingPersonnels);
+    };*/
+
+
+
+
+
+
+
+
+
+

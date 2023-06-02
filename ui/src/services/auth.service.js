@@ -32,6 +32,7 @@ class AuthService {
             date_of_birth: user.date_of_birth,
             identification: user.identification,
             password: user.password,
+            companyToken: user.companyToken,
             user_type: 0
         });
     }
@@ -39,11 +40,9 @@ class AuthService {
 
         return axios.post(API_URL + 'signup', {
             name: user.name,
-            surname: user.surname,
             email: user.email,
-            phone: user.phone,
             password: user.password,
-            user_type: 0
+            user_type: 1
         });
     }
     

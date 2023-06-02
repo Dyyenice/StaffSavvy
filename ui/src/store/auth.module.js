@@ -37,6 +37,18 @@ export const auth = {
                 }
             );
         },
+        registerCompany({ commit }, user) {
+            return AuthService.registerCompany(user).then(
+                response => {
+                    commit('registerSuccess');
+                    return Promise.resolve(response.data);
+                },
+                error => {
+                    commit('registerFailure');
+                    return Promise.reject(error);
+                }
+            );
+        },
         
         saveProfile({ commit }, user) {
             return AuthService.editProfile(user).then(

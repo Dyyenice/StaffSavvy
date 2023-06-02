@@ -50,7 +50,11 @@ function initial() {
         id: 3,
         name: "admin"
     });
+    Role.create({
+        id: 4,
+        name: "pending"
+    });
 }
-
+require('./routes/company.routes')(app);
 require('./routes/auth.routes')(app);
 require('./routes/user.routes')(app);

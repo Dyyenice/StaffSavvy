@@ -2,6 +2,7 @@ import { createWebHistory, createRouter } from "vue-router";
 import Home from "./components/Home.vue";
 import Login from "./components/Login.vue";
 import Register from "./components/Register.vue";
+import RegisterChoose from "./components/registerChoose.vue";
 import ForgotPassword from "./components/ForgotPassword.vue";
 import CompanyRegister from "./components/CompanyRegister.vue";
 import JobPostingInDetail from "./components/JobPostingInDetail.vue";
@@ -29,8 +30,14 @@ const routes = [
         path: "/register",
         component: Register,
     },
+
+
     {
-        path: "/companyregister",
+        path: "/registerChoose",
+        component: RegisterChoose,
+    },
+    {
+        path: "/companyRegister",
         component: CompanyRegister,
     },
     {
@@ -78,7 +85,7 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-    const publicPages = ['/login', '/register', '/home','/forgotpassword','/companyregister','/jobpostingdetail'];
+    const publicPages = ['/login', '/register','/registerChoose','/companyRegister', '/home','/forgotpassword','/companyregister','/jobpostingdetail'];
     const authRequired = !publicPages.includes(to.path);
     const loggedIn = localStorage.getItem('user');
 

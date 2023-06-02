@@ -23,6 +23,9 @@ module.exports = (sequelize, Sequelize) => {
         company: {
             type: Sequelize.INTEGER
         },
+        status: {
+            type: Sequelize.INTEGER
+        },
 
     });
 

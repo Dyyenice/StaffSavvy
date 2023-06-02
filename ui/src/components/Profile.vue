@@ -4,8 +4,14 @@
   <div class="card card-container-profile">
     <div v-if="currentUser">
       <Form @submit="saveData" :validation-schema="schema" >
-        <label class="labelheader">{{currentUser.name}} {{ currentUser.surname }} </label>
-        <div >
+        <div v-if="currentUser.user_type === 0">
+          <label class="labelheader">{{currentUser.name}} {{ currentUser.surname }} </label>
+        </div>
+        <div v-if="currentUser.user_type === 1">
+          <label class="labelheader">{{currentUser.name}}</label>
+        </div>
+        <div v-if="currentUser.user_type === 0">
+        <div>
           <div class="form-row">
             <div class="form-group col-md-6">
               <label for="name" class="label">Name</label>
@@ -57,8 +63,23 @@
             </div>
 
           </div>
+        </div>
 
-
+        </div>
+        <div v-if="currentUser.user_type === 1">
+          <div>
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="name" class="label">Name</label>
+                <Field id="cname" name="name" type="text" class="form-control" v-model="currentUser.name" disabled/>
+                <ErrorMessage name="name" class="error-feedback" />
+              </div>
+              <div class="form-group col-md-6">
+                <label for="token" class="label">Token</label>
+                <Field id="token" name="token" type="text" class="form-control" v-model="currentUser.token" disabled/>
+                <ErrorMessage name="token" class="error-feedback" />
+              </div>
+            </div>
         </div>
         <div class="form-row">
           <div class="form-group">
@@ -74,8 +95,9 @@
             </button>
           </div>
         </div>
-
+        </div>
       </Form>
+
     </div>
 
     <div
