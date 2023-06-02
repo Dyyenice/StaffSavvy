@@ -78,7 +78,7 @@ export default{
       color: #333;
       font-size: 24px;
       margin-bottom: 10px;
-      text-align: center;
+
     }
     p {
       color: #666;

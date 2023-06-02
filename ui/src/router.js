@@ -22,10 +22,6 @@ const routes = [
         component: Home,
     },
     {
-        path: "/jobpostingdetail",
-        component: JobPostingInDetail,
-    },
-    {
         path: "/login",
         component: Login,
     },
@@ -40,6 +36,10 @@ const routes = [
     {
         path: "/forgotpassword",
         component: ForgotPassword,
+    },
+    {
+        path: "/jobpostingdetail",
+        component: JobPostingInDetail,
     },
     {
         path: "/profile",

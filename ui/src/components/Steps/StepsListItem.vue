@@ -1,53 +1,58 @@
 <template>
-  <div class="form-row">
+<div class="form-row">
   <div class="card">
-  <div class="card__side card__side--front" :style="{'background-image': `url(https://images.unsplash.com/photo-1585435465945-bef5a93f8849?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80)`, 'border': `0.4rem solid #fbdf7e`}" ></div>
-  <div class="card__side card__side--back" :style="{'background-color': `black`, 'border': `0.4rem solid #fff`}" >
-    <div>
-      <h3 class="card__side__title">Manage Your Projects</h3>
-      <p class="card__side__description">Lorem ipsum dolor sit amet,consectetur</p>
+      <div class="card__side card__side--front" :style="{'background-image': `url(https://images.unsplash.com/photo-1574100004472-e536d3b6bacc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80)`, 'border': `0.4rem solid #fbdf7e`}" ></div>
+      <div class="card__side card__side--back" :style="{'background-color': `black`, 'border': `0.4rem solid #fff`}" >
+        <div>
+         <h3 class="card__side__title">Manage Your Projects</h3>
+         <p class="card__side__description">Yousmdlkfsldsdlkmlksdmvslkmvlsmfvlfm</p>
+        </div>
+      </div>
+    </div>
+  <div class="card">
+      <div class="card__side card__side--front" :style="{'background-image': `url(https://images.unsplash.com/photo-1620608968572-eb721f7851f6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80)`, 'border': `0.4rem solid #fbdf7e`}" ></div>
+      <div class="card__side card__side--back" :style="{'background-color': `black`, 'border': `0.4rem solid #fff`}" >
+        <div>
+         <h3 class="card__side__title">Follow Up Work</h3>
+         <p class="card__side__description">Yousmdlkfsldsdlkmlksdmvslkmvlsmfvlfm</p>
+       </div>
+      </div>
+   </div>
+  <div class="card">
+    <div class="card__side card__side--front" :style="{'background-image': `url(https://images.unsplash.com/photo-1513128034602-7814ccaddd4e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=435&q=80)`, 'border': `0.4rem solid #fbdf7e`}" ></div>
+     <div class="card__side card__side--back" :style="{'background-color': `black`, 'border': `0.4rem solid #fff`}" >
+       <div>
+         <h3 class="card__side__title">Teamwork</h3>
+         <p class="card__side__description">Yousmdlkfsldsdlkmlksdmvslkmvlsmfvlfm</p>
+      </div>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card__side card__side--front" :style="{'background-image': `url(https://images.unsplash.com/photo-1535957998253-26ae1ef29506?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=436&q=80)`, 'border': `0.4rem solid #fbdf7e`}" ></div>
+     <div class="card__side card__side--back" :style="{'background-color': `black`, 'border': `0.4rem solid #fff`}" >
+       <div>
+         <h3 class="card__side__title">Efficient Work</h3>
+         <p class="card__side__description">Yousmdlkfsldsdlkmlksdmvslkmvlsmfvlfm</p>
+      </div>
     </div>
   </div>
 </div>
-<div class="card">
-  <div class="card__side card__side--front" :style="{'background-image': `url(https://images.unsplash.com/photo-1620608968572-eb721f7851f6?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80)`, 'border': `0.4rem solid #fbdf7e`}" ></div>
-  <div class="card__side card__side--back" :style="{'background-color': `black`, 'border': `0.4rem solid #fff`}" >
-    <div>
-      <h3 class="card__side__title">Follow Up Work</h3>
-      <p class="card__side__description">Lorem ipsum dolor sit amet,consectetur</p>
-    </div>
-  </div>
-</div>
-<div class="card">
-  <div class="card__side card__side--front" :style="{'background-image': `url(https://images.unsplash.com/photo-1535957998253-26ae1ef29506?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=436&q=80)`, 'border': `0.4rem solid #fbdf7e`}" ></div>
-  <div class="card__side card__side--back" :style="{'background-color': `black`, 'border': `0.4rem solid #fff`}" >
-    <div>
-      <h3 class="card__side__title">Teamwork</h3>
-      <p class="card__side__description">Lorem ipsum dolor sit amet,consectetur</p>
-    </div>
-  </div>
-</div>
-</div>
+
 </template>
 
 
 <style>
-.card {
-    background-color: #fff; 
+.card{
+  background-color: #fff;
     position: relative; 
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    margin: 35px;
-
+    width: auto;
+    
 }
-
 .card__side {
   transition: all 0.8s ease;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
-  height: 27rem;
+  height: 25rem;
   cursor: pointer;
   background-position: center center;
   background-repeat: no-repeat;
@@ -55,6 +60,7 @@
   border-radius: 50%;
   position: relative;
   color: #fbdf7e;
+  
 }
 
 .card__side--front {
