@@ -75,6 +75,11 @@
                 <ErrorMessage name="name" class="error-feedback" />
               </div>
               <div class="form-group col-md-6">
+                <label for="description" class="label">Name</label>
+                <Field id="description" name="description" type="text" class="form-control" v-model="currentUser.name" disabled/>
+                <ErrorMessage name="description" class="error-feedback" />
+              </div>
+              <div class="form-group col-md-6">
                 <label for="token" class="label">Token</label>
                 <Field id="token" name="token" type="text" class="form-control" v-model="currentUser.token" disabled/>
                 <ErrorMessage name="token" class="error-feedback" />
@@ -168,6 +173,7 @@ export default {
     if (!this.currentUser) {
       this.$router.push('/login');
     }
+    console.log(this.currentUser)
   },
   methods: {
    
@@ -190,7 +196,7 @@ export default {
       this.message = "";
       this.successful = false;
       this.loading = true;
-      console.log('Veriler kaydedildi');
+      console.log(user);
       this.$store.dispatch("auth/saveProfile", user).then(
           () => {
             this.$router.go("/profile");

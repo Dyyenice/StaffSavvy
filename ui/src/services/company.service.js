@@ -20,9 +20,19 @@ class CompanyService {
         return axios.get(API_URL + 'admin', { headers: authHeader()});
     }
     getPendingPersonnels(user){
-        return axios.post(API_URL + 'pendingPersonnels',{
+        return axios.get(API_URL + 'pendingPersonnels',{
+            headers: authHeader(),
+            params: {
+                id: user.id
+            }
+             });
+
+    }
+    confirmPending(user){
+
+        return axios.post(API_URL + 'confirmPending',{
             id: user.id
-             }).then(res => console.log(res))
+        });
     }
 }
 

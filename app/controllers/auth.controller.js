@@ -21,6 +21,9 @@ function generate_token(length){
     }
     return b.join("");
 }
+exports.getToken = () =>{
+    return token;
+}
 exports.signup = (req, res) => {
     User.create({
         email: req.body.email,

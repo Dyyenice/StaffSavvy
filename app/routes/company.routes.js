@@ -10,11 +10,13 @@ module.exports = function(app) {
         next();
     });
 
-   /* app.post(
+    app.get(
         "/api/company/pendingPersonnels",
-        [authJwt.verifyToken, authJwt.isAdmin],
-        controller.pendingPersonnelRequests()
-    );*/
+        [authJwt.verifyToken],
+        controller.pendingPersonnelRequests
+    );
+    app.post(
+        "/api/company/confirmPending", controller.confirmPending)
 
 
 };
