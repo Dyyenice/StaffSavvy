@@ -28,6 +28,12 @@ db.user = require("./user.model.js")(sequelize, Sequelize);
 db.role = require("./role.model.js")(sequelize, Sequelize);
 db.company = require("./company.model.js")(sequelize, Sequelize);
 db.personnel = require("./personnel.model.js")(sequelize, Sequelize);
+db.event = require("./event.model.js")(sequelize, Sequelize);
+db.permissions = require("./permissions.model.js")(sequelize, Sequelize);
+db.personneldetails = require("./personneldetails.model.js")(sequelize, Sequelize);
+db.task = require("./task.model.js")(sequelize, Sequelize);
+db.usergroups = require("./usergroups.model.js")(sequelize, Sequelize);
+
 
 db.role.belongsToMany(db.user, {
     through: "user_roles",
@@ -40,6 +46,18 @@ db.user.belongsToMany(db.role, {
     otherKey: "roleId"
 });
 
+db.role.belongsToMany(db.user, {
+    through: "user_task",
+    foreignKey: "taskId",
+    otherKey: "userId"
+});
+db.user.belongsToMany(db.task, {
+    through: "user_task",
+    foreignKey: "userId",
+    otherKey: "taskId"
+});
+
 db.ROLES = ["user", "admin", "moderator","pending"];
+db.TASKS = [];
 
 module.exports = db;

@@ -16,7 +16,14 @@ module.exports = function(app) {
         controller.pendingPersonnelRequests
     );
     app.post(
-        "/api/company/confirmPending", controller.confirmPending)
+        "/api/company/confirmPending", controller.confirmPending);
 
+    app.get(
+        "/api/company/PersonnelDetails",
+        [authJwt.verifyToken],
+        controller.editPersonnelDetails
+    );
+    app.post(
+        "/api/company/editPersonnelDetails", controller.editPersonnelDetails);
 
 };

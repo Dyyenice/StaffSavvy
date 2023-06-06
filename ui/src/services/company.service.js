@@ -25,14 +25,26 @@ class CompanyService {
             params: {
                 id: user.id
             }
-             });
+             })
 
     }
-    confirmPending(user){
-
+    confirmPending(personnel){
+            console.log(personnel);
         return axios.post(API_URL + 'confirmPending',{
-            id: user.id
+            id: personnel.id
         });
+    }
+    getPersonnelDetails(personneldetails) {
+        return axios.get(API_URL + 'personnelDetails', {
+          headers: authHeader(),
+          params: {
+            id: personneldetails.id
+          }
+        });
+      }
+    
+    editPersonnelDetails(personneldetails) {
+        return axios.put(API_URL + 'personnelDetails/' + personneldetails.id, personneldetails);
     }
 }
 

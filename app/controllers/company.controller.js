@@ -3,6 +3,7 @@ const db = require("../models");
 const Company = db.company;
 const User = db.user;
 const Personnel = db.personnel;
+const PersonnelDetails = db.personneldetails;
 
 exports.pendingPersonnelRequests = (req, res) => {
     Company.findByPk(req.query.id)
@@ -76,7 +77,34 @@ exports.confirmPending = (req, res) => {
             })
         }
     });
-}
+};
+exports.editPersonnelDetails = (req, res) => {
+    PersonnelDetails.findByPk(req.query.id)
+      .then(personnelDetails => {
+        if (!personnelDetails) {
+          return res.status(404).send("Personnel information not found");
+        }
+  
+        personnelDetails.update({
+          date_start: req.body.date_start,
+          usergroupid: req.body.usergroupid,
+          salary: req.body.salary,
+          task: req.body.task
+        })
+          .then(updatedPersonnelDetails => {
+            res.status(200).json(updatedPersonnelDetails);
+          })
+          .catch(error => {
+            console.error(error);
+            res.status(500).send("Internal Server Error");
+          });
+      })
+      .catch(error => {
+        console.error(error);
+        res.status(500).send("Internal Server Error");
+      });
+  };
+  
 
 
 
