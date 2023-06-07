@@ -1,18 +1,12 @@
+// Styles
+import '@mdi/font/css/materialdesignicons.css'
+import 'vuetify/styles'
 import '@fortawesome/fontawesome-free/css/all.css'
 import 'material-design-icons-iconfont/dist/material-design-icons.css'
-import { aliases, fa } from 'vuetify/iconsets/fa'
-import 'vuetify/styles'
-
-import { createVuetify } from 'vuetify/lib/framework.mjs'
+import "echarts"
+// Vuetify
+import { createVuetify } from 'vuetify'
 
 export default createVuetify(
- {
-  icons: {
-    defaultSet: 'fa',
-    aliases,
-    sets: {
-      fa,
-    },
-},
- }
+  // https://vuetifyjs.com/en/introduction/why-vuetify/#feature-guides
 )

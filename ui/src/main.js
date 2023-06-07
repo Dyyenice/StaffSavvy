@@ -15,5 +15,3 @@ createApp(App)
     .use(vuetify)
     .component("font-awesome-icon", FontAwesomeIcon)
     .mount("#app");
-    
-  

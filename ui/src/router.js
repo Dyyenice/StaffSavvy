@@ -11,6 +11,7 @@ const Profile = () => import("./components/Profile.vue")
 const BoardAdmin = () => import("./components/BoardAdmin.vue")
 const BoardModerator = () => import("./components/BoardModerator.vue")
 const BoardUser = () => import("./components/BoardUser.vue")
+const LoggedHome = () => import("./components/LoggedHome.vue")
 
 const routes = [
     {
@@ -76,6 +77,12 @@ const routes = [
         name: "user",
         // lazy-loaded
         component: BoardUser,
+    },
+    {
+        path: "/loggedhome",
+        name: "loggedhome",
+        // lazy-loaded
+        component: LoggedHome,
     },
 ];
 
