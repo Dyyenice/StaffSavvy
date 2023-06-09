@@ -1,14 +1,6 @@
 const db = require("../models");
 const ROLES = db.ROLES;
 const User = db.user;
-<<<<<<< HEAD
-
-checkDuplicateUsernameOrEmail = (req, res, next) => {
-    // Username
-    User.findOne({
-        where: {
-            username: req.body.username
-=======
 const Personnel = db.personnel;
 const Company = db.company;
 
@@ -17,43 +9,31 @@ checkDuplicateEmail = (req, res, next) => {
     User.findOne({
         where: {
             email: req.body.email
->>>>>>> 4cbc62f10cf60f9ac4109e4c9422a7f504d81547
         }
     }).then(user => {
         if (user) {
             res.status(400).send({
-<<<<<<< HEAD
-                message: "Failed! Username is already in use!"
-            });
-            return;
-        }
-
-        // Email
-        User.findOne({
-            where: {
-                email: req.body.email
-            }
-        }).then(user => {
-            if (user) {
-                res.status(400).send({
-                    message: "Failed! Email is already in use!"
-                });
-                return;
-            }
-
-            next();
-        });
-    });
-=======
                 message: "Failed! Email is already in use!"
             });
 
         }
+if(req.user_type === 0){
+    Personnel.findOne({
+        where: {
+            identification: req.body.identification
+        }
+    }).then(personnel => {
+        if (personnel) {
+            res.status(400).send({
+                message: "Failed! Identification is already in use!"
+            });
 
+        }
+    });
+}
 
     });
     next();
->>>>>>> 4cbc62f10cf60f9ac4109e4c9422a7f504d81547
 };
 
 checkRolesExisted = (req, res, next) => {
@@ -71,18 +51,12 @@ checkRolesExisted = (req, res, next) => {
     next();
 };
 
-<<<<<<< HEAD
-const verifySignUp = {
-    checkDuplicateUsernameOrEmail: checkDuplicateUsernameOrEmail,
-    checkRolesExisted: checkRolesExisted
-=======
 
 
 const verifySignUp = {
     checkDuplicateEmail: checkDuplicateEmail,
     checkRolesExisted: checkRolesExisted,
 
->>>>>>> 4cbc62f10cf60f9ac4109e4c9422a7f504d81547
 };
 
 module.exports = verifySignUp;

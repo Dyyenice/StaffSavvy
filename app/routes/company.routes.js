@@ -1,5 +1,5 @@
-const { verifySignUp } = require("../middleware");
-const controller = require("../controllers/company.controller.js");
+const { authJwt } = require("../middleware");
+const controller = require("../controllers/company.controller");
 
 module.exports = function(app) {
     app.use(function(req, res, next) {
@@ -10,14 +10,31 @@ module.exports = function(app) {
         next();
     });
 
+    app.get(
+        "/api/company/pendingPersonnels",
+        [authJwt.verifyToken],
+        controller.pendingPersonnelRequests
+    );
     app.post(
-        "/api/auth/signupcompany",
-        [
-            verifySignUp.checkDuplicateCompany,
+        "/api/company/confirmPending", controller.confirmPending);
 
-        ],
-        controller.signup
+
+
+    app.get(
+        "/api/company/getCompanyPersonnels",
+        [authJwt.verifyToken],
+        controller.getCompanyPersonnels
     );
 
-    app.post("/api/auth/signincompany", controller.signin);
+    app.get(
+        "/api/company/getSelectedPersonnelCompanyInfo",
+        [authJwt.verifyToken],
+        controller.selectedPersonnelCompanyInfo
+    );
+    app.post(
+        "/api/company/editselectedPersonnelCompanyInfo",
+
+        controller.editselectedPersonnelCompanyInfo
+    );
+
 };

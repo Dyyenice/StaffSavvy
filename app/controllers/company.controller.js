@@ -1,51 +1,179 @@
-const db = require("../models");
 const config = require("../config/auth.config");
+const db = require("../models");
+const {where} = require("sequelize");
 const Company = db.company;
-const Role = db.role;
+const User = db.user;
+const Personnel = db.personnel;
+const PersonnelCompanyInfo = db.personneldetails
 
-const Op = db.Sequelize.Op;
-
-var jwt = require("jsonwebtoken");
-var bcrypt = require("bcryptjs");
-
-exports.signup = (req, res) => {
-    // Save User to Database
-    Company.create({
-        name: req.body.name,
-        username: req.body.surname,
-        password: bcrypt.hashSync(req.body.password, 8)
-    })
-        .catch(err => {
-            res.status(500).send({ message: err.message });
-        });
-};
-
-exports.signin = (req, res) => {
-    Company.findOne({
-        where: {
-            username: req.body.username
-        }
-    })
+exports.pendingPersonnelRequests = (req, res) => {
+    Company.findByPk(req.query.id)
         .then(company => {
             if (!company) {
-                return res.status(404).send({ message: "Company Not found." });
+                return res.status(404).send("Company not found");
             }
 
-            var passwordIsValid = bcrypt.compareSync(
-                req.body.password,
-                user.password
-            );
+            const pendingPersonnels = [];
 
-            if (!passwordIsValid) {
-                return res.status(401).send({
-                    accessToken: null,
-                    message: "Invalid Password!"
-                });
-            }
+            Personnel.findAll({
+                where: {
+                    company: company.id
+                }
+            }).then(personnel => {
+                let counter = 0;
 
+                for (let i = 0; i < personnel.length; i++) {
+                    User.findOne({
+                        where: {
+                            id: personnel[i].id
+                        }
+                    }).then(user => {
+                        if (user) {
+                            user.getRoles().then(roles => {
+                                for (let j = 0; j < roles.length; j++) {
+                                   if(roles[j].name === "pending"){
+                                       pendingPersonnels.push({
+                                           id: user.id,
+                                           email: user.email,
+                                           name: personnel[i].name,
+                                           surname: personnel[i].surname,
+                                           phone: personnel[i].phone
+                                       });
+                                }
 
-        })
-        .catch(err => {
-            res.status(500).send({ message: err.message });
-        });
+                                }
+
+                                counter++; // Increment the counter
+
+                                if (counter === personnel.length) {
+                                    console.log(pendingPersonnels);
+                                    res.status(200).send(pendingPersonnels); // Send data here
+                                }
+                            });
+                        }
+                    }).catch(error => {
+                        // Handle any errors in retrieving users
+                        console.error(error);
+                    });
+                }
+            });
+        }).catch(error => {
+        // Handle any errors in retrieving the company
+        console.error(error);
+        // return res.status(500).send("Internal Server Error");
+    });
+
 };
+
+exports.getCompanyPersonnels = (req, res) =>{
+    Company.findByPk(req.query.id)
+        .then(company  => {
+            if (!company) {
+                return res.status(404).send("Company not found");
+            }
+
+            const pendingPersonnels = [];
+
+            Personnel.findAll({
+                where: {
+                    company: company.id
+                }
+            }).then(personnel => {
+                let counter = 0;
+
+                for (let i = 0; i < personnel.length; i++) {
+                    User.findOne({
+                        where: {
+                            id: personnel[i].id
+                        }
+                    }).then(user => {
+                        if (user) {
+                            user.getRoles().then(roles => {
+                                for (let j = 0; j < roles.length; j++) {
+                                    if(roles[j].name !== "pending"){
+                                        pendingPersonnels.push({
+                                            id: user.id,
+                                            email: user.email,
+                                            name: personnel[i].name,
+                                            surname: personnel[i].surname,
+                                            phone: personnel[i].phone
+                                        });
+                                    }
+
+                                }
+
+                                counter++; // Increment the counter
+
+                                if (counter === personnel.length) {
+                                    console.log(pendingPersonnels);
+                                    res.status(200).send(pendingPersonnels); // Send data here
+                                }
+                            });
+                        }
+                    }).catch(error => {
+                        // Handle any errors in retrieving users
+                        console.error(error);
+                    });
+                }
+            });
+        }).catch(error => {
+        // Handle any errors in retrieving the company
+        console.error(error);
+        // return res.status(500).send("Internal Server Error");
+    });
+
+}
+exports.confirmPending = (req, res) => {
+    console.log(req.body.id);
+   User.findOne({
+       where:{
+           id:req.body.id
+       }
+   }).then(user =>{
+        if(user){
+            user.setRoles([1]).then(roles =>{
+                console.log(roles)
+                res.status(200).send("user confirmed");
+            })
+        }
+    });
+};
+
+
+exports.selectedPersonnelCompanyInfo = (req, res) => {
+    PersonnelCompanyInfo.findByPk(req.query.id).then(personnel => {
+       if(personnel){
+           res.status(200).send({
+               date_start: personnel.date_start,
+               salary: personnel.salary,
+           });
+       }
+    })
+};
+exports.editselectedPersonnelCompanyInfo = (req, res) => {
+    PersonnelCompanyInfo.findByPk(req.body.id).then(personnel => {
+        if(personnel){
+            console.log(personnel)
+           PersonnelCompanyInfo.update({
+               salary: req.body.salary,
+
+           },
+               {where: {id: req.body.id}}
+
+           ).then(() =>{
+               res.status(200).send("updated successfully")
+           })
+        }
+    })
+}
+  
+
+
+
+
+
+
+
+
+
+

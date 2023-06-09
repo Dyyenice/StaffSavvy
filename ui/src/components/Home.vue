@@ -1,92 +1,89 @@
 <template>
-<<<<<<< HEAD
-  <div id="myCarousel" class="carousel slide" data-ride="carousel">
-  <!-- Indicators -->
-  <ol class="carousel-indicators">
-    <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
-    <li data-target="#myCarousel" data-slide-to="1"></li>
-    <li data-target="#myCarousel" data-slide-to="2"></li>
-  </ol>
-
-  <!-- Wrapper for slides -->
-  <div class="carousel-inner">
-    <div class="item active">
-      <img src="la.jpg" alt="Los Angeles">
-    </div>
-
-    <div class="item">
-      <img src="chicago.jpg" alt="Chicago">
-    </div>
-
-    <div class="item">
-      <img src="ny.jpg" alt="New York">
-    </div>
-  </div>
-
-  <!-- Left and right controls -->
-  <a class="left carousel-control" href="#myCarousel" data-slide="prev">
-    <span class="glyphicon glyphicon-chevron-left"></span>
-    <span class="sr-only">Previous</span>
-  </a>
-  <a class="right carousel-control" href="#myCarousel" data-slide="next">
-    <span class="glyphicon glyphicon-chevron-right"></span>
-    <span class="sr-only">Next</span>
-  </a>
-</div>
-<FooterComponent></FooterComponent>
-=======
   <div>
-    <h1>Başvuran Şirketler</h1>
-    <table>
-      <thead>
-        <tr>
-          <th>Şirket Adı</th>
-          <th>İletişim</th>
-          <th>Ülke</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="(company, index) in companies" :key="index">
-          <td>{{ company.name }}</td>
-          <td>{{ company.contact }}</td>
-          <td>{{ company.country }}</td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="slider-container">
+      <transition-group name="fade" tag="div" class="slider" mode="out-in">
+        <div v-for="(slide, index) in slides" :key="index" v-show="currentSlideIndex === index">
+          <img :src="slide.image" :alt="slide.caption" class="slide-image">
+          <div class="text-caption">{{ slide.caption }}</div>
+          <div class="slider-controls">
+      <button class="slider-arrow" @click="previousSlide"><i class="fa fa-chevron-left"></i></button>
+      <div class="slider-dots">
+        <button v-for="(image, index) in images" :key="index" @click="changeSlide(index)" :class="{ 'active': currentSlide === index }" class="slider-dot"></button>
+      </div>
+      <button class="slider-arrow" @click="nextSlide"><i class="fa fa-chevron-right"></i></button>
+    </div>
+        </div>
+      </transition-group>
+    </div>
+
+    <div class="dots">
+      <span
+        v-for="(slide, index) in slides"
+        :key="index"
+        :class="{ active: currentSlideIndex === index }"
+        @click="changeSlide(index)"
+      ></span>
+    </div>
+
+    <div class="head">
+    <v-container style="position:relative" >
+      <h2 class="labelheader text">About Us</h2>
+      <p class="label text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam dignissim tellus eu lacus ultrices, vel auctor dui iaculis. Sed semper massa ut ultrices malesuada. Aenean ac orci ac ipsum congue lobortis. Sed tincidunt ligula ut scelerisque cursus. Nam eget nisl semper, ullamcorper lectus vitae, fringilla est. Proin dignissim, urna sed ullamcorper interdum, mi lectus blandit velit, vitae tincidunt lectus lectus a nulla. Duis varius tortor ut sapien tempus eleifend. Sed nec ligula ut nunc gravida lobortis vitae sit amet nunc. Nam hendrerit urna sit amet sem lacinia, id malesuada erat ultrices.</p>
+      <p class="label text">Etiam id neque ligula. Suspendisse et mauris id augue convallis semper. Integer sed sagittis dolor, at condimentum odio. Fusce a purus eget felis consectetur dapibus. Nam id ultrices enim. Sed porttitor, lacus ut facilisis malesuada, leo risus varius turpis, in feugiat quam nulla id nulla. Pellentesque quis eros eros. Ut eu fringilla arcu. Sed a ex nec risus iaculis dignissim.</p>
+    </v-container>
+    </div>
   </div>
->>>>>>> 4cbc62f10cf60f9ac4109e4c9422a7f504d81547
+  
+  
+  
+  <div class="container container--full category">
+    <h2 class="category__title">What you can do with StaffSavvy</h2>
+     <div class="form-row">
+     <StepsListComponent></StepsListComponent>
+     </div>
+    
+     
+    
+  </div>
+  <FooterComponent></FooterComponent>
+
 </template>
 
 
 <script>
 import UserService from "../services/user.service";
-<<<<<<< HEAD
 import FooterComponent from "./Footer/FooterComponent.vue";
+import './css/home.css';
+import StepsListComponent from "./Steps/StepsListComponent.vue";
 
 export default {
+  name: "Home",
   components: {
+    StepsListComponent,
     FooterComponent,
-  },
-  name: "Home",
-  data() {
-    return {
-      
-=======
 
-export default {
-  name: "Home",
+  },
   data() {
     return {
-      companies: [
-        { name: 'Şirket 1', contact: 'info@company1.com', country: 'Türkiye' },
-        { name: 'Şirket 2', contact: 'info@company2.com', country: 'ABD' },
-        { name: 'Şirket 3', contact: 'info@company3.com', country: 'İngiltere' },
-        // Diğer şirketler
-      ]
->>>>>>> 4cbc62f10cf60f9ac4109e4c9422a7f504d81547
+      slides: [
+        {
+          image: 'https://images.unsplash.com/photo-1552664730-d307ca884978?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80',
+          caption: 'Slide 1',
+        },
+        {
+          image: 'https://images.unsplash.com/photo-1600880292203-757bb62b4baf?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=870&q=80',
+          caption: 'Slide 2',
+        },
+        {
+          image: 'https://images.unsplash.com/photo-1556761175-5973dc0f32e7?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1032&q=80',
+          caption: 'Slide 3',
+        },
+      ],
+      currentSlideIndex: 0,
     };
   },
   mounted() {
+    this.startSlideShow();
     UserService.getPublicContent().then(
         (response) => {
           this.content = response.data;
@@ -101,9 +98,90 @@ export default {
         }
     );
   },
+  methods: {
+    startSlideShow() {
+      
+        this.nextSlide();
+      
+    },
+    previousSlide() {
+      if (this.currentSlideIndex === 0) {
+        this.currentSlideIndex = this.slides.length - 1;
+      } else {
+        this.currentSlideIndex--;
+      }
+    },
+    nextSlide() {
+      this.currentSlideIndex = (this.currentSlideIndex + 1) % this.slides.length;
+    },
+    changeSlide(index) {
+      this.currentSlideIndex = index;
+    },
+  },
 };
-<<<<<<< HEAD
 </script>
-=======
-</script>
->>>>>>> 4cbc62f10cf60f9ac4109e4c9422a7f504d81547
+
+<style>
+.col{
+  position: relative; 
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 50px;
+  padding: 30px;
+}
+.v-container {
+  padding: 16px 0 16px 0;
+ 
+}
+.head {
+  position: relative;
+  text-align: center;
+  padding: 12px;
+  margin-bottom: 6px;
+  height: 400px;
+  width: 100%;
+  color: white;
+ 
+  
+}
+.head:before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 120%;
+  width: 50%;
+  background: black;
+  transform: skew(0deg, 6deg);
+}
+.head:after {
+  content: "";
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 120%;
+  width: 50%;
+  background: black;
+  transform: skew(0deg, -6deg);
+  
+  
+}
+.egg {
+  display: block;
+  margin-left: 100px;
+  margin-top: 50px;
+  width: 356px;
+  height: 300px;
+  background-color: #fbdf7e;
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+
+}
+.text{
+  position: relative;
+  z-index: 9999;
+  top: 0;
+  right: 0;
+  padding: 20px;
+}
+</style>

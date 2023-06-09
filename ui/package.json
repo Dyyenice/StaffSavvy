@@ -12,23 +12,25 @@
     "@fortawesome/fontawesome-svg-core": "^6.4.0",
     "@fortawesome/free-solid-svg-icons": "^6.4.0",
     "@fortawesome/vue-fontawesome": "^3.0.0-5",
+    "@mdi/font": "5.9.55",
     "axios": "^1.4.0",
     "bootstrap": "^4.6.2",
     "core-js": "^3.30.2",
     "echarts": "^5.4.2",
     "intl-tel-input": "^18.1.6",
     "jquery": "^3.7.0",
+    "moment": "^2.29.4",
     "popper.js": "^1.16.1",
+    "roboto-fontface": "*",
     "vee-validate": "^4.9.4",
     "vue": "^3.3.2",
     "vue-charts": "^0.2.1",
-<<<<<<< HEAD
-=======
     "vue-country-code-select": "^1.6.7",
->>>>>>> 4cbc62f10cf60f9ac4109e4c9422a7f504d81547
+    "vue-echarts": "^6.5.5",
     "vue-router": "^4.2.0",
-    "vuetify": "^3.3.1",
+    "vuetify": "^3.0.0-beta.0",
     "vuex": "^4.1.0",
+    "webfontloader": "^1.0.0",
     "yup": "^1.1.1"
   },
   "devDependencies": {
@@ -38,7 +40,10 @@
     "@vue/cli-plugin-eslint": "^5.0.8",
     "@vue/cli-service": "^5.0.8",
     "eslint": "^7.32.0",
-    "eslint-plugin-vue": "^8.7.1"
+    "eslint-plugin-vue": "^8.7.1",
+    "material-design-icons-iconfont": "^6.7.0",
+    "vue-cli-plugin-vuetify": "~2.5.8",
+    "webpack-plugin-vuetify": "^2.0.0-alpha.0"
   },
   "eslintConfig": {
     "root": true,
