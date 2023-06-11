@@ -2,11 +2,7 @@
   <div class="background-img"></div> 
   <div class="col-md-12">
     <div class="card card-container">
-<<<<<<< HEAD
       <label class="labelheader">LOGIN</label>
-=======
-      <label class="labelLogin">LOGIN</label>
->>>>>>> 4cbc62f10cf60f9ac4109e4c9422a7f504d81547
       <Form @submit="handleLogin" :validation-schema="schema">
         <div class="form-group">
           <label for="email" class="label">E-mail</label>
@@ -52,8 +48,11 @@
           </button>
         </div>
 
-        <div class="form-group">
+        <div class="form-group text-align" >
         <router-link to="/forgotpassword" >Forgot Password? </router-link>
+        </div>
+        <div class="form-group text-align" >
+        <router-link to="/register" >Don't you have an account? Sign in. </router-link>
         </div>
 
         <div class="form-group">
@@ -64,11 +63,6 @@
       </Form>
     </div>
   </div>
-<<<<<<< HEAD
-  <Copyright></Copyright>
-=======
-  
->>>>>>> 4cbc62f10cf60f9ac4109e4c9422a7f504d81547
 </template>
 
 <script>
@@ -77,21 +71,12 @@ import * as yup from "yup";
 import "bootstrap/dist/css/bootstrap.min.css";
 import "@fortawesome/fontawesome-free/css/all.min.css";
 import "./css/style.css";
-<<<<<<< HEAD
-import Copyright from "./Footer/Copyright.vue";
-=======
-
->>>>>>> 4cbc62f10cf60f9ac4109e4c9422a7f504d81547
 export default {
   name: "Login",
   components: {
     Form,
     Field,
     ErrorMessage,
-<<<<<<< HEAD
-    Copyright,
-=======
->>>>>>> 4cbc62f10cf60f9ac4109e4c9422a7f504d81547
   },
   data() {
     const schema = yup.object().shape({
@@ -118,7 +103,7 @@ export default {
   methods: {
     handleLogin(user) {
       this.loading = true;
-
+      console.log(user)
       this.$store.dispatch("auth/login", user).then(
         () => {
           this.$router.push("/profile");

@@ -1,5 +1,5 @@
-const { verifySignUp } = require("../middleware");
-const controller = require("../controllers/company.controller.js");
+const { authJwt } = require("../middleware");
+const controller = require("../controllers/company.controller");
 
 module.exports = function(app) {
     app.use(function(req, res, next) {
@@ -10,14 +10,39 @@ module.exports = function(app) {
         next();
     });
 
+    app.get(
+        "/api/company/pendingPersonnels",
+        [authJwt.verifyToken],
+        controller.pendingPersonnelRequests
+    );
     app.post(
-        "/api/auth/signupcompany",
-        [
-            verifySignUp.checkDuplicateCompany,
+        "/api/company/confirmPending", controller.confirmPending);
 
-        ],
-        controller.signup
+
+
+    app.get(
+        "/api/company/getCompanyPersonnels",
+        [authJwt.verifyToken, authJwt.isAdmin],
+        controller.getCompanyPersonnels
     );
 
-    app.post("/api/auth/signincompany", controller.signin);
+    app.get(
+        "/api/company/getSelectedPersonnelCompanyInfo",
+        [authJwt.verifyToken],
+        controller.selectedPersonnelCompanyInfo
+    );
+    app.post(
+        "/api/company/editselectedPersonnelCompanyInfo",
+
+        controller.editselectedPersonnelCompanyInfo
+    );
+    app.post("/api/company/createTask", controller.createTask)
+    app.get(
+        "/api/company/getTasks", [authJwt.verifyToken], controller.getTasks
+    );
+    app.post("/api/company/createUserGroup" , controller.createUserGroup)
+
+    app.post("/api/company/giveTaskToUser", controller.giveTaskToUser)
+    app.get("/api/company/getRolegroups", [authJwt.verifyToken], controller.getRolegroups)
+    app.get("/api/company/getRoles", [authJwt.verifyToken], controller.getUserRoles)
 };

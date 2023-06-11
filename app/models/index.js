@@ -24,25 +24,74 @@ const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 
-db.user = require("./user.model.js")(sequelize, Sequelize);
+db.rolegroups = require("./rolegroups.model.js")(sequelize, Sequelize);
 db.role = require("./role.model.js")(sequelize, Sequelize);
-<<<<<<< HEAD
-=======
 db.company = require("./company.model.js")(sequelize, Sequelize);
 db.personnel = require("./personnel.model.js")(sequelize, Sequelize);
->>>>>>> 4cbc62f10cf60f9ac4109e4c9422a7f504d81547
+db.event = require("./event.model.js")(sequelize, Sequelize);
+db.permissions = require("./permissions.model.js")(sequelize, Sequelize);
+db.personneldetails = require("./personneldetails.model.js")(sequelize, Sequelize);
+db.task = require("./task.model.js")(sequelize, Sequelize);
+db.usergroups = require("./usergroups.model.js")(sequelize, Sequelize);
+db.user = require("./user.model.js")(sequelize, Sequelize);
 
-db.role.belongsToMany(db.user, {
-    through: "user_roles",
-    foreignKey: "roleId",
+
+
+
+db.rolegroups.belongsToMany(db.user, {
+    through: "user_rolegroups",
+    foreignKey: "rolegroupsId",
     otherKey: "userId"
 });
-db.user.belongsToMany(db.role, {
-    through: "user_roles",
+db.user.belongsToMany(db.rolegroups, {
+    through: "user_rolegroups",
     foreignKey: "userId",
-    otherKey: "roleId"
+    otherKey: "rolegroupsId"
 });
 
-db.ROLES = ["user", "admin", "moderator"];
+db.role.belongsToMany(db.rolegroups, {
+    through: "rolegroups_roles",
+    foreignKey: "roleId",
+    otherKey: "rolegroupsId"
+});
+db.rolegroups.belongsToMany(db.role, {
+    through: "rolegroups_roles",
+    foreignKey: "rolegroupsId",
+    otherKey: "roleId"
+});
+db.task.belongsToMany(db.user, {
+    through: "user_task",
+    foreignKey: "taskId",
+    otherKey: "userId"
+});
+db.user.belongsToMany(db.task, {
+    through: "user_task",
+    foreignKey: "userId",
+    otherKey: "taskId"
+});
+db.usergroups.belongsToMany(db.user, {
+    through: "user_usergroups",
+    foreignKey: "usergroupID",
+    otherKey: "userId"
+});
+db.user.belongsToMany(db.usergroups, {
+    through: "user_usergroups",
+    foreignKey: "userId",
+    otherKey: "usergroupID"
+});
+db.task.belongsToMany(db.usergroups, {
+    through: "usergroup_tasks",
+    foreignKey: "taskId",
+    otherKey: "userId"
+});
+db.usergroups.belongsToMany(db.task, {
+    through: "usergroup_tasks",
+    foreignKey: "userId",
+    otherKey: "taskId"
+});
+
+
+
+db.ROLES = ["user", "admin", "moderator","pending"];
 
 module.exports = db;

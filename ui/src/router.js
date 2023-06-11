@@ -2,18 +2,23 @@ import { createWebHistory, createRouter } from "vue-router";
 import Home from "./components/Home.vue";
 import Login from "./components/Login.vue";
 import Register from "./components/Register.vue";
+import RegisterChoose from "./components/registerChoose.vue";
 import ForgotPassword from "./components/ForgotPassword.vue";
-<<<<<<< HEAD
-import Profile from "./components/Profile.vue";
-// lazy-loaded
-
-=======
+import CompanyRegister from "./components/CompanyRegister.vue";
+import JobPostingInDetail from "./components/JobPostingInDetail.vue";
 // lazy-loaded
 const Profile = () => import("./components/Profile.vue")
->>>>>>> 4cbc62f10cf60f9ac4109e4c9422a7f504d81547
-const BoardAdmin = () => import("./components/BoardAdmin.vue")
+const PendingPersonnels = () => import("./components/PendingPersonnels.vue")
 const BoardModerator = () => import("./components/BoardModerator.vue")
 const BoardUser = () => import("./components/BoardUser.vue")
+const LoggedHome = () => import("./components/LoggedHome.vue")
+const CompanyPersonnels = () => import("./components/CompanyPersonnels.vue")
+const PersonnelDetails = () => import("./components/personnelDetails.vue")
+const PermissionRequest = () => import("./components/Permission&Request.vue")
+const CreateTask = () => import("./components/createTask.vue")
+const CreateUserGroup = () => import("./components/createUserGroup.vue")
+const GiveTask = () => import("./components/giveTask.vue")
+const CreateRolegroup = () => import("./components/createRolegroup.vue")
 
 const routes = [
     {
@@ -22,8 +27,18 @@ const routes = [
         component: Home,
     },
     {
-        path: "/home",
-        component: Home,
+        path: '/home',
+        name: 'Home',
+      beforeEnter: (to, from, next) => {
+      const isLoggedIn =  JSON.parse(localStorage.getItem('user'));
+      if (isLoggedIn) {
+        next('/loggedhome');
+      } else {
+        next();
+      }
+    },
+    component: Home
+  
     },
     {
         path: "/login",
@@ -33,25 +48,40 @@ const routes = [
         path: "/register",
         component: Register,
     },
+
+
+    {
+        path: "/registerChoose",
+        component: RegisterChoose,
+    },
+    {
+        path: "/companyRegister",
+        component: CompanyRegister,
+    },
     {
         path: "/forgotpassword",
         component: ForgotPassword,
     },
     {
+        path: "/jobpostingdetail",
+        component: JobPostingInDetail,
+    },
+    {
         path: "/profile",
-<<<<<<< HEAD
-        
-=======
-        name: "profile",
-        // lazy-loaded
->>>>>>> 4cbc62f10cf60f9ac4109e4c9422a7f504d81547
+        name:"profile",
         component: Profile,
     },
     {
-        path: "/admin",
-        name: "admin",
+        path: "/pendingPersonnels",
+        name: "pendingPersonnels",
         // lazy-loaded
-        component: BoardAdmin,
+        component: PendingPersonnels,
+    },
+    {
+        path: "/profile",
+        name: "profile",
+        // lazy-loaded
+        component: Profile,
     },
     {
         path: "/mod",
@@ -65,6 +95,54 @@ const routes = [
         // lazy-loaded
         component: BoardUser,
     },
+    {
+        path: "/loggedhome",
+        name: "loggedhome",
+        // lazy-loaded
+        component: LoggedHome,
+    },
+    {
+        path: "/companyPersonnels",
+        name: "companyPersonnels",
+        // lazy-loaded
+        component: CompanyPersonnels,
+    },
+    {
+        path: "/personnelDetails",
+        name: "personnelDetails",
+        // lazy-loaded
+        component: PersonnelDetails,
+    },
+    {
+        path: "/PermissionRequest",
+        name: "PermissionRequest",
+        // lazy-loaded
+        component: PermissionRequest,
+    },
+    {
+        path: "/createTask",
+        name: "CreateTask",
+        // lazy-loaded
+        component: CreateTask,
+    },
+    {
+        path: "/createUserGroup",
+        name: "CreateUserGroup",
+        // lazy-loaded
+        component: CreateUserGroup,
+    },
+    {
+        path: "/giveTask",
+        name: "GiveTask",
+        // lazy-loaded
+        component: GiveTask,
+    },
+    {
+        path: "/createRolegroup",
+        name: "CreateRolegroup",
+        // lazy-loaded
+        component: CreateRolegroup,
+    },
 ];
 
 const router = createRouter({
@@ -73,11 +151,7 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-<<<<<<< HEAD
-    const publicPages = ['/login', '/register', '/home','/forgotpassword','/profile'];
-=======
-    const publicPages = ['/login', '/register', '/home','/forgotpassword'];
->>>>>>> 4cbc62f10cf60f9ac4109e4c9422a7f504d81547
+    const publicPages = ['/login', '/register','/registerChoose','/companyRegister', '/home','/forgotpassword','/companyregister','/jobpostingdetail'];
     const authRequired = !publicPages.includes(to.path);
     const loggedIn = localStorage.getItem('user');
 

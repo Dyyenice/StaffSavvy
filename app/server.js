@@ -9,18 +9,18 @@ var corsOptions = {
 
 app.use(cors(corsOptions));
 
-// parse requests of content-type - application/json
+
 app.use(express.json());
 
-// parse requests of content-type - application/x-www-form-urlencoded
+
 app.use(express.urlencoded({ extended: true }));
 
-// simple route
+
 app.get("/", (req, res) => {
     res.json({ message: "Welcome to bezkoder application." });
 });
 
-// set port, listen for requests
+
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}.`);
@@ -28,6 +28,7 @@ app.listen(PORT, () => {
 
 const db = require("./models");
 const Role = db.role;
+const Rolegroup = db.rolegroups;
 
 db.sequelize.sync({force: true}).then(() => {
     console.log('Drop and Resync Db');
@@ -50,7 +51,23 @@ function initial() {
         id: 3,
         name: "admin"
     });
-}
+    Role.create({
+        id: 4,
+        name: "pending"
+    });
+    Rolegroup.create({
+        name:"default"
+    }).then(rolegroup =>{
+        rolegroup.setRoles([4])
+        rolegroup.setRoles([1])
+    });
+    Rolegroup.create({
+        name:"admin"
+    }).then(rolegroup =>{
+        rolegroup.setRoles([3])
+    });
 
+}
+require('./routes/company.routes')(app);
 require('./routes/auth.routes')(app);
 require('./routes/user.routes')(app);

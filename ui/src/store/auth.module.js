@@ -26,11 +26,7 @@ export const auth = {
             commit('logout');
         },
         register({ commit }, user) {
-<<<<<<< HEAD
-            return AuthService.register(user).then(
-=======
             return AuthService.registerPersonnel(user).then(
->>>>>>> 4cbc62f10cf60f9ac4109e4c9422a7f504d81547
                 response => {
                     commit('registerSuccess');
                     return Promise.resolve(response.data);
@@ -40,7 +36,33 @@ export const auth = {
                     return Promise.reject(error);
                 }
             );
-        }
+        },
+        registerCompany({ commit }, user) {
+            return AuthService.registerCompany(user).then(
+                response => {
+                    commit('registerSuccess');
+                    return Promise.resolve(response.data);
+                },
+                error => {
+                    commit('registerFailure');
+                    return Promise.reject(error);
+                }
+            );
+        },
+        
+        saveProfile({ commit }, user) {
+            return AuthService.editProfile(user).then(
+                user => {
+                    commit('editProfileSuccessful');
+                    return Promise.resolve(user);
+                },
+                error => {
+                    commit('editProfileFailure');
+                    return Promise.reject(error);
+                }
+            );
+        },
+
     },
     mutations: {
         loginSuccess(state, user) {
@@ -60,6 +82,13 @@ export const auth = {
         },
         registerFailure(state) {
             state.status.loggedIn = false;
-        }
+        },
+        editProfileSuccessful(state) {
+            state.status.loggedIn = true;
+        },
+        editProfileFailure(state) {
+            state.status.loggedIn = true;
+
+        },
     }
 };
