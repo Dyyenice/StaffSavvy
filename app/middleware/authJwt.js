@@ -24,68 +24,279 @@ verifyToken = (req, res, next) => {
 };
 
 isAdmin = (req, res, next) => {
-    console.log(req.userId)
-    User.findByPk(req.userId).then(user => {
-        if(user)
-        user.getRoles().then(roles => {
-            for (let i = 0; i < roles.length; i++) {
-                if (roles[i].name === "admin") {
-                    next();
-                    return;
-                }
-            }
+    User.findByPk(req.userId)
+        .then(user => {
+            user.getRolegroups()
+                .then(rolegroup => {
+                    rolegroup[0].getRoles()
+                        .then(roles => {
+                            console.log(roles);
+                            let hasAccess = false;
+                            for (let i = 0; i < roles.length; i++) {
+                                if (roles[i].name === "admin") {
+                                    hasAccess = true;
+                                    break;
+                                }
+                            }
+                            if (hasAccess) {
+                                next();
+                            } else {
+                                res.status(403).send({
+                                    message: "Page Access is Denied!"
+                                });
+                            }
+                        })
+                        .catch(() => {
 
-            res.status(403).send({
-                message: "Require Admin Role!"
+                            res.status(500).send({
+                                message: "An error has occured during retrieving roles"
+                            });
+                        });
+                })
+                .catch(() => {
+
+                    res.status(500).send({
+                        message: "An error has occured during retrieving rolegroups"
+                    });
+                });
+        })
+        .catch(() => {
+
+            res.status(500).send({
+                message: "An error has occured during retrieving the user"
             });
-
         });
-    });
 };
 
-isModerator = (req, res, next) => {
-    User.findByPk(req.userId).then(user => {
-        user.getRoles().then(roles => {
-            for (let i = 0; i < roles.length; i++) {
-                if (roles[i].name === "moderator") {
-                    next();
-                    return;
-                }
-            }
+pendingPersonnelsAccess = (req, res, next) => {
+    User.findByPk(req.userId)
+        .then(user => {
+            user.getRolegroups()
+                .then(rolegroup => {
+                    rolegroup[0].getRoles()
+                        .then(roles => {
+                            console.log(roles);
+                            let hasAccess = false;
+                            for (let i = 0; i < roles.length; i++) {
+                                if (roles[i].name === "pendingPersonnelsAdmin" || roles[i].name === "admin") {
+                                    hasAccess = true;
+                                    break;
+                                }
+                            }
+                            if (hasAccess) {
+                                next();
+                            } else {
+                                res.status(403).send({
+                                    message: "Page Access is Denied!"
+                                });
+                            }
+                        })
+                        .catch(() => {
 
-            res.status(403).send({
-                message: "Require Moderator Role!"
+                            res.status(500).send({
+                                message: "An error has occured during retrieving roles"
+                            });
+                        });
+                })
+                .catch(() => {
+
+                    res.status(500).send({
+                        message: "An error has occured during retrieving rolegroups"
+                    });
+                });
+        })
+        .catch(() => {
+
+            res.status(500).send({
+                message: "An error has occured during retrieving the user"
             });
         });
-    });
 };
+companyPersonnelsAccess = (req, res, next) => {
+    User.findByPk(req.userId)
+        .then(user => {
+            user.getRolegroups()
+                .then(rolegroup => {
+                    rolegroup[0].getRoles()
+                        .then(roles => {
+                            console.log(roles);
+                            let hasAccess = false;
+                            for (let i = 0; i < roles.length; i++) {
+                                if (roles[i].name === "companyPersonnelsAdmin" || roles[i].name === "admin") {
+                                    hasAccess = true;
+                                    break;
+                                }
+                            }
+                            if (hasAccess) {
+                                next();
+                            } else {
+                                res.status(403).send({
+                                    message: "Page Access is Denied!"
+                                });
+                            }
+                        })
+                        .catch(() => {
 
-isModeratorOrAdmin = (req, res, next) => {
-    User.findByPk(req.userId).then(user => {
-        user.getRoles().then(roles => {
-            for (let i = 0; i < roles.length; i++) {
-                if (roles[i].name === "moderator") {
-                    next();
-                    return;
-                }
+                            res.status(500).send({
+                                message: "An error has occured during retrieving roles"
+                            });
+                        });
+                })
+                .catch(() => {
 
-                if (roles[i].name === "admin") {
-                    next();
-                    return;
-                }
-            }
+                    res.status(500).send({
+                        message: "An error has occured during retrieving rolegroups"
+                    });
+                });
+        })
+        .catch(() => {
 
-            res.status(403).send({
-                message: "Require Moderator or Admin Role!"
+            res.status(500).send({
+                message: "An error has occured during retrieving the user"
             });
         });
-    });
+};
+taskAccess = (req, res, next) => {
+    User.findByPk(req.userId)
+        .then(user => {
+            user.getRolegroups()
+                .then(rolegroup => {
+                    rolegroup[0].getRoles()
+                        .then(roles => {
+                            console.log(roles);
+                            let hasAccess = false;
+                            for (let i = 0; i < roles.length; i++) {
+                                if (roles[i].name === "taskAdmin" || roles[i].name === "admin") {
+                                    hasAccess = true;
+                                    break;
+                                }
+                            }
+                            if (hasAccess) {
+                                next();
+                            } else {
+                                res.status(403).send({
+                                    message: "Page Access is Denied!"
+                                });
+                            }
+                        })
+                        .catch(() => {
+
+                            res.status(500).send({
+                                message: "An error has occured during retrieving roles"
+                            });
+                        });
+                })
+                .catch(() => {
+
+                    res.status(500).send({
+                        message: "An error has occured during retrieving rolegroups"
+                    });
+                });
+        })
+        .catch(() => {
+
+            res.status(500).send({
+                message: "An error has occured during retrieving the user"
+            });
+        });
+};
+userGroupAccess = (req, res, next) => {
+    User.findByPk(req.userId)
+        .then(user => {
+            user.getRolegroups()
+                .then(rolegroup => {
+                    rolegroup[0].getRoles()
+                        .then(roles => {
+                            console.log(roles);
+                            let hasAccess = false;
+                            for (let i = 0; i < roles.length; i++) {
+                                if (roles[i].name === "userGroupAdmin" || roles[i].name === "admin") {
+                                    hasAccess = true;
+                                    break;
+                                }
+                            }
+                            if (hasAccess) {
+                                next();
+                            } else {
+                                res.status(403).send({
+                                    message: "Page Access is Denied!"
+                                });
+                            }
+                        })
+                        .catch(() => {
+
+                            res.status(500).send({
+                                message: "An error has occured during retrieving roles"
+                            });
+                        });
+                })
+                .catch(() => {
+
+                    res.status(500).send({
+                        message: "An error has occured during retrieving rolegroups"
+                    });
+                });
+        })
+        .catch(() => {
+
+            res.status(500).send({
+                message: "An error has occured during retrieving the user"
+            });
+        });
+};
+roleGroupAccess = (req, res, next) => {
+    User.findByPk(req.userId)
+        .then(user => {
+            user.getRolegroups()
+                .then(rolegroup => {
+                    rolegroup[0].getRoles()
+                        .then(roles => {
+                            console.log(roles);
+                            let hasAccess = false;
+                            for (let i = 0; i < roles.length; i++) {
+                                if (roles[i].name === "roleGroupAdmin" || roles[i].name === "admin") {
+                                    hasAccess = true;
+                                    break;
+                                }
+                            }
+                            if (hasAccess) {
+                                next();
+                            } else {
+                                res.status(403).send({
+                                    message: "Page Access is Denied!"
+                                });
+                            }
+                        })
+                        .catch(() => {
+
+                            res.status(500).send({
+                                message: "An error has occured during retrieving roles"
+                            });
+                        });
+                })
+                .catch(() => {
+
+                    res.status(500).send({
+                        message: "An error has occured during retrieving rolegroups"
+                    });
+                });
+        })
+        .catch(() => {
+
+            res.status(500).send({
+                message: "An error has occured during retrieving the user"
+            });
+        });
 };
 
 const authJwt = {
     verifyToken: verifyToken,
     isAdmin: isAdmin,
-    isModerator: isModerator,
-    isModeratorOrAdmin: isModeratorOrAdmin
+    pendingPersonnelsAccess: pendingPersonnelsAccess,
+    taskAccess: taskAccess,
+    roleGroupAccess: roleGroupAccess,
+    userGroupAccess:userGroupAccess,
+    companyPersonnelsAccess: companyPersonnelsAccess,
+
 };
 module.exports = authJwt;

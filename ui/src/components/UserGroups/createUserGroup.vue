@@ -130,7 +130,7 @@ export default {
 
 
 
-      CompanyService.createUserGroup(name.groupname, this.selectedPersonnels).then(
+      CompanyService.createUserGroup(name.groupname, this.selectedPersonnels,  this.currentUser).then(
           (response) => {
             this.message = response.data;
             this.successful = true;

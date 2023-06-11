@@ -43,11 +43,6 @@ function initial() {
     });
 
     Role.create({
-        id: 2,
-        name: "moderator"
-    });
-
-    Role.create({
         id: 3,
         name: "admin"
     });
@@ -55,13 +50,41 @@ function initial() {
         id: 4,
         name: "pending"
     });
+    Role.create({
+        id: 5,
+        name: "taskAdmin"
+    });
+
+    Role.create({
+        id: 6,
+        name: "userGroupAdmin"
+    });
+    Role.create({
+        id: 7,
+        name: "roleGroupAdmin"
+    });
+    Role.create({
+        id: 8,
+        name: "pendingPersonnelsAdmin"
+    });
+    Role.create({
+        id: 9,
+        name: "companyPersonnelsAdmin"
+    });
     Rolegroup.create({
+        id: 1,
         name:"default"
     }).then(rolegroup =>{
-        rolegroup.setRoles([4])
         rolegroup.setRoles([1])
     });
     Rolegroup.create({
+        id: 2,
+        name:"pending"
+    }).then(rolegroup =>{
+        rolegroup.setRoles([4])
+    });
+    Rolegroup.create({
+        id:3,
         name:"admin"
     }).then(rolegroup =>{
         rolegroup.setRoles([3])

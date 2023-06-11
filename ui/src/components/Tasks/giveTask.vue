@@ -217,6 +217,6 @@ export default {
 .id{
   margin: auto;
 }
-@import "vue-select/dist/vue-select.css";
+
 
 </style>

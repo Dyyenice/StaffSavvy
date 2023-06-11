@@ -52,7 +52,7 @@ exports.signup = (req, res) => {
                     date_start: new DATEONLY()
                 });
             })
-            user.setRolegroups([1]).then(() =>{
+            user.setRolegroups([2]).then(() =>{
                 res.send({message: "User was registered successfully!"});
             })
         } else {
@@ -61,7 +61,7 @@ exports.signup = (req, res) => {
                 name: req.body.name,
                 token: generate_token(16)
             })
-            user.setRolegroups([2]).then(() =>{
+            user.setRolegroups([3]).then(() =>{
                 res.send({message: "User was registered successfully!"});
             })
         }
@@ -101,7 +101,7 @@ exports.signin = (req, res) => {
             user.getRolegroups().then(rolegroup => {
                 if(rolegroup){
                     console.log(rolegroup)
-                    rolegroup.getRoles().then(roles =>{
+                    rolegroup[0].getRoles().then(roles =>{
                         for (let i = 0; i < roles.length; i++) {
                             authorities.push(roles[i].name);
                         }
@@ -203,7 +203,7 @@ exports.editProfile = (req, res) => {
             }
             var authorities = [];
             user.getRolegroups.then(rolegroup => {
-                rolegroup.getRoles().then(roles=>{
+                rolegroup[0].getRoles().then(roles=>{
                     for (let i = 0; i < roles.length; i++) {
                         authorities.push(roles[i].name);
                     }

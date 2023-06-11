@@ -3,7 +3,7 @@
   <div class="col-md-12">
     <div class="card card-container-profile">
       <div v-if="message">  <label class="labelheader">{{ message }}</label></div>
-      <div v-if="!message"><label class="labelheader">COMPANY PERSONNELS</label></div>
+      <div v-if="!message"><label class="labelheader">CREATE TASK</label></div>
       <div v-if="currentUser">
 
 
@@ -97,7 +97,7 @@ export default {
 
       console.log(task);
 
-      CompanyService.createTask(task).then(
+      CompanyService.createTask(task, this.currentUser).then(
           () => {
 
           },

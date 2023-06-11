@@ -15,11 +15,13 @@ const LoggedHome = () => import("./components/LoggedHome.vue")
 const CompanyPersonnels = () => import("./components/CompanyPersonnels.vue")
 const PersonnelDetails = () => import("./components/personnelDetails.vue")
 const PermissionRequest = () => import("./components/Permission&Request.vue")
-const CreateTask = () => import("./components/createTask.vue")
-const CreateUserGroup = () => import("./components/createUserGroup.vue")
-const GiveTask = () => import("./components/giveTask.vue")
-const CreateRolegroup = () => import("./components/createRolegroup.vue")
-
+const CreateTask = () => import("./components/Tasks/createTask.vue")
+const CreateUserGroup = () => import("./components/UserGroups/createUserGroup.vue")
+const GiveTask = () => import("./components/Tasks/giveTask.vue")
+const CompanyTasks = () => import("./components/Tasks/companyTasks.vue")
+const TaskDetails = () => import("./components/Tasks/taskDetails.vue")
+const CreateRolegroup = () => import("./components/Rolegroups/createRolegroup.vue")
+const GiveRolegroup = () => import("./components/Rolegroups/giveRolegroup.vue")
 const routes = [
     {
         path: "/",
@@ -142,6 +144,24 @@ const routes = [
         name: "CreateRolegroup",
         // lazy-loaded
         component: CreateRolegroup,
+    },
+    {
+        path: "/CompanyTasks",
+        name: "CompanyTasks",
+        // lazy-loaded
+        component: CompanyTasks,
+    },
+    {
+        path: "/TaskDetails",
+        name: "TaskDetails",
+        // lazy-loaded
+        component: TaskDetails,
+    },
+    {
+        path: "/giveRolegroup",
+        name: "GiveRolegroup",
+        // lazy-loaded
+        component: GiveRolegroup,
     },
 ];
 

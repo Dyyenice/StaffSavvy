@@ -10,68 +10,105 @@ const Task = db.task
 const UserGroup = db.usergroups;
 const Rolegroup = db.rolegroups;
 const Role = db.role;
-
-exports.pendingPersonnelRequests = (req, res) => {
-    Company.findByPk(req.query.id)
+var companyid;
+exports.pendingPersonnelRequests = async (req, res) => {
+    companyid;
+    console.log(req.query)
+    if (req.query.user_type === '0') {
+        try {
+            const personnel = await Personnel.findOne({
+                where: {
+                    id: req.query.userid,
+                },
+            });
+            companyid = personnel.company;
+            // Call a function or continue the logic here that depends on companyid
+        } catch (error) {
+            // Handle any errors that occurred during the query
+        }
+    } else {
+        companyid = req.query.userid;
+    }
+    console.log(companyid);
+    Company.findByPk(companyid)
         .then(company => {
             if (!company) {
                 return res.status(404).send("Company not found");
+            }else{
+                const pendingPersonnels = [];
+
+                Personnel.findAll({
+                    where: {
+                        company: company.id
+                    }
+                }).then(personnel => {
+                    let counter = 0;
+
+                    for (let i = 0; i < personnel.length; i++) {
+                        User.findOne({
+                            where: {
+                                id: personnel[i].id
+                            }
+                        }).then(user => {
+                            if (user) {
+                                user.getRolegroups().then(rolesgroup => {
+                                    if (rolesgroup[0].name === "pending") {
+
+                                        pendingPersonnels.push({
+                                            id: user.id,
+                                            email: user.email,
+                                            name: personnel[i].name,
+                                            surname: personnel[i].surname,
+                                            phone: personnel[i].phone
+                                        });
+
+
+                                    }
+
+                                    counter++; // Increment the counter
+
+                                    if (counter === personnel.length) {
+                                        console.log(pendingPersonnels);
+                                        res.status(200).send(pendingPersonnels); // Send data here
+                                    }
+                                });
+                            }
+                        }).catch(() => {
+                            res.status(404).send({
+                                message: "User Not Found"
+                            })
+                        });
+                    }
+                });
             }
 
-            const pendingPersonnels = [];
 
-            Personnel.findAll({
-                where: {
-                    company: company.id
-                }
-            }).then(personnel => {
-                let counter = 0;
-
-                for (let i = 0; i < personnel.length; i++) {
-                    User.findOne({
-                        where: {
-                            id: personnel[i].id
-                        }
-                    }).then(user => {
-                        if (user) {
-                            user.getRoles().then(roles => {
-                                for (let j = 0; j < roles.length; j++) {
-                                   if(roles[j].name === "pending"){
-                                       pendingPersonnels.push({
-                                           id: user.id,
-                                           email: user.email,
-                                           name: personnel[i].name,
-                                           surname: personnel[i].surname,
-                                           phone: personnel[i].phone
-                                       });
-                                }
-
-                                }
-
-                                counter++; // Increment the counter
-
-                                if (counter === personnel.length) {
-                                    console.log(pendingPersonnels);
-                                    res.status(200).send(pendingPersonnels); // Send data here
-                                }
-                            });
-                        }
-                    }).catch(error => {
-                        // Handle any errors in retrieving users
-                        console.error(error);
-                    });
-                }
-            });
         }).catch(error => {
         // Handle any errors in retrieving the company
         console.error(error);
-        // return res.status(500).send("Internal Server Error");
+        res.status(500).send("Internal Server Error");
     });
 
 };
 
-exports.getCompanyPersonnels = (req, res) =>{
-    Company.findByPk(req.query.id)
+exports.getCompanyPersonnels = async (req, res) =>{
+    var companyid;
+    if (req.query.user_type === '0') {
+        try {
+            const personnel = await Personnel.findOne({
+                where: {
+                    id: req.query.userid,
+                },
+            });
+            companyid = personnel.company;
+            // Call a function or continue the logic here that depends on companyid
+        } catch (error) {
+            // Handle any errors that occurred during the query
+        }
+    } else {
+        companyid = req.query.userid;
+    }
+    Company.findByPk(companyid)
         .then(company  => {
             if (!company) {
                 return res.status(404).send("Company not found");
@@ -93,9 +130,9 @@ exports.getCompanyPersonnels = (req, res) =>{
                         }
                     }).then(user => {
                         if (user) {
-                            user.getRoles().then(roles => {
-                                for (let j = 0; j < roles.length; j++) {
-                                    if(roles[j].name !== "pending"){
+                            user.getRolegroups().then(rolegroups => {
+
+                                    if(rolegroups[0].name !== "pending"){
                                         pendingPersonnels.push({
                                             id: user.id,
                                             email: user.email,
@@ -104,9 +141,6 @@ exports.getCompanyPersonnels = (req, res) =>{
                                             phone: personnel[i].phone
                                         });
                                     }
-
-                                }
-
                                 counter++; // Increment the counter
 
                                 if (counter === personnel.length) {
@@ -134,8 +168,8 @@ exports.confirmPending = (req, res) => {
        }
    }).then(user =>{
         if(user){
-            user.setRoles([1]).then(roles =>{
-                console.log(roles)
+            user.setRolegroups([1]).then(rolegroup =>{
+                console.log(rolegroup)
                 res.status(200).send("User Confirmed Successfully");
             })
         }else{
@@ -194,10 +228,25 @@ exports.editselectedPersonnelCompanyInfo = (req, res) => {
         res.status(500).send({message: error.message})
     })
 }
-exports.createTask = (req, res) => {
-    console.log(req.body)
+exports.createTask = async (req, res) => {
+    var companyid;
+    if (req.body.user_type === '0') {
+        try {
+            const personnel = await Personnel.findOne({
+                where: {
+                    id: req.body.userid,
+                },
+            });
+            companyid = personnel.company;
+            // Call a function or continue the logic here that depends on companyid
+        } catch (error) {
+            // Handle any errors that occurred during the query
+        }
+    } else {
+        companyid = req.body.userid;
+    }
     Task.create({
-        companyid: req.body.companyid,
+        companyid: companyid,
         deadline: req.body.deadline,
         taskdesc: req.body.description,
     }).then(() => {
@@ -206,10 +255,26 @@ exports.createTask = (req, res) => {
         res.status(500).send({message: error.message});
     })
 }
-exports.getTasks = (req, res) => {
+exports.getTasks = async (req, res) => {
+    var companyid;
+    if (req.query.user_type === '0') {
+        try {
+            const personnel = await Personnel.findOne({
+                where: {
+                    id: req.query.userid,
+                },
+            });
+            companyid = personnel.company;
+            // Call a function or continue the logic here that depends on companyid
+        } catch (error) {
+            // Handle any errors that occurred during the query
+        }
+    } else {
+        companyid = req.query.userid;
+    }
     Task.findAll({
         where: {
-            companyid: req.query.id
+            companyid: companyid
         }
     }).then(tasks =>{
         if(tasks){
@@ -219,10 +284,27 @@ exports.getTasks = (req, res) => {
         res.status(500).send({message: error.message});
     })
 }
-exports.createUserGroup = (req, res) => {
+exports.createUserGroup = async (req, res) => {
     console.log(req.body)
+    var companyid;
+    if (req.body.user_type === '0') {
+        try {
+            const personnel = await Personnel.findOne({
+                where: {
+                    id: req.body.userid,
+                },
+            });
+            companyid = personnel.company;
+            // Call a function or continue the logic here that depends on companyid
+        } catch (error) {
+            // Handle any errors that occurred during the query
+        }
+    } else {
+        companyid = req.body.userid;
+    }
     UserGroup.create({
-        name: req.body.groupname
+        name: req.body.groupname,
+        companyid:companyid,
     }).then(usergroup =>{
         let counter = 0;
         for (let i = 0; i < req.body.selectedPersonnels.length; i++) {
@@ -251,16 +333,85 @@ exports.giveTaskToUser = (req, res) =>{
         res.status(500).send({message: error.message})
     })
 }
-exports.getRolegroups = (req, res) =>{
-    Rolegroup.findAll().then(rolegroups =>{
+exports.getRolegroups = async (req, res) =>{
+    var companyid;
+    if (req.query.user_type === '0') {
+        try {
+            const personnel = await Personnel.findOne({
+                where: {
+                    id: req.query.userid,
+                },
+            });
+            companyid = personnel.company;
+            // Call a function or continue the logic here that depends on companyid
+        } catch (error) {
+            // Handle any errors that occurred during the query
+        }
+    } else {
+        companyid = req.query.userid;
+    }
+    Rolegroup.findAll({
+        where: {
+            companyid: companyid
+        }
+    }).then(rolegroups =>{
         res.status(200).send(rolegroups)
     }).catch(error =>{
         res.status(500).send({message: error.message})
     })
 }
 exports.getUserRoles = (req, res) =>{
-    Role.findAll().then(roles =>{
+    Role.findAll( {
+
+    }).then(roles =>{
         res.status(200).send(roles)
+    }).catch(error =>{
+        res.status(500).send({message: error.message})
+    })
+}
+exports.createRolegroup = async (req, res) => {
+    var companyid;
+    if (req.body.user_type === '0') {
+        try {
+            const personnel = await Personnel.findOne({
+                where: {
+                    id: req.body.userid,
+                },
+            });
+            companyid = personnel.company;
+            // Call a function or continue the logic here that depends on companyid
+        } catch (error) {
+            // Handle any errors that occurred during the query
+        }
+    } else {
+        companyid = req.body.userid;
+    }
+    console.log(companyid)
+    Rolegroup.create({
+        name: req.body.name,
+        companyid: companyid,
+    }).then(rolegroup => {
+        let counter = 0;
+        for (let i = 0; i < req.body.roles.length; i++) {
+            rolegroup.setRoles([req.body.roles[i].id]);
+            counter++;
+        }
+        if (counter === req.body.roles.length) {
+            res.status(200).send("Role Group Created Successfully");
+        }
+
+    }).catch(error => {
+        res.status(500).send({message: error.message});
+    })
+}
+exports.giveRolegroupToUser = (req, res) =>{
+    User.findByPk(req.body.personnelid).then(user =>{
+        if(user){
+            user.setRolegroups([req.body.rolegroupid]).then(() =>{
+                res.status(200).send("Role Group Given Successfully")
+            })
+        }
+
     }).catch(error =>{
         res.status(500).send({message: error.message})
     })

@@ -9,26 +9,29 @@ class CompanyService {
         return axios.get(API_URL + 'pendingPersonnels',{
             headers: authHeader(),
             params: {
-                id: user.id
+                userid: user.id,
+                user_type: user.user_type
             }
              })
 
     }
-    getCompanyPersonnels(user){
+    getCompanyPersonnels(currentuser){
         return axios.get(API_URL + 'getCompanyPersonnels',{
             headers: authHeader(),
             params: {
-                id: user.id
+                userid: currentuser.id,
+                user_type: currentuser.user_type
             }
         })
 
     }
 
-    getSelectedPersonnel(user){
+    getSelectedPersonnel(currentuser){
         return axios.get(API_URL + 'getSelectedPersonnelCompanyInfo',{
             headers: authHeader(),
             params: {
-                id: user.id
+                userid: currentuser.id,
+                user_type: currentuser.user_type
             }
         })
 
@@ -37,6 +40,8 @@ class CompanyService {
             console.log(personnel);
         return axios.post(API_URL + 'confirmPending',{
             id: personnel.id
+        },{
+            headers: authHeader(),
         });
     }
 
@@ -44,18 +49,23 @@ class CompanyService {
     editSelectedPersonnel(personnel, selectedRolegroup) {
         return axios.post(API_URL + 'editselectedPersonnelCompanyInfo' ,{
             id: personnel.id,
-            salary: personnel.salary,
             Rolegroupid: selectedRolegroup.id,
-        });
+        },{
+            headers: authHeader(),
+        }
+        );
     }
 
-    createTask(task){
+    createTask(task, currentuser){
 
         return axios.post(API_URL + 'createTask' , {
                 description: task.desc,
                 deadline: task.deadline,
-                companyid: task.companyid,
+            userid: currentuser.id,
+            user_type: currentuser.user_type
 
+        },{
+            headers: authHeader(),
         });
     }
 
@@ -64,23 +74,29 @@ class CompanyService {
             taskid: task.id,
             personnelid: personnel.id,
 
+        },{
+            headers: authHeader(),
         });
     }
-    createUserGroup(name, selectedPersonnels){
+    createUserGroup(name, selectedPersonnels, currentuser){
 
         return axios.post(API_URL + 'createUserGroup' , {
             groupname: name,
            selectedPersonnels: selectedPersonnels,
-
+            userid: currentuser.id,
+            user_type: currentuser.user_type
+        },{
+            headers: authHeader(),
         });
     }
 
-    getTasks(company){
+    getTasks(currentuser){
 
         return axios.get(API_URL + 'getTasks' , {
             headers: authHeader(),
             params: {
-                id: company.id
+                userid: currentuser.id,
+                user_type: currentuser.user_type
             }
 
         });
@@ -93,9 +109,34 @@ class CompanyService {
 
         });
     }
-    getRolegroups(){
+    getRolegroups(currentuser){
 
         return axios.get(API_URL + 'getRolegroups' , {
+            headers: authHeader(),
+            params:{
+                userid: currentuser.id,
+                user_type: currentuser.user_type
+            }
+        });
+    }
+
+    createRolegroup(name,roles, currentuser){
+        return axios.post(API_URL + 'createRoleGroup', {
+            name:name.rolegroupname,
+            roles:roles,
+            userid: currentuser.id,
+            user_type: currentuser.user_type
+        },{
+            headers: authHeader(),
+        })
+    }
+
+    giveRolegroupToUser(rolegroup, personnel){
+        return axios.post(API_URL + 'giveRolegroupToUser' , {
+            rolegroupid: rolegroup.id,
+            personnelid: personnel.id,
+
+        },{
             headers: authHeader(),
         });
     }
