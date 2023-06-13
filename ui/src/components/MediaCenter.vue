@@ -1,6 +1,5 @@
 <template>
-  <div>
-    <div class="slider-container">
+    <div class="slider-container media">
       <transition-group name="fade" tag="div" class="slider" mode="out-in">
         <div v-for="(slide, index) in slides" :key="index" v-show="currentSlideIndex === index">
           <img :src="slide.image" :alt="slide.caption" class="slide-image">
@@ -24,44 +23,13 @@
         @click="changeSlide(index)"
       ></span>
     </div>
-
-    <div class="head">
-    <v-container style="position:relative" >
-      <h2 class="category__title text">What you can do with StaffSavvy</h2>
-    </v-container>
-    </div>
-  </div>
-  
-  
-  
-  <div class="container container--full category">
-   
-     <div class="form-row">
-     <div></div>
-     <StepsListComponent></StepsListComponent>
-     </div>
     
-     
-    
-  </div>
-  <FooterComponent></FooterComponent>
-
 </template>
-
 
 <script>
 import UserService from "../services/user.service";
-import FooterComponent from "./Footer/FooterComponent.vue";
-import './css/home.css';
-import StepsListComponent from "./Steps/StepsListComponent.vue";
-
 export default {
-  name: "Home",
-  components: {
-    StepsListComponent,
-    FooterComponent,
-
-  },
+ 
   data() {
     return {
       slides: [
@@ -118,69 +86,14 @@ export default {
     },
   },
 };
+
 </script>
 
 <style>
-.col{
-  position: relative; 
-  display: flex;
-  flex-direction: column;
+.media{
+    display: flex;
+  align-items: center;
   justify-content: center;
-  margin: 50px;
-  padding: 30px;
-}
-.v-container {
-  padding: 16px 0 16px 0;
- 
-}
-.head {
-  position: relative;
-  text-align: center;
-  padding: 12px;
-  margin-bottom: 6px;
-  height: 400px;
-  width: 100%;
-  color: white;
- 
-  
-}
-.head:before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 120%;
-  width: 50%;
-  background: black;
-  transform: skew(0deg, 6deg);
-}
-.head:after {
-  content: "";
-  position: absolute;
-  top: 0;
-  right: 0;
-  height: 120%;
-  width: 50%;
-  background: black;
-  transform: skew(0deg, -6deg);
-  
-  
-}
-.egg {
-  display: block;
-  margin-left: 100px;
-  margin-top: 50px;
-  width: 356px;
-  height: 300px;
-  background-color: #fbdf7e;
-  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
-
-}
-.text{
-  position: relative;
-  z-index: 9999;
-  top: 0;
-  right: 0;
-  padding: 20px;
+  height: 90vh;
 }
 </style>

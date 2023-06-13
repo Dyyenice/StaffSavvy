@@ -52,7 +52,7 @@
               </div>
               <div class="form-row">
                 <div class="form-group col-md-6">
-                  <label for="tasks" class="label">Assign Task</label>
+                  <label for="tasks" class="label">Role Group</label>
                   <select id="tasks" name="tasks" v-model="selected">
                     <option v-for="rolegroup in rolegroups" :key="rolegroup.id">
                       {{rolegroup}}
@@ -61,7 +61,57 @@
                   <ErrorMessage name="tasks" class="error-feedback" />
                 </div>
               </div>
+              <label class="labelheader">Teams that Personnel in</label>
+           
+               
+             <table class="table">
+               <thead>
+                 <tr>
+                   <th>E-mail</th>
+                   <th>Name</th>
+                   <th>Surname</th>
+                   <th>Phone Number</th>
+                   <th></th>
+                 </tr>
+               </thead>
+             <tbody>
+                <tr v-for="usergroup in usergroups" :key="usergroup.id">
+                 <td>{{ usergroup.name }}</td>
+                <td>
+                  <button class="btn btn-primary form-group col-md-2" :disabled="loading" type="submit"  @click="teamDetails(task)"  >
+                    <span v-show="loading" class="spinner-border spinner-border-sm"></span>
+                    <span>Details</span>
+                 </button>
+               </td>
+               </tr>
+              </tbody>
+             </table>
+
+             <label class="labelheader">Personnel's Tasks</label>
+             <table class="table">
+               <thead>
+                 <tr>
+                   <th>Description</th>
+                   <th>Deadline</th>
+                   <th></th>
+                 </tr>
+               </thead>
+             <tbody>
+                <tr v-for="task in tasks" :key="task.id">
+                 <td>{{ task.taskdesc }}</td>
+                 <td>{{ task.deadline}}</td>
+                <td>
+                  <button class="btn btn-primary form-group col-md-2" :disabled="loading" type="submit"  @click="taskDetails(task)"  >
+                    <span v-show="loading" class="spinner-border spinner-border-sm"></span>
+                    <span>Details</span>
+                 </button>
+               </td>
+               </tr>
+              </tbody>
+             </table>
+
             </div>
+       
 
           </div>
           <button class="btn btn-primary" type="submit">
@@ -102,7 +152,9 @@ export default {
       loading: false,
       message: "",
       selectedPersonnelCompanyInfo: [],
+      tasks:[],
       rolegroups: [],
+      usergroups:[],
       selected: '',
     };
 
@@ -147,6 +199,32 @@ export default {
           error.toString();
         }
     )
+    CompanyService.getTasks(this.currentUser).then(
+        (response) => {
+          this.tasks = response.data;
+          console.log(this.tasks);
+        },
+        (error) => {
+          (error.response &&
+              error.response.data &&
+              error.response.data.message) ||
+          error.message ||
+          error.toString();
+        }
+    );
+    CompanyService.getUsergroups(this.currentUser).then(
+        (response) => {
+          this.usergroups = response.data;
+          console.log(this.usergroups);
+        },
+        (error) => {
+          (error.response &&
+              error.response.data &&
+              error.response.data.message) ||
+          error.message ||
+          error.toString();
+        }
+    );
 
   },
   methods: {
@@ -169,7 +247,24 @@ export default {
           });
 
     },
+    personnelDetails(personnel){
+    localStorage.setItem("selectedPersonnel", JSON.stringify(personnel));
+    console.log(JSON.parse(localStorage.getItem("selectedPersonnel")));
+    this.$router.push("/personnelDetails");
+  }  ,
 
+  teamDetails(usergroup){
+    localStorage.setItem("selectedUserGroup", JSON.stringify(usergroup));
+    console.log(JSON.parse(localStorage.getItem("selectedUserGroup")));
+    this.$router.push("/UserGroupDetails");
+  }  ,
+  taskDetails(task){
+        localStorage.setItem("selectedTask", JSON.stringify(task));
+        console.log(JSON.parse(localStorage.getItem("selectedTask")));
+        this.$router.push("/taskDetails");
+      }
+
+   
   },
 
 };

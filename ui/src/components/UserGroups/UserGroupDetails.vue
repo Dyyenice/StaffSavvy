@@ -3,7 +3,7 @@
 </script>
 
 <template>
-
+<p>dnkvnsdk</p>
 </template>
 
 <style scoped>

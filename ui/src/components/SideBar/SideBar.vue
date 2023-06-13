@@ -2,9 +2,9 @@
 
 <div class="container">
   <div v-if="currentUser">
-    <div v-if="currentUser.roles == 'ROLE_USER'">
+    <div v-if="currentUser.user_type === 0">
       <div class="sidebar">
-        <button class="sidebar-button" :disabled="loading" type="submit" @click="this.$router.push('/PermissionRequest')" >
+        <button class="btn btn-primary sidebar-button" :disabled="loading" type="submit" @click="this.$router.push('/PermissionRequest')" >
               <span v-show="loading" class="spinner-border spinner-border-sm"></span>
               <span>Permission & Request</span>
         </button>
@@ -13,25 +13,37 @@
   </div>
   <div v-if="currentUser.user_type === 1">
       <div class="sidebar">
-        <button class="sidebar-button" :disabled="loading" type="submit" @click="this.$router.push('/CompanyPersonnels')" >
+        <button class="btn btn-primary sidebar-button" :disabled="loading" type="submit" @click="this.$router.push('/CompanyPersonnels')" >
               <span v-show="loading" class="spinner-border spinner-border-sm"></span>
               <span>Personnels</span>
         </button>
-        <button class="sidebar-button" :disabled="loading" type="submit" @click="this.$router.push('/PendingPersonnels')" >
+        <button class="btn btn-primary sidebar-button" :disabled="loading" type="submit" @click="this.$router.push('/PendingPersonnels')" >
               <span v-show="loading" class="spinner-border spinner-border-sm"></span>
               <span>Pending Personnels</span>
         </button>
-        <button class="sidebar-button" :disabled="loading" type="submit" @click="this.$router.push('/createTask')" >
+        <button class="btn btn-primary sidebar-button" :disabled="loading" type="submit" @click="this.$router.push('/createTask')" >
           <span v-show="loading" class="spinner-border spinner-border-sm"></span>
           <span>Create Task</span>
         </button>
-        <button class="sidebar-button" :disabled="loading" type="submit" @click="this.$router.push('/createUserGroup')" >
+        <button class="btn btn-primary sidebar-button" :disabled="loading" type="submit" @click="this.$router.push('/createUserGroup')" >
           <span v-show="loading" class="spinner-border spinner-border-sm"></span>
-          <span>CreateUserGroup</span>
+          <span>Create Team</span>
         </button>
-        <button class="sidebar-button" :disabled="loading" type="submit" @click="this.$router.push('/giveTask')" >
+        <button class="btn btn-primary sidebar-button" :disabled="loading" type="submit" @click="this.$router.push('/giveTask')" >
           <span v-show="loading" class="spinner-border spinner-border-sm"></span>
           <span>Give Task</span>
+        </button>
+        <button class="btn btn-primary sidebar-button" :disabled="loading" type="submit" @click="this.$router.push('/companyRolegroups')" >
+          <span v-show="loading" class="spinner-border spinner-border-sm"></span>
+          <span>Company Role Groups</span>
+        </button>
+        <button class="btn btn-primary sidebar-button" :disabled="loading" type="submit" @click="this.$router.push('/createRolegroup')" >
+          <span v-show="loading" class="spinner-border spinner-border-sm"></span>
+          <span>Create Role Group</span>
+        </button>
+        <button class="btn btn-primary sidebar-button" :disabled="loading" type="submit" @click="this.$router.push('/giveRolegroup')" >
+          <span v-show="loading" class="spinner-border spinner-border-sm"></span>
+          <span>Give Role Group</span>
         </button>
        
       </div>
@@ -44,17 +56,7 @@
 
 <script>
   export default {
-    data: () => ({ 
-         selectedItem: 0,
-        drawer: null,
-        items: [
-            {icon: 'fas fa-plus'},
-            {icon: 'fas fa-th-large'},
-            {icon: 'fas fa-align-center'},
-            {icon: 'fab fa-gitter'},
-            {icon: 'fas fa-chart-line'},
-        ],
-     }),
+ 
      computed: {
 
 currentUser() {
@@ -64,34 +66,34 @@ currentUser() {
   }
 </script>
 <style>
-.border  {
-   margin-left: 12px;
-   margin-right: 12px;
-    background: #49D9A0 ;
-    border-radius: 50%;
-    text-decoration: none;
-    
-}
-.v-list-item-group .v-list-item--active {
-    color: white !important;
-}
+
+
+
 .sidebar {
   width: 200px;
-  background-color: #f2f2f2;
+  background-color: #000000;
   padding: 10px;
-  height: 100%;
-  position: absolute;
+  position: absolute; 
+  left: 0; 
+  top: 0; 
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.4);
+  height: 100vb;
 }
+
 
 .sidebar-button {
   display: block;
   width: 100%;
   padding: 8px;
-  margin-top: 50%;
+  margin-top: 17%;
   border: none;
-  background-color: #e0e0e0;
+  
   text-align: left;
   cursor: pointer;
+
+  
+  background-color: #f0c62f;
+    
 }
 
 .sidebar-button:hover {

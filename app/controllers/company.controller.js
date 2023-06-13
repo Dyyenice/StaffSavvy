@@ -10,6 +10,7 @@ const Task = db.task
 const UserGroup = db.usergroups;
 const Rolegroup = db.rolegroups;
 const Role = db.role;
+
 var companyid;
 exports.pendingPersonnelRequests = async (req, res) => {
     companyid;
@@ -331,6 +332,48 @@ exports.giveTaskToUser = (req, res) =>{
 
     }).catch(error =>{
         res.status(500).send({message: error.message})
+    })
+}
+exports.giveTaskToUsergroup = (req, res) =>{
+    console.log(req.body)
+    UserGroup.findbypk(req.body.usergroupid).then(usergroup =>{
+        if(usergroup){
+            usergroup.setTasks([req.body.taskid]).then(() =>{
+                res.status(200).send("Task Given Successfully")
+            })
+        }
+
+    }).catch(error =>{
+        res.status(500).send({message: error.message})
+    })
+}
+exports.getUsergroups = async (req, res) => {
+    var companyid;
+    if (req.query.user_type === '0') {
+        try {
+            const personnel = await Personnel.findOne({
+                where: {
+                    id: req.query.userid,
+                },
+            });
+            companyid = personnel.company;
+            // Call a function or continue the logic here that depends on companyid
+        } catch (error) {
+            // Handle any errors that occurred during the query
+        }
+    } else {
+        companyid = req.query.userid;
+    }
+    UserGroup.findAll({
+        where: {
+            companyid: companyid
+        }
+    }).then(usergroup =>{
+        if(usergroup){
+            res.status(200).send(usergroup)
+        }
+    }).catch(error =>{
+        res.status(500).send({message: error.message});
     })
 }
 exports.getRolegroups = async (req, res) =>{

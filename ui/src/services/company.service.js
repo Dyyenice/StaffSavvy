@@ -15,12 +15,12 @@ class CompanyService {
              })
 
     }
-    getCompanyPersonnels(currentuser){
+    getCompanyPersonnels(user){
         return axios.get(API_URL + 'getCompanyPersonnels',{
             headers: authHeader(),
             params: {
-                userid: currentuser.id,
-                user_type: currentuser.user_type
+                userid: user.id,
+                user_type: user.user_type
             }
         })
 
@@ -78,6 +78,15 @@ class CompanyService {
             headers: authHeader(),
         });
     }
+    giveTaskToUsergroup(task, usergroup){
+        return axios.post(API_URL + 'giveTaskToUser' , {
+            taskid: task.id,
+            usergroupid: usergroup.id,
+
+        },{
+            headers: authHeader(),
+        });
+    }
     createUserGroup(name, selectedPersonnels, currentuser){
 
         return axios.post(API_URL + 'createUserGroup' , {
@@ -101,6 +110,7 @@ class CompanyService {
 
         });
     }
+    
     getRoles(){
 
         return axios.get(API_URL + 'getRoles' , {
@@ -112,6 +122,16 @@ class CompanyService {
     getRolegroups(currentuser){
 
         return axios.get(API_URL + 'getRolegroups' , {
+            headers: authHeader(),
+            params:{
+                userid: currentuser.id,
+                user_type: currentuser.user_type
+            }
+        });
+    }
+    getUsergroups(currentuser){
+
+        return axios.get(API_URL + 'getUsergroups' , {
             headers: authHeader(),
             params:{
                 userid: currentuser.id,

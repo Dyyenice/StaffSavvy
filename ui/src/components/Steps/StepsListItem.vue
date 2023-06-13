@@ -1,5 +1,5 @@
 <template>
-<div class="form-row">
+<div class="form-row steps">
   <div class="card">
       <div class="card__side card__side--front" :style="{'background-image': `url(https://images.unsplash.com/photo-1574100004472-e536d3b6bacc?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=387&q=80)`, 'border': `0.4rem solid #fbdf7e`}" ></div>
       <div class="card__side card__side--back" :style="{'background-color': `black`, 'border': `0.4rem solid #fff`}" >
@@ -117,6 +117,9 @@
 
 .card:hover .card__side--back {
   transform: rotateY(0);
+}
+.steps{
+  margin-top: 10%;
 }
 
 </style>

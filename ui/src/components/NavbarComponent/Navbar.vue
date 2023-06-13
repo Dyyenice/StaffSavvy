@@ -11,29 +11,29 @@
 
         <div v-if="!currentUser">
         <li class="nav-item">
-            <router-link to="/home" class="nav-link">
+            <router-link to="/aboutus" class="nav-link">
             <font-awesome-icon  /> About Us
           </router-link>
         </li>
         </div>
         <div v-if="currentUser">
         <li class="nav-item">
-            <router-link to="/JobPostingInDetail" class="nav-link">
+            <router-link to="/jobpostings" class="nav-link">
             <font-awesome-icon  /> Job Postings
           </router-link>
         </li>
         </div>
         <li class="nav-item">
-            <router-link to="/home" class="nav-link">
+            <router-link to="/mediacenter" class="nav-link">
             <font-awesome-icon  /> Media Center
             </router-link>
         </li>
         <li class="nav-item">
-            <router-link to="/home" class="nav-link">
+            <router-link to="/UserGuide" class="nav-link">
             <font-awesome-icon  /> User Guide
             </router-link>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" v-if="currentUser">
             <router-link to="/home" class="nav-link">
             <font-awesome-icon  /> Events
             </router-link>
@@ -44,9 +44,7 @@
         <li v-if="showModeratorBoard" class="nav-item">
           <router-link to="/mod" class="nav-link">Moderator Board</router-link>
         </li>
-        <li class="nav-item">
-          <router-link v-if="currentUser" to="/user" class="nav-link">User</router-link>
-        </li>
+        
       </div>
 
       <div v-if="!currentUser" class="navbar-nav ml-auto">

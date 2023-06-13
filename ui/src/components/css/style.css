@@ -74,6 +74,10 @@
     font-size: 1.8rem;
     color: #fbdf7e;
     margin-block-end: 5%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+   
   }
   
   .input-group-text {
@@ -103,8 +107,7 @@ bottom: 0;
 display: flex;
 align-items: center;
 justify-content: center;
-background-color: rgba(0, 0, 0, 0.5); /* Arkaplanın kararma düzeyini ayarlayın /
-z-index: 9999; / Pop-up'ın en üstte görüntülenmesini sağlayın */
+background-color: rgba(0, 0, 0, 0.5); 
 }
 
 .error-popup-content {
@@ -123,8 +126,8 @@ box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: rgba(0, 0, 0, 0.5); /* Arkaplanın kararma düzeyini ayarlayın /
-  z-index: 9999; / Pop-up'ın en üstte görüntülenmesini sağlayın */
+  background-color: rgba(0, 0, 0, 0.5); 
+
   }
   
   .error-popup-content {
@@ -141,5 +144,38 @@ box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   
   .error-popup-button {
   margin-top: 10px;
+  }
+
+  .table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 800px;
+    margin-top: 5%;
+  }
+  
+  .table th,
+  .table td {
+    padding: 8px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .table tr:nth-child(even) {
+    background-color: #f2f2f2;
+  }
+  
+  .table th {
+    background-color: #ddb833;
+    color: white;
+  }
+
+  .search{
+    width: 600px;
+    border-collapse: collapse;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 7%;
   }
   

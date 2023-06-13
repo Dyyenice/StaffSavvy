@@ -8,6 +8,7 @@ import 'vuetify/dist/vuetify.min.css';
 import { FontAwesomeIcon } from './plugins/font-awesome'
 import vuetify from './plugins/vuetify';
 import  VueSelect  from "vue-select";
+import '@fortawesome/fontawesome-free/css/all.css'
 
 
 createApp(App)

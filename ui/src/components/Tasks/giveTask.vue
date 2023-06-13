@@ -7,7 +7,7 @@
       <div v-if="currentUser">
 
           <v-toolbar color="rgba(0,0,0,0)" flat class="mt-n4">
-            <v-btn-toggle v-model="toggle_exclusive" tile group color="#49D9A0" >
+            <v-btn-toggle v-model="toggle_exclusive" tile group color="#f0c62f" >
               <v-btn @click="setToggle(1)">
                 <span>User Groups</span>
               </v-btn>
@@ -19,25 +19,27 @@
 
         <div v-if="toggle === 1">
           <Form @submit="saveDataForUserGroup" :validation-schema="schema" >
-            <div>
-              <div class="form-group col-md-6 id">
-                <Field id="companyid" name="companyid" type="hidden" class="form-control" v-model="currentUser.id" />
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="usergroups" class="usergroups">Select Team</label>
+                <select id="usergroups" name="usergroups" v-model="selectedUsergroup">
+                  <option v-for="usergroups in usergroupsa" :key="usergroups.id">
+                    {{usergroups}}
+                  </option>
+                </select>
+                <ErrorMessage name="tasks" class="error-feedback" />
               </div>
-              <div>
-                <div class="form-group col-md-6 id">
-                  <label for="desc" class="label">description</label>
-                  <Field id="desc" name="desc" type="text" class="form-control" />
-                  <ErrorMessage name="desc" class="error-feedback" />
-                </div>
-                <div class="form-row">
-                  <div class="form-group col-md-6">
-                    <label for="deadline" class="label">deadline</label>
-                    <Field id="deadline" name="deadline" type="date" class="form-control"/>
-                    <ErrorMessage name="deadline" class="error-feedback" />
-                  </div>
-                </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group col-md-6">
+                <label for="tasks" class="label">Assign Task</label>
+                <select id="tasks" name="tasks" v-model="selectedTask">
+                  <option v-for="task in tasks" :key="task.id">
+                    {{task}}
+                  </option>
+                </select>
+                <ErrorMessage name="tasks" class="error-feedback" />
               </div>
-
             </div>
             <button class="btn btn-primary" type="submit">
               <span>Save</span>
@@ -45,10 +47,10 @@
           </Form>
         </div>
         <div v-if="toggle === 2">
-          <Form @submit="saveDataForUser">
+          <Form @submit="saveDataForUser" :validation-schema="schema">
             <div class="form-row">
               <div class="form-group col-md-6">
-                <label for="personnels" class="personnels">Assign Task</label>
+                <label for="personnels" class="personnels">Select Personnel</label>
                 <select id="personnels" name="personnels" v-model="selectedPersonnel">
                   <option v-for="personnel in companyPersonnels" :key="personnel.id">
                     {{personnel}}
@@ -100,14 +102,13 @@
 
 <script>
 
-import {ErrorMessage, Field, Form} from "vee-validate";
+import {ErrorMessage, Form} from "vee-validate";
 import CompanyService from "@/services/company.service";
 
 export default {
   name: 'Task',
   components: {
     Form,
-    Field,
     ErrorMessage,
 
   },
@@ -122,8 +123,10 @@ export default {
       toggle: 2,
       companyPersonnels: [],
       tasks: [],
+      usergroupsa:[],
       selectedTask: '',
       selectedPersonnel: '',
+      selectedUsergroup:'',
     };
 
 
@@ -168,6 +171,19 @@ export default {
           error.toString();
         }
     );
+    CompanyService.getUsergroups(this.currentUser).then(
+        (response) => {
+          this.usergroupsa = response.data;
+          console.log(this.usergroupsa);
+        },
+        (error) => {
+          (error.response &&
+              error.response.data &&
+              error.response.data.message) ||
+          error.message ||
+          error.toString();
+        }
+    );
 
 
   },
@@ -181,6 +197,25 @@ export default {
         var selectedTask = JSON.parse(this.selectedTask);
         var selectedPersonnel = JSON.parse(this.selectedPersonnel);
         CompanyService.giveTaskToUser(selectedTask, selectedPersonnel).then(
+            (response) => {
+              this.message = response.data;
+              this.successful = true;
+            },
+            (error) => {
+              this.message = (error.response &&
+                      error.response.data &&
+                      error.response.data.message) ||
+                  error.message ||
+                  error.toString();
+            }
+
+        );
+
+      },
+      saveDataForUserGroup() {
+        var selectedTask = JSON.parse(this.selectedTask);
+        var selectedUsergroup = JSON.parse(this.selectedUsergroup);
+        CompanyService.giveTaskToUser(selectedTask, selectedUsergroup).then(
             (response) => {
               this.message = response.data;
               this.successful = true;

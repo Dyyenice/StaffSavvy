@@ -8,6 +8,7 @@
 
 <script>
 import Navbar from './components/NavbarComponent/Navbar.vue';
+import '@fortawesome/fontawesome-free/css/all.css'
 
 
 export default {
