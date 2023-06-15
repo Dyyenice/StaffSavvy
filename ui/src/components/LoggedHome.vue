@@ -34,38 +34,7 @@
               cols="12"
               md="2"
             >
-              <v-item v-slot="{ active, toggle }" > 
-               <v-card
-                  :color="active ? '#49D9A0' : 'white'"
-                  class="d-flex align-center rounded-xl"
-                  dark
-                  height="200"
-                  @click="toggle, $router.push('/UserTasks')"
-                
-                >
-                  <v-row>
-                    <v-col cols="12" sm="12">
-                      <v-list-item three-line  class="mt-10">
-                        <v-list-item-content>
-                          <div class="mb-4">
-                           
-                            <v-icon class="fas fa-suitcase" x-large :color="active ? 'white' : '#f0c62f'"></v-icon>
-                           
-                          </div>
-                          <v-list-item-subtitle :class="active ? 'white--text' : 'black--text'">My Tasks</v-list-item-subtitle>
-                          <v-list-item-title class="headline mb-1" :class="active ? 'white--text' : 'black--text'" >
-                           
-                             <strong >{{ tasks.length }}</strong>
-                           
-                          </v-list-item-title>
-                          
-                        </v-list-item-content>
-                      </v-list-item>
-                    </v-col>
-                  </v-row>
-                  
-                </v-card>
-              </v-item>
+
             </v-col>
              <v-col
               cols="12"
@@ -77,7 +46,7 @@
                   class="d-flex align-center rounded-xl"
                   dark
                   height="200"
-                  @click="toggle, $router.push('/CompletedTasks')"
+                  @click="toggle, $router.push('/MyTasks')"
                 >
                   <v-row>
                     <v-col cols="12" sm="12">
@@ -89,7 +58,7 @@
                               <v-icon class="fas fa-suitcase" x-large :color="active ? 'white' : '#f0c62f'"></v-icon>
 
                           </div>
-                          <v-list-item-subtitle :class="active ? 'white--text' : 'black--text'">My Completed Tasks</v-list-item-subtitle>
+                          <v-list-item-subtitle :class="active ? 'white--text' : 'black--text'">My Tasks</v-list-item-subtitle>
                           <v-list-item-title class="headline mb-1" :class="active ? 'white--text' : 'black--text'">
                             <strong>{{ tasks.length }}</strong>
                           </v-list-item-title>
@@ -112,7 +81,7 @@
                   class="d-flex align-center rounded-xl"
                   dark
                   height="200"
-                  @click="toggle, $router.push('/UserGroups')"
+                  @click="toggle, $router.push('/MyTeams')"
                 >
                   <v-row>
                     <v-col cols="12" sm="12">
@@ -161,7 +130,6 @@
           <tr
             v-for="item in orders"
             :key="item.name"
-           
           >
             <td>{{ item.id }}</td>
             <td>{{ item.title }}</td>
@@ -210,6 +178,8 @@
       data: () => ({
         toggle_exclusive: 1,
         tasks: [],
+        completedTasks: 1,
+        activeTasks: 1,
          orders: [
               {
                 id: 'Sprint1',
@@ -254,14 +224,13 @@
           
             series: [
               {
-                name: "Traffic Sources",
+                name: "My Tasks",
                 type: "pie",
                 radius: "55%",
                 center: ["45%", "50%"],
                 data: [
-                  { value: 335, name: "Completed" },
-                  { value: 310, name: "Incomplete" },
-                 
+                  { value: 1 , name:"Completed"
+                  }
                 ],
                 emphasis: {
                   itemStyle: {
@@ -278,14 +247,34 @@
 
     currentUser() {
       return this.$store.state.auth.user;
-    }
+    },
 
   },
       mounted(){
-        companyService.getTasks(this.currentUser).then(
+        companyService.getTasksOfPersonnel(this.currentUser).then(
         (response) => {
           this.tasks = response.data;
-
+          var completed = 0
+          var active = 0
+          var data = []
+          for (let i = 0; i < this.tasks.length; i++) {
+            if(this.tasks[i].status === 1){
+             completed++;
+            }else{
+              active++
+            }
+          }
+          data.push({
+            name: "Completed",
+            value: completed
+          });
+          data.push({
+            name: "Active",
+            value: active
+          })
+          console.log(this.option.series.data)
+          console.log(data)
+          this.option.series.data = data
         },
         (error) => {
           this.message = (error.response &&
@@ -295,6 +284,7 @@
               error.toString();
         }
     );
+
       },
         components: {
           SideBar,

@@ -183,11 +183,12 @@ exports.confirmPending = (req, res) => {
 
 
 exports.selectedPersonnelCompanyInfo = (req, res) => {
-    PersonnelCompanyInfo.findByPk(req.query.id).then(personnel => {
+    PersonnelCompanyInfo.findByPk(req.query.userid).then(personnel => {
        if(personnel){
            res.status(200).send({
                date_start: personnel.date_start,
                salary: personnel.salary,
+               allowance: personnel.allowance
            });
        }else{
            res.status(200).send({message: "Personnel Not Found"})
@@ -203,24 +204,12 @@ exports.editselectedPersonnelCompanyInfo = (req, res) => {
             console.log(personnel)
            PersonnelCompanyInfo.update({
                salary: req.body.salary,
-
+                   allowance: req.body.allowance
            },
                {where: {id: req.body.id}}
 
-           ).then(() =>{
-               if(req.body.taskid){
-                   User.findByPk(personnel.id).then(user =>{
-                       if(user){
-                           user.setRolegroups([req.body.rolegroupid]).then(() =>{
-                               res.status(200).send("updated successfully")
-
-                           })
-                       }
-
-                   })
-
-               }
-
+           ).then(()=>{
+               res.status(200).send("Personnel updated successfully")
            })
         } else{
             res.status(404).send({message: "User Not Found"})
@@ -250,6 +239,8 @@ exports.createTask = async (req, res) => {
         companyid: companyid,
         deadline: req.body.deadline,
         taskdesc: req.body.description,
+        name:req.body.name,
+        status: 0,
     }).then(() => {
         res.status(200).send("task created successfully");
     }).catch(error =>{
@@ -325,7 +316,7 @@ exports.giveTaskToUser = (req, res) =>{
     console.log(req.body)
     User.findByPk(req.body.personnelid).then(user =>{
         if(user){
-            user.setTasks([req.body.taskid]).then(() =>{
+            user.addTask([req.body.taskid]).then(() =>{
                 res.status(200).send("Task Given Successfully")
             })
         }
@@ -336,16 +327,11 @@ exports.giveTaskToUser = (req, res) =>{
 }
 exports.giveTaskToUsergroup = (req, res) =>{
     console.log(req.body)
-    UserGroup.findbypk(req.body.usergroupid).then(usergroup =>{
-        if(usergroup){
-            usergroup.setTasks([req.body.taskid]).then(() =>{
-                res.status(200).send("Task Given Successfully")
-            })
-        }
-
-    }).catch(error =>{
-        res.status(500).send({message: error.message})
-    })
+  UserGroup.findByPk(req.body.usergroupid).then(userGroup =>{
+      userGroup.addTask([req.body.taskid]).then(() =>{
+          res.status(200).send("Task given to user group successfully")
+      })
+  })
 }
 exports.getUsergroups = async (req, res) => {
     var companyid;
@@ -458,6 +444,294 @@ exports.giveRolegroupToUser = (req, res) =>{
     }).catch(error =>{
         res.status(500).send({message: error.message})
     })
+}
+exports.getTasksOfPersonnel = (req, res) =>{
+    User.findByPk(req.query.id).then(user =>{
+        if(user){
+            user.getTasks().then(tasks=>{
+                res.status(200).send(tasks);
+            })
+        }
+    }).catch(error =>{
+        res.status(500).send({message: error.message})
+    })
+}
+exports.getUserGroupsOfPersonnel = (req, res) =>{
+    User.findByPk(req.query.id).then(user =>{
+        if(user){
+            user.getUsergroups().then(usergroups=>{
+                res.status(200).send(usergroups);
+            })
+        }
+    }).catch(error =>{
+        res.status(500).send({message: error.message})
+    })
+}
+exports.editSelectedTask = (req, res) =>{
+    Task.update({
+        name: req.body.name,
+        deadline: req.body.deadline,
+        taskdesc: req.body.taskdesc
+    },
+        {
+            where: {id: req.body.id}
+        }).then(() =>{
+            res.status(200).send("Task Updated Successfully");
+    }).catch(error =>{
+        res.status(500).send({message: error.message})
+    })
+}
+exports.editSelectedUserGroup = (req, res) =>{
+    UserGroup.update({
+            name: req.body.name,
+        },
+        {
+            where: {id: req.body.id}
+        }).then(() =>{
+        res.status(200).send("User Group Updated Successfully");
+    }).catch(error =>{
+        res.status(500).send({message: error.message})
+    })
+}
+exports.getSelectedTask = (req, res) =>{
+    Task.findByPk(req.query.id).then(task =>{
+        if(task){
+
+            res.status(200).send(task);
+        }
+    }).catch(error =>{
+        res.status(500).send({message: error.message});
+    })
+}
+exports.deleteTask = (req, res) =>{
+    Task.destroy({
+        where:{
+            id:req.body.id
+        }
+    }).then(() =>{
+        res.status(200).send("Task Deleted")
+    }).catch(error =>{
+        res.status(500).send({message: error.message})
+    })
+}
+exports.getSelectedRolegroup = (req, res) =>{
+    Rolegroup.findByPk(req.query.id).then(rolegroup =>{
+        if(rolegroup){
+            rolegroup.getRoles().then(roles=>{
+                res.status(200).send({
+                    rolegroup: rolegroup,
+                    roles: roles
+                });
+            })
+
+        }
+    }).catch(error =>{
+        res.status(500).send({message: error.message});
+    })
+}
+exports.deleteRolegroup = (req, res) =>{
+    Rolegroup.destroy({
+        where:{
+            id:req.body.id
+        }
+    }).then(() =>{
+        res.status(200).send("Rolegroup Deleted")
+    }).catch(error =>{
+        res.status(500).send({message: error.message})
+    })
+}
+exports.deleteUserGroup = (req, res) =>{
+    UserGroup.destroy({
+        where:{
+            id:req.body.id
+        }
+    }).then(() =>{
+        res.status(200).send("User Group Deleted")
+    }).catch(error =>{
+        res.status(500).send({message: error.message})
+    })
+}
+exports.editSelectedRolegroup = (req, res) =>{
+    Rolegroup.update(
+        { name: req.body.name },
+        { where: { id: req.body.id } }
+    )
+        .then(() => {
+            return Rolegroup.findByPk(req.body.id);
+        })
+        .then(rolegroup => {
+            if (rolegroup) {
+                let counter = 0;
+                for (let i = 0; i < req.body.roles.length; i++) {
+                    rolegroup.setRoles([req.body.roles[i]]);
+                    counter++;
+                }
+                if (counter === req.body.roles.length) {
+                    res.status(200).send("Role Group updated Successfully");
+                }
+            } else {
+                res.status(404).send({ message: "Rolegroup not found" });
+            }
+        })
+
+        .catch(error => {
+            res.status(500).send({ message: error.message });
+        });
+}
+exports.removeUserFromTask = (req, res) =>{
+   Task.findByPk(req.body.taskid).then(task =>{
+       if(task){
+           task.removeUser([req.body.userid]).then(()=>{
+               res.status(200).send("User Removed Successfully")
+           })
+       }
+
+   }).catch(error=>{
+       res.status(500).send({message: error.message});
+   })
+}
+exports.removeUserGroupFromTask = (req, res) =>{
+    Task.findByPk(req.body.taskid).then(task =>{
+        if(task){
+            task.removeUsergroup([req.body.usergroupid]).then(()=>{
+                res.status(200).send("User Group Removed Successfully")
+            })
+
+        }
+
+    }).catch(error=>{
+        res.status(500).send({message: error.message});
+    })
+}
+exports.removeUserFromUserGroup = (req, res) =>{
+    UserGroup.findByPk(req.body.usergroupid).then(usergroup =>{
+        if(usergroup){
+            usergroup.removeUser([req.body.userid]).then( () =>{
+                res.status(200).send("User Removed Successfully")
+            }).catch(error =>{
+                res.status(500).send({message: error.message})
+            })
+        }
+    }).catch(()=>{
+        res.status(404).send("Usergroup Not Found");
+    })
+}
+exports.getUsersOfTask = (req, res) =>{
+    Task.findByPk(req.query.id)
+        .then(task => {
+            if (task) {
+                task.getUsers()
+                    .then(users => {
+                        if (users) {
+                            const usersOfTask = [];
+                            let counter = 0;
+
+                            for (let i = 0; i < users.length; i++) {
+                                Personnel.findOne({ where: { id: users[i].id } })
+                                    .then(personnel => {
+                                        if (personnel) {
+                                            usersOfTask.push({
+                                                id: personnel.id,
+                                                name: personnel.name,
+                                                surname: personnel.surname,
+                                                phone: personnel.phone,
+                                                email: users[i].email
+                                            });
+                                        }
+
+                                        counter++;
+
+                                        if (counter === users.length) {
+                                            res.status(200).send(usersOfTask);
+                                            console.log("asd");
+                                            console.log(usersOfTask);
+                                        }
+                                    })
+                                    .catch(error => {
+                                        res.status(500).send({ message: error.message });
+                                    });
+                            }
+                        }
+                    })
+                    .catch(error => {
+                        res.status(500).send({ message: error.message });
+                    });
+            }
+            else {
+                res.status(404).send({ message: 'Task not found' });
+            }
+        })
+        .catch(error => {
+            res.status(500).send({ message: error.message });
+        });
+}
+exports.getUserGroupsOfTask = (req, res) =>{
+    Task.findByPk(req.query.id)
+        .then(task => {
+            if (task) {
+                task.getUsergroups()
+                    .then(users => {
+                        if (users) {
+                            res.status(200).send(users);
+                        }
+                    })
+                    .catch(error => {
+                        res.status(500).send({ message: error.message });
+                    });
+            }
+            else {
+                res.status(404).send({ message: 'Task not found' });
+            }
+        })
+        .catch(error => {
+            res.status(500).send({ message: error.message });
+        });
+}
+exports.getSelectedUserGroup = (req, res) =>{
+   UserGroup.findByPk(req.query.id).then(usergroup=>{
+       if(usergroup){
+           usergroup.getUsers().then(users=>{
+               if (users) {
+                   const usersOfUserGroup = [];
+                   let counter = 0;
+
+                   for (let i = 0; i < users.length; i++) {
+                       Personnel.findOne({ where: { id: users[i].id } })
+                           .then(personnel => {
+                               if (personnel) {
+                                   usersOfUserGroup.push({
+                                       id: personnel.id,
+                                       name: personnel.name,
+                                       surname: personnel.surname,
+                                       phone: personnel.phone,
+                                       email: users[i].email
+                                   });
+                               }
+
+                               counter++;
+
+                               if (counter === users.length) {
+                                   res.status(200).send({
+                                       usergroup: usergroup,
+                                       users: usersOfUserGroup
+                                   });
+
+                               }else if(counter === 0){
+                                   res.status(200).send({
+                                       usergroup: usergroup,
+                                   });
+                               }
+                           })
+                           .catch(error => {
+                               res.status(500).send({ message: error.message });
+                           });
+                   }
+               }
+           })
+       }
+   }).catch(error =>{
+       res.status(500).send({message: error.message});
+   })
 }
   
 

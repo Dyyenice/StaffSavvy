@@ -17,4 +17,5 @@ createApp(App)
     .use(vuetify)
     .component("font-awesome-icon", FontAwesomeIcon)
     .component("v-select", VueSelect)
+
     .mount("#app");

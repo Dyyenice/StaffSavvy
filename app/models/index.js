@@ -82,11 +82,11 @@ db.user.belongsToMany(db.usergroups, {
 db.task.belongsToMany(db.usergroups, {
     through: "usergroup_tasks",
     foreignKey: "taskId",
-    otherKey: "userId"
+    otherKey: "usergroupId"
 });
 db.usergroups.belongsToMany(db.task, {
     through: "usergroup_tasks",
-    foreignKey: "userId",
+    foreignKey: "usergroupId",
     otherKey: "taskId"
 });
 

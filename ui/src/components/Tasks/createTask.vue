@@ -2,9 +2,9 @@
 
   <div class="col-md-12">
     <div class="card card-container-profile">
-      <div v-if="message">  <label class="labelheader">{{ message }}</label></div>
-      <div v-if="!message"><label class="labelheader">CREATE TASK</label></div>
-      <div v-if="currentUser">
+
+      <div><label class="labelheader">CREATE TASK</label></div>
+      <div v-if="currentUser && !message">
 
 
           <Form @submit="saveData" :validation-schema="schema" >
@@ -16,16 +16,21 @@
 
                 <div class="form-row">
                   <div class="form-group col-md-6 id">
-                    <label for="desc" class="label">description</label>
-                    <Field id="desc" name="desc" type="text" class="form-control" />
-                    <ErrorMessage name="desc" class="error-feedback" />
+                    <label for="name" class="label">Name</label>
+                    <Field id="name" name="name" type="text" class="form-control" />
+                    <ErrorMessage name="name" class="error-feedback" />
                   </div>
                   <div class="form-group col-md-6 id">
                     <label for="deadline" class="label">deadline</label>
-                    <Field id="deadline" name="deadline" type="date" class="form-control"/>
+                    <Field id="deadline" name="deadline" type="date" :min="currentDate" class="form-control"/>
                     <ErrorMessage name="deadline" class="error-feedback" />
                   </div>
                 </div>
+              <div class="form-group col-md-6 id">
+                <label for="desc" class="label">description</label>
+                <Field id="desc" name="desc" type="textarea" class="form-control" />
+                <ErrorMessage name="desc" class="error-feedback" />
+              </div>
 
             </div>
 
@@ -59,6 +64,7 @@
 
 import {ErrorMessage, Field, Form} from "vee-validate";
 import CompanyService from "@/services/company.service";
+import moment from 'moment'
 
 export default {
   name: 'Task',
@@ -84,6 +90,11 @@ export default {
     currentUser() {
       return this.$store.state.auth.user;
     },
+    currentDate()
+    {
+      console.log(moment().format('YYYY-MM-DD'))
+      return moment().format('YYYY-MM-DD')
+    },
 
   },
   mounted() {
@@ -98,8 +109,9 @@ export default {
       console.log(task);
 
       CompanyService.createTask(task, this.currentUser).then(
-          () => {
-
+          (response) => {
+          this.message = response.data;
+          this.successful = true;
           },
            (error) => {
             this.message = (error.response &&
@@ -108,7 +120,7 @@ export default {
             error.message ||
             error.toString();
           });
-      location.reload();
+
     },
 
   },

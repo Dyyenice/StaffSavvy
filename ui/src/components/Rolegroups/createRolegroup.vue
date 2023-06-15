@@ -3,7 +3,7 @@
   <div class="col-md-12">
     <div class="card card-container-profile">
       <div><label class="labelheader">CREATE ROLE GROUP</label></div>
-      <div v-if="currentUser">
+      <div v-if="currentUser && !message">
         <Form @submit="saveData" :validation-schema="schema" >
           <div class="form-group col-md-4">
             <label for="rolegroupname" class="label" >Name</label>

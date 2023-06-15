@@ -1,8 +1,8 @@
 <template>
     <div class="container">
   
-      <div v-if="message">  <label class="labelheader">{{ message }}</label></div>
-      <div v-if="!message"><label class="labelheader">TEAMS</label></div>
+
+      <div ><label class="labelheader">TEAMS</label></div>
       <table class="table">
                <thead>
                  <tr>
@@ -36,7 +36,7 @@
     },
     data() {
       return {
-        tasks: [],
+        usergroups: [],
         isEditmode:false,
         message: "",
       };
@@ -68,8 +68,8 @@
     },
     methods: {
       teamDetails(task){
-        localStorage.setItem("selectedTeam", JSON.stringify(task));
-        console.log(JSON.parse(localStorage.getItem("selectedTeam")));
+        localStorage.setItem("selectedUserGroup", JSON.stringify(task));
+        console.log(JSON.parse(localStorage.getItem("selectedUserGroup")));
         this.$router.push("/UserGroupDetails");
       }
   

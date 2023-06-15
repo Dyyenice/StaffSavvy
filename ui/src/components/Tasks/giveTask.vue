@@ -2,9 +2,9 @@
 
   <div class="col-md-12">
     <div class="card card-container-profile">
-      <div v-if="message">  <label class="labelheader">{{ message }}</label></div>
-      <div v-if="!message"><label class="labelheader">GIVE TASK</label></div>
-      <div v-if="currentUser">
+
+      <div><label class="labelheader">GIVE TASK</label></div>
+      <div v-if="currentUser && !message">
 
           <v-toolbar color="rgba(0,0,0,0)" flat class="mt-n4">
             <v-btn-toggle v-model="toggle_exclusive" tile group color="#f0c62f" >
@@ -22,7 +22,7 @@
             <div class="form-row">
               <div class="form-group col-md-6">
                 <label for="usergroups" class="usergroups">Select Team</label>
-                <select id="usergroups" name="usergroups" v-model="selectedUsergroup">
+                <select id="usergroups" name="usergroups" v-model="selectedUsergroup" class="mb-3">
                   <option v-for="usergroups in usergroupsa" :key="usergroups.id">
                     {{usergroups}}
                   </option>
@@ -33,9 +33,9 @@
             <div class="form-row">
               <div class="form-group col-md-6">
                 <label for="tasks" class="label">Assign Task</label>
-                <select id="tasks" name="tasks" v-model="selectedTask">
-                  <option v-for="task in tasks" :key="task.id">
-                    {{task}}
+                <select id="tasks" name="tasks" v-model="selectedTask" class="mb-3">
+                  <option v-for="task in tasks" :key="task.id" :value="task.id">
+                    {{task.name}}
                   </option>
                 </select>
                 <ErrorMessage name="tasks" class="error-feedback" />
@@ -50,24 +50,32 @@
           <Form @submit="saveDataForUser" :validation-schema="schema">
             <div class="form-row">
               <div class="form-group col-md-6">
-                <label for="personnels" class="personnels">Select Personnel</label>
-                <select id="personnels" name="personnels" v-model="selectedPersonnel">
-                  <option v-for="personnel in companyPersonnels" :key="personnel.id">
-                    {{personnel}}
-                  </option>
-                </select>
-                <ErrorMessage name="tasks" class="error-feedback" />
+                <label for="personnels" class="label">Select Personnel</label>
+                <div class="form-row">
+                  <select id="personnels" name="personnels" v-model="selectedPersonnel" class="form-select">
+                    <option disabled value="">Please Select a Personnel</option>
+                    <option v-for="personnel in companyPersonnels" :key="personnel.id">
+                      {{personnel}}
+                    </option>
+                  </select>
+                  <ErrorMessage name="tasks" class="error-feedback" />
+                </div>
+
               </div>
             </div>
             <div class="form-row">
               <div class="form-group col-md-6">
                 <label for="tasks" class="label">Assign Task</label>
-                <select id="tasks" name="tasks" v-model="selectedTask">
-                  <option v-for="task in tasks" :key="task.id">
-                    {{task}}
-                  </option>
-                </select>
-                <ErrorMessage name="tasks" class="error-feedback" />
+                <div class="form-row">
+                  <select id="tasks" name="tasks" v-model="selectedTask">
+                    <option disabled value="">Please Select a Task</option>
+                    <option v-for="task in tasks" :key="task.id" :value="task.id">
+                      {{task.name}}
+                    </option>
+                  </select>
+                  <ErrorMessage name="tasks" class="error-feedback" />
+                </div>
+
               </div>
             </div>
             <button class="btn btn-primary" type="submit">
@@ -75,19 +83,8 @@
             </button>
           </Form>
 
-
-
-
-
-
         </div>
-
-
-
-
-
       </div>
-
       <div
           v-if="message"
           class="alert"
@@ -215,7 +212,7 @@ export default {
       saveDataForUserGroup() {
         var selectedTask = JSON.parse(this.selectedTask);
         var selectedUsergroup = JSON.parse(this.selectedUsergroup);
-        CompanyService.giveTaskToUser(selectedTask, selectedUsergroup).then(
+        CompanyService.giveTaskToUsergroup(selectedTask, selectedUsergroup).then(
             (response) => {
               this.message = response.data;
               this.successful = true;

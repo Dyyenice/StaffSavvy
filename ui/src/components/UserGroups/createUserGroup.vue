@@ -2,9 +2,10 @@
 
   <div class="col-md-12">
     <div class="card card-container-profile">
-      <div v-if="message">  <label class="labelheader">{{ message }}</label></div>
-      <div v-if="!message"><label class="labelheader">COMPANY PERSONNELS</label></div>
+
+      <div ><label class="labelheader">CREATE TEAM</label></div>
       <div v-if="currentUser">
+        <label  class="label" >Personnels</label>
         <Form @submit="saveData" :validation-schema="schema" >
            <div>
             <div class="form-group search">

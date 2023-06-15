@@ -10,6 +10,12 @@ module.exports = (sequelize, Sequelize) => {
         taskdesc:{
             type: Sequelize.STRING
         },
+        name:{
+            type: Sequelize.STRING
+        },
+        status:{
+            type:Sequelize.INTEGER
+        }
     });
     return Task;
 };

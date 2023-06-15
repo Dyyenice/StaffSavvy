@@ -8,6 +8,7 @@ import CompanyRegister from "./components/CompanyRegister.vue";
 import UserGuide from "./components/UserGuide.vue";
 import AboutUs from "./components/AboutUs.vue";
 import MediaCenter from "./components/MediaCenter.vue";
+
 // lazy-loaded
 const Profile = () => import("./components/Profile.vue")
 const PendingPersonnels = () => import("./components/PendingPersonnels.vue")
@@ -24,14 +25,16 @@ const TaskDetails = () => import("./components/Tasks/taskDetails.vue")
 const CompletedTasks = () => import("./components/Tasks/CompletedTasks.vue")
 const CreateRolegroup = () => import("./components/Rolegroups/createRolegroup.vue")
 const GiveRolegroup = () => import("./components/Rolegroups/giveRolegroup.vue")
-const UserTasks = () => import("./components/Tasks/UserTasks.vue")
-const UserGroups=()=> import("./components/UserGroups/UserGroups.vue")
+const UserTasks = () => import("./components/Tasks/CompanyTasks.vue")
+const UserGroups=()=> import("./components/UserGroups/CompanyUserGroups.vue")
 const UserGroupDetails=()=> import("./components/UserGroups/UserGroupDetails.vue")
 const CompanyRolegroups =()=> import("./components/Rolegroups/companyRolegroups.vue")
 const RolegroupDetails =()=> import("./components/Rolegroups/RolegroupDetails.vue")
 const JobPostings = ()=> import("./components/JobPostings.vue")
 const JobPostingInDetail=()=> import("./components/JobPostingInDetail.vue") 
 const Events=()=> import("./components/Events.vue")
+const UserGroupsOfPersonnel=()=> import("./components/UserGroups/UserGroupsOfPersonnel.vue")
+const TasksOfPersonnel=()=> import("./components/Tasks/TasksOfPersonnel.vue")
 const routes = [
     {
         path: "/",
@@ -198,7 +201,7 @@ const routes = [
         component: CompanyRolegroups,
     },
     {
-        path: "/UserTasks",
+        path: "/companyTasks",
         name: "UserTasks",
         // lazy-loaded
         component: UserTasks,
@@ -216,7 +219,7 @@ const routes = [
         component: RolegroupDetails,
     },
     {
-        path: "/UserGroups",
+        path: "/companyUserGroups",
         name: "UserGroups",
         // lazy-loaded
         component: UserGroups,
@@ -226,6 +229,18 @@ const routes = [
         name: "Events",
         // lazy-loaded
         component: Events,
+    },
+    {
+        path: "/MyTeams",
+        name: "UserGroupsOfPersonnel",
+        // lazy-loaded
+        component: UserGroupsOfPersonnel,
+    },
+    {
+        path: "/MyTasks",
+        name: "TasksOfPersonnel",
+        // lazy-loaded
+        component: TasksOfPersonnel,
     },
 ];
 

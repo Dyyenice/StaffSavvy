@@ -9,7 +9,7 @@
           <Form @submit="saveDataForUser">
             <div class="form-row">
               <div class="form-group col-md-6">
-                <label for="personnels" class="personnels">Assign Task</label>
+                <label for="personnels" class="personnels">Select Personnel</label>
                 <select id="personnels" name="personnels" v-model="selectedPersonnel">
                   <option v-for="personnel in companyPersonnels" :key="personnel.id">
                     {{personnel}}
@@ -20,9 +20,9 @@
             </div>
             <div class="form-row">
               <div class="form-group col-md-6">
-                <label for="rolegroups" class="label">Assign Task</label>
+                <label for="rolegroups" class="label">Select Role Group</label>
                 <select id="rolegroups" name="rolegroups" v-model="selectedRoleGroup">
-                  <option v-for="rolegroup in roleGroups" :key="rolegroup.id">
+                  <option v-for="rolegroup in roleGroups" :key="rolegroup.id" >
                     {{rolegroup}}
                   </option>
                 </select>

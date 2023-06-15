@@ -1,24 +1,27 @@
 <template>
     <div class="container">
   
-      <div v-if="message">  <label class="labelheader">{{ message }}</label></div>
-      <div v-if="!message"><label class="labelheader">COMPANY TASKS</label></div>
-      <div class="form-row" v-for="task in tasks" :key="task.id">
-        <div class="form-group col-md-4">
-          <label for="desc" class="label" >Description</label>
-          <Field id="desc" name="desc" type="text" class="form-control" v-model="task.taskdesc" disabled/>
-          <ErrorMessage name="desc" class="error-feedback" />
+
+      <div ><label class="labelheader">COMPANY TASKS</label></div>
+      <div v-if="currentUser && !message">
+        <div class="form-row" v-for="task in tasks" :key="task.id">
+          <div class="form-group col-md-4">
+            <label for="desc" class="label" >Description</label>
+            <Field id="desc" name="desc" type="text" class="form-control" v-model="task.taskdesc" disabled/>
+            <ErrorMessage name="desc" class="error-feedback" />
+          </div>
+          <div class="form-group col-md-3">
+            <label for="deadline" class="label" >Deadline</label>
+            <Field id="deadline" name="deadline" type="date" class="form-control" v-model="task.deadline" disabled/>
+            <ErrorMessage name="deadline" class="error-feedback" />
+          </div>
+          <button class="btn btn-primary form-group col-md-2" :disabled="loading" type="submit"  @click="taskDetails(task)"  >
+            <span v-show="loading" class="spinner-border spinner-border-sm"></span>
+            <span>Details</span>
+          </button>
         </div>
-        <div class="form-group col-md-3">
-          <label for="deadline" class="label" >Deadline</label>
-          <Field id="deadline" name="deadline" type="date" class="form-control" v-model="task.deadline" disabled/>
-          <ErrorMessage name="deadline" class="error-feedback" />
-        </div>
-        <button class="btn btn-primary form-group col-md-2" :disabled="loading" type="submit"  @click="taskDetails(task)"  >
-          <span v-show="loading" class="spinner-border spinner-border-sm"></span>
-          <span>Details</span>
-        </button>
       </div>
+
     </div>
   
   </template>
@@ -49,7 +52,7 @@
     },
     mounted()
     {
-      CompanyService.getTasks(this.currentUser).then(
+      CompanyService.getCompletedTasks(this.currentUser).then(
           (response) => {
             this.tasks = response.data;
   

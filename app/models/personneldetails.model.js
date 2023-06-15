@@ -11,6 +11,9 @@ module.exports = (sequelize, Sequelize) => {
         salary: {
             type: Sequelize.INTEGER
         },
+        allowance: {
+            type:Sequelize.INTEGER
+        }
 
 
     });

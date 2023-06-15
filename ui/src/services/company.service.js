@@ -46,10 +46,11 @@ class CompanyService {
     }
 
     
-    editSelectedPersonnel(personnel, selectedRolegroup) {
+    editSelectedPersonnel(personnel) {
         return axios.post(API_URL + 'editselectedPersonnelCompanyInfo' ,{
             id: personnel.id,
-            Rolegroupid: selectedRolegroup.id,
+            salary: personnel.salary,
+            allowance: personnel.allowance
         },{
             headers: authHeader(),
         }
@@ -59,6 +60,7 @@ class CompanyService {
     createTask(task, currentuser){
 
         return axios.post(API_URL + 'createTask' , {
+                name: task.name,
                 description: task.desc,
                 deadline: task.deadline,
             userid: currentuser.id,
@@ -71,7 +73,7 @@ class CompanyService {
 
     giveTaskToUser(task, personnel){
         return axios.post(API_URL + 'giveTaskToUser' , {
-            taskid: task.id,
+            taskid: task,
             personnelid: personnel.id,
 
         },{
@@ -79,8 +81,8 @@ class CompanyService {
         });
     }
     giveTaskToUsergroup(task, usergroup){
-        return axios.post(API_URL + 'giveTaskToUser' , {
-            taskid: task.id,
+        return axios.post(API_URL + 'giveTaskToUserGroup' , {
+            taskid: task,
             usergroupid: usergroup.id,
 
         },{
@@ -110,6 +112,7 @@ class CompanyService {
 
         });
     }
+
     
     getRoles(){
 
@@ -158,6 +161,139 @@ class CompanyService {
 
         },{
             headers: authHeader(),
+        });
+    }
+    getTasksOfPersonnel(user){
+        return axios.get(API_URL + 'getTasksOfPersonnel' , {
+            headers: authHeader(),
+            params:{
+                id: user.id,
+            }
+        });
+    }
+    getUserGroupsOfPersonnel(user){
+        return axios.get(API_URL + 'getUserGroupsOfPersonnel' , {
+            headers: authHeader(),
+            params:{
+                id: user.id,
+            }
+        });
+    }
+    editSelectedTask(id, task){
+        return axios.post(API_URL + 'editSelectedTask', {
+            id:id.id,
+            name:task.name,
+            deadline: task.deadline,
+            taskdesc: task.desc
+        },{
+            headers: authHeader(),
+        });
+    }
+    getSelectedTask(task){
+        return axios.get(API_URL + 'getSelectedTask' , {
+            headers: authHeader(),
+            params:{
+                id: task.id,
+            }
+        });
+    }
+    deleteTask(task){
+        return axios.delete(API_URL + 'deleteTask' , {
+            headers: authHeader(),
+            data:{
+                id: task.id,
+            }
+        });
+    }
+    getSelectedRolegroup(rolegroup){
+        return axios.get(API_URL + 'getSelectedRolegroup' , {
+            headers: authHeader(),
+            params:{
+                id: rolegroup.id,
+            }
+        });
+    }
+    deleteRolegroup(rolegroup){
+        return axios.delete(API_URL + 'deleteRolegroup' , {
+            headers: authHeader(),
+            data:{
+                id: rolegroup.id,
+            }
+        });
+    }
+    deleteUserGroup(usergroup){
+        return axios.delete(API_URL + 'deleteUserGroup' , {
+            headers: authHeader(),
+            data:{
+                id: usergroup.id,
+            }
+        });
+    }
+    editSelectedRolegroup(rolegroup,name,checkedroles){
+        return axios.post(API_URL + 'editSelectedRolegroup', {
+            id:rolegroup.id,
+            name:name.name,
+            roles: checkedroles,
+
+        },{
+            headers: authHeader(),
+        });
+    }
+    editSelectedUserGroup(usergroup, name){
+        return axios.post(API_URL + 'editSelectedUserGroup', {
+            id:usergroup.id,
+            name:name.name,
+
+        },{
+            headers: authHeader(),
+        });
+    }
+    removeUserFromTask(user, task){
+        return axios.post(API_URL + 'removeUserFromTask', {
+            userid:user.id,
+            taskid: task.id
+        },{
+            headers: authHeader(),
+        });
+    }
+    removeUserGroupFromTask(usergroup, task){
+        return axios.post(API_URL + 'removeUserGroupFromTask', {
+            usergroupid:usergroup.id,
+            taskid: task.id
+        },{
+            headers: authHeader(),
+        });
+    }
+    removeUserFromUserGroup(user, usergroup){
+        return axios.post(API_URL + 'removeUserFromUserGroup', {
+            usergroupid:usergroup.id,
+            userid: user.id
+        },{
+            headers: authHeader(),
+        });
+    }
+    getUsersOfTask(task){
+        return axios.get(API_URL + 'getUsersOfTask' , {
+            headers: authHeader(),
+            params:{
+                id: task.id,
+            }
+        });
+    }
+    getUserGroupsOfTask(task){
+        return axios.get(API_URL + 'getUserGroupsOfTask' , {
+            headers: authHeader(),
+            params:{
+                id: task.id,
+            }
+        });
+    }
+    getSelectedUserGroup(usergroup){
+        return axios.get(API_URL + 'getSelectedUserGroup' , {
+            headers: authHeader(),
+            params:{
+                id: usergroup.id,
+            }
         });
     }
 }

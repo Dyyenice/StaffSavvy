@@ -1,8 +1,8 @@
 <template>
   <div class="container">
 
-
-    <div ><label class="labelheader">COMPANY ROLE GROUPS</label></div>
+    <div v-if="message">  <label class="labelheader">{{ message }}</label></div>
+    <div v-if="!message"><label class="labelheader">MY TEAMS</label></div>
     <table class="table">
       <thead>
       <tr>
@@ -11,10 +11,10 @@
       </tr>
       </thead>
       <tbody>
-      <tr v-for="rolegroup in rolegroups" :key="rolegroup.id">
-        <td>{{ rolegroup.name }}</td>
+      <tr v-for="usergroup in usergroups" :key="usergroup.id">
+        <td>{{ usergroup.name }}</td>
         <td>
-          <button class="btn btn-primary form-group col-md-2" :disabled="loading" type="submit"  @click="rolegroupDetails(rolegroup)"  >
+          <button class="btn btn-primary form-group col-md-2" :disabled="loading" type="submit"  @click="teamDetails(usergroup)"  >
             <span v-show="loading" class="spinner-border spinner-border-sm"></span>
             <span>Details</span>
           </button>
@@ -36,7 +36,7 @@ export default {
   },
   data() {
     return {
-      rolegroups: [],
+      usergroups: [],
       isEditmode:false,
       message: "",
     };
@@ -51,9 +51,9 @@ export default {
   },
   mounted()
   {
-    CompanyService.getRolegroups(this.currentUser).then(
+    CompanyService.getUserGroupsOfPersonnel(this.currentUser).then(
         (response) => {
-          this.rolegroups = response.data;
+          this.usergroups = response.data;
 
         },
         (error) => {
@@ -67,10 +67,10 @@ export default {
 
   },
   methods: {
-    rolegroupDetails(rolegroup){
-      localStorage.setItem("selectedRolegroup", JSON.stringify(rolegroup));
-      console.log(JSON.parse(localStorage.getItem("selectedRolegroup")));
-      this.$router.push("/RolegroupDetails");
+    teamDetails(task){
+      localStorage.setItem("selectedTeam", JSON.stringify(task));
+      console.log(JSON.parse(localStorage.getItem("selectedTeam")));
+      this.$router.push("/UserGroupDetails");
     }
 
 

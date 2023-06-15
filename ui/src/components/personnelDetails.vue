@@ -2,7 +2,7 @@
 
   <div class="col-md-12">
     <div class="card card-container-profile">
-      <div v-if="currentUser && selectedPersonnel">
+      <div v-if="currentUser && selectedPersonnel && !message">
         <Form @submit="saveData" :validation-schema="schema" >
           <div>
             <label class="labelheader">{{selectedPersonnel.name}} {{ selectedPersonnel.surname }} </label>
@@ -52,73 +52,65 @@
               </div>
               <div class="form-row">
                 <div class="form-group col-md-6">
-                  <label for="tasks" class="label">Role Group</label>
-                  <select id="tasks" name="tasks" v-model="selected">
-                    <option v-for="rolegroup in rolegroups" :key="rolegroup.id">
-                      {{rolegroup}}
-                    </option>
-                  </select>
-                  <ErrorMessage name="tasks" class="error-feedback" />
+                  <label for="allowance" class="label">Salary</label>
+                  <Field id="allowance" name="allowance" type="number" class="form-control" v-model="selectedPersonnelCompanyInfo.allowance" />
+                  <ErrorMessage name="allowance" class="error-feedback" />
                 </div>
               </div>
-              <label class="labelheader">Teams that Personnel in</label>
-           
-               
-             <table class="table">
-               <thead>
-                 <tr>
-                   <th>E-mail</th>
-                   <th>Name</th>
-                   <th>Surname</th>
-                   <th>Phone Number</th>
-                   <th></th>
-                 </tr>
-               </thead>
-             <tbody>
-                <tr v-for="usergroup in usergroups" :key="usergroup.id">
-                 <td>{{ usergroup.name }}</td>
-                <td>
-                  <button class="btn btn-primary form-group col-md-2" :disabled="loading" type="submit"  @click="teamDetails(task)"  >
-                    <span v-show="loading" class="spinner-border spinner-border-sm"></span>
-                    <span>Details</span>
-                 </button>
-               </td>
-               </tr>
-              </tbody>
-             </table>
-
-             <label class="labelheader">Personnel's Tasks</label>
-             <table class="table">
-               <thead>
-                 <tr>
-                   <th>Description</th>
-                   <th>Deadline</th>
-                   <th></th>
-                 </tr>
-               </thead>
-             <tbody>
-                <tr v-for="task in tasks" :key="task.id">
-                 <td>{{ task.taskdesc }}</td>
-                 <td>{{ task.deadline}}</td>
-                <td>
-                  <button class="btn btn-primary form-group col-md-2" :disabled="loading" type="submit"  @click="taskDetails(task)"  >
-                    <span v-show="loading" class="spinner-border spinner-border-sm"></span>
-                    <span>Details</span>
-                 </button>
-               </td>
-               </tr>
-              </tbody>
-             </table>
-
             </div>
-       
-
           </div>
           <button class="btn btn-primary" type="submit">
             <span>Save</span>
           </button>
         </Form>
+        <label class="labelheader">Teams that Personnel in</label>
 
+
+        <table class="table">
+          <thead>
+          <tr>
+            <th>E-mail</th>
+            <th>Name</th>
+            <th>Surname</th>
+            <th>Phone Number</th>
+            <th></th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr v-for="usergroup in usergroups" :key="usergroup.id">
+            <td>{{ usergroup.name }}</td>
+            <td>
+              <button class="btn btn-primary form-group col-md-2" :disabled="loading" type="submit"  @click="teamDetails(task)"  >
+                <span v-show="loading" class="spinner-border spinner-border-sm"></span>
+                <span>Details</span>
+              </button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+
+        <label class="labelheader">Personnel's Tasks</label>
+        <table class="table">
+          <thead>
+          <tr>
+            <th>Description</th>
+            <th>Deadline</th>
+            <th></th>
+          </tr>
+          </thead>
+          <tbody>
+          <tr v-for="task in tasks" :key="task.id">
+            <td>{{ task.taskdesc }}</td>
+            <td>{{ task.deadline}}</td>
+            <td>
+              <button class="btn btn-primary form-group col-md-2" :disabled="loading" type="submit"  @click="taskDetails(task)"  >
+                <span v-show="loading" class="spinner-border spinner-border-sm"></span>
+                <span>Details</span>
+              </button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
       </div>
 
       <div
@@ -153,7 +145,6 @@ export default {
       message: "",
       selectedPersonnelCompanyInfo: [],
       tasks:[],
-      rolegroups: [],
       usergroups:[],
       selected: '',
     };
@@ -177,7 +168,6 @@ export default {
     CompanyService.getSelectedPersonnel(this.selectedPersonnel).then(
         (response) => {
           this.selectedPersonnelCompanyInfo = response.data;
-          console.log(this.selectedPersonnelCompanyInfo);
         },
         (error) => {
           (error.response &&
@@ -187,19 +177,8 @@ export default {
           error.toString();
         }
     );
-    CompanyService.getRolegroups().then(
-        (response) => {
-        this.rolegroups = response.data;
-  },
-        (error) => {
-          (error.response &&
-              error.response.data &&
-              error.response.data.message) ||
-          error.message ||
-          error.toString();
-        }
-    )
-    CompanyService.getTasks(this.currentUser).then(
+
+    CompanyService.getTasksOfPersonnel(this.selectedPersonnel).then(
         (response) => {
           this.tasks = response.data;
           console.log(this.tasks);
@@ -212,7 +191,7 @@ export default {
           error.toString();
         }
     );
-    CompanyService.getUsergroups(this.currentUser).then(
+    CompanyService.getUserGroupsOfPersonnel(this.selectedPersonnel).then(
         (response) => {
           this.usergroups = response.data;
           console.log(this.usergroups);
@@ -230,16 +209,14 @@ export default {
   methods: {
 
     saveData(user) {
-      var selectedRolegroup =JSON.parse(this.selected)
-      console.log(selectedRolegroup.id)
-      console.log(user);
 
-      CompanyService.editSelectedPersonnel(user, selectedRolegroup).then(
-          () => {
-
+      CompanyService.editSelectedPersonnel(user).then(
+          (response) => {
+            this.message = response.data;
+            this.successful  = true;
           },
           (error) => {
-            (error.response &&
+            this.message = (error.response &&
                 error.response.data &&
                 error.response.data.message) ||
             error.message ||
