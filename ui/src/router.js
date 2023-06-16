@@ -35,6 +35,7 @@ const JobPostingInDetail=()=> import("./components/JobPostingInDetail.vue")
 const Events=()=> import("./components/Events.vue")
 const UserGroupsOfPersonnel=()=> import("./components/UserGroups/UserGroupsOfPersonnel.vue")
 const TasksOfPersonnel=()=> import("./components/Tasks/TasksOfPersonnel.vue")
+const CreateJobPostings=()=> import("./components/createJobPostings.vue")
 const routes = [
     {
         path: "/",
@@ -241,6 +242,12 @@ const routes = [
         name: "TasksOfPersonnel",
         // lazy-loaded
         component: TasksOfPersonnel,
+    },
+    {
+        path: "/createJobPostings",
+        name: "CreateJobPostings",
+        // lazy-loaded
+        component: CreateJobPostings,
     },
 ];
 

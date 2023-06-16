@@ -70,7 +70,22 @@ class CompanyService {
             headers: authHeader(),
         });
     }
+    createJobPostings(jobposting, currentuser){
 
+        return axios.post(API_URL + 'createJobPostings' , {
+                jobtitle: jobposting.jobtitle,
+                company:jobposting.company,
+                location:jobposting.location,
+                description: jobposting.description,
+                requirements: jobposting.requirements,
+                benefits:jobposting.benefits,
+            userid: currentuser.id,
+            user_type: currentuser.user_type
+
+        },{
+            headers: authHeader(),
+        });
+    }
     giveTaskToUser(task, personnel){
         return axios.post(API_URL + 'giveTaskToUser' , {
             taskid: task,
@@ -104,6 +119,17 @@ class CompanyService {
     getTasks(currentuser){
 
         return axios.get(API_URL + 'getTasks' , {
+            headers: authHeader(),
+            params: {
+                userid: currentuser.id,
+                user_type: currentuser.user_type
+            }
+
+        });
+    }
+    getCompanyJobPostings(currentuser){
+
+        return axios.get(API_URL + 'getCompanyJobPostings' , {
             headers: authHeader(),
             params: {
                 userid: currentuser.id,
@@ -184,7 +210,18 @@ class CompanyService {
             id:id.id,
             name:task.name,
             deadline: task.deadline,
-            taskdesc: task.desc
+            taskdesc: task.desc,
+        },{
+            headers: authHeader(),
+        });
+    }
+    editSelectedJobPosting(id, jobposting){
+        return axios.post(API_URL + 'editSelectedJobPosting', {
+            id:id.id,
+            jobtitle: jobposting.jobtitle,
+            description: jobposting.description,
+            requirements: jobposting.requirements,
+            benefits:jobposting.benefits,
         },{
             headers: authHeader(),
         });
@@ -194,6 +231,14 @@ class CompanyService {
             headers: authHeader(),
             params:{
                 id: task.id,
+            }
+        });
+    }
+    deleteJobPosting(jobposting){
+        return axios.delete(API_URL + 'deleteJobPosting' , {
+            headers: authHeader(),
+            data:{
+                id: jobposting.id,
             }
         });
     }

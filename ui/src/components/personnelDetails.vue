@@ -1,5 +1,5 @@
 <template>
-
+ 
   <div class="col-md-12">
     <div class="card card-container-profile">
       <div v-if="currentUser && selectedPersonnel && !message">
@@ -52,7 +52,7 @@
               </div>
               <div class="form-row">
                 <div class="form-group col-md-6">
-                  <label for="allowance" class="label">Salary</label>
+                  <label for="allowance" class="label">Off Day Allowance</label>
                   <Field id="allowance" name="allowance" type="number" class="form-control" v-model="selectedPersonnelCompanyInfo.allowance" />
                   <ErrorMessage name="allowance" class="error-feedback" />
                 </div>
@@ -64,15 +64,10 @@
           </button>
         </Form>
         <label class="labelheader">Teams that Personnel in</label>
-
-
         <table class="table">
           <thead>
           <tr>
-            <th>E-mail</th>
-            <th>Name</th>
-            <th>Surname</th>
-            <th>Phone Number</th>
+            <th>Team Name</th>
             <th></th>
           </tr>
           </thead>
@@ -80,7 +75,7 @@
           <tr v-for="usergroup in usergroups" :key="usergroup.id">
             <td>{{ usergroup.name }}</td>
             <td>
-              <button class="btn btn-primary form-group col-md-2" :disabled="loading" type="submit"  @click="teamDetails(task)"  >
+              <button class="btn btn-primary form-group" :disabled="loading" type="submit"  @click="teamDetails(usergroup)"  >
                 <span v-show="loading" class="spinner-border spinner-border-sm"></span>
                 <span>Details</span>
               </button>
@@ -103,7 +98,7 @@
             <td>{{ task.taskdesc }}</td>
             <td>{{ task.deadline}}</td>
             <td>
-              <button class="btn btn-primary form-group col-md-2" :disabled="loading" type="submit"  @click="taskDetails(task)"  >
+              <button class="btn btn-primary form-group" :disabled="loading" type="submit"  @click="taskDetails(task)"  >
                 <span v-show="loading" class="spinner-border spinner-border-sm"></span>
                 <span>Details</span>
               </button>

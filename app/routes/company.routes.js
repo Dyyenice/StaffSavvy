@@ -26,7 +26,7 @@ module.exports = function(app) {
         [authJwt.verifyToken, authJwt.companyPersonnelsAccess],
         controller.getCompanyPersonnels
     );
-
+    
     app.get(
         "/api/company/getSelectedPersonnelCompanyInfo",
         [authJwt.verifyToken],
@@ -64,4 +64,11 @@ module.exports = function(app) {
     app.post("/api/company/removeUserGroupFromTask",[authJwt.verifyToken, authJwt.taskAccess], controller.removeUserGroupFromTask)
     app.post("/api/company/removeUserFromUserGroup",[authJwt.verifyToken, authJwt.userGroupAccess], controller.removeUserFromUserGroup)
     app.get("/api/company/getSelectedUserGroup", [authJwt.verifyToken,authJwt.userGroupAccess], controller.getSelectedUserGroup)
+    app.get( "/api/company/getCompanyJobPostings",[authJwt.verifyToken, authJwt.JobPostingAccess],controller.getJobPostings)
+    app.post("/api/company/createJobPostings",[authJwt.verifyToken, authJwt.JobPostingAccess], controller.createJobPostings)
+    app.delete("/api/company/deleteJobPosting", [authJwt.verifyToken,authJwt.JobPostingAccess], controller.deleteJobPosting)
+    app.post("/api/company/editSelectedJobPosting",[authJwt.verifyToken, authJwt.JobPostingAccess], controller.editSelectedJobPosting)
+    
+
+
 };

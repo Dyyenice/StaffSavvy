@@ -34,7 +34,7 @@ db.personneldetails = require("./personneldetails.model.js")(sequelize, Sequeliz
 db.task = require("./task.model.js")(sequelize, Sequelize);
 db.usergroups = require("./usergroups.model.js")(sequelize, Sequelize);
 db.user = require("./user.model.js")(sequelize, Sequelize);
-
+db.jobpostings = require("./jobpostings.model.js")(sequelize,Sequelize);
 
 
 

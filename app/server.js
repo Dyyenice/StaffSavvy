@@ -17,7 +17,7 @@ app.use(express.urlencoded({ extended: true }));
 
 
 app.get("/", (req, res) => {
-    res.json({ message: "Welcome to bezkoder application." });
+    res.json({ message: "Welcome to StaffSavvy application." });
 });
 
 
@@ -70,6 +70,10 @@ function initial() {
     Role.create({
         id: 9,
         name: "companyPersonnelsAdmin"
+    });
+    Role.create({
+        id: 10,
+        name: "companyJobPostingsAdmin"
     });
     Rolegroup.create({
         id: 1,

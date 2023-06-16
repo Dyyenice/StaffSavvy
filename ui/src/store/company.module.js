@@ -23,6 +23,16 @@ export const company = {
                 return Promise.reject(error);
               }
             );
+          },
+          editJobPostings(jobposting) {
+            return CompanyService.editJobPostings(jobposting).then(
+              updatedJobPosting => {
+                return Promise.resolve(updatedJobPosting);
+              },
+              error => {
+                return Promise.reject(error);
+              }
+            );
           }
 
 

@@ -66,6 +66,10 @@
           <span v-show="loading" class="spinner-border spinner-border-sm"></span>
           <span>Create Task</span>
         </button>
+        <button class="btn btn-primary sidebar-button" :disabled="loading" type="submit" @click="this.$router.push('/createJobPostings')" >
+          <span v-show="loading" class="spinner-border spinner-border-sm"></span>
+          <span>Create Job Postings</span>
+        </button>
         <button class="btn btn-primary sidebar-button" :disabled="loading" type="submit" @click="this.$router.push('/giveTask')" >
           <span v-show="loading" class="spinner-border spinner-border-sm"></span>
           <span>Give Task</span>
@@ -141,7 +145,7 @@ currentUserRoles(){
   display: block;
   width: 100%;
   padding: 8px;
-  margin-top: 17%;
+  margin-top: 4%;
   border: none;
   
   text-align: left;

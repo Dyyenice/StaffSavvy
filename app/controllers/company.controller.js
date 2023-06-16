@@ -10,6 +10,7 @@ const Task = db.task
 const UserGroup = db.usergroups;
 const Rolegroup = db.rolegroups;
 const Role = db.role;
+const JobPosting = db.jobpostings;
 
 var companyid;
 exports.pendingPersonnelRequests = async (req, res) => {
@@ -312,6 +313,7 @@ exports.createUserGroup = async (req, res) => {
     })
 }
 
+
 exports.giveTaskToUser = (req, res) =>{
     console.log(req.body)
     User.findByPk(req.body.personnelid).then(user =>{
@@ -343,9 +345,9 @@ exports.getUsergroups = async (req, res) => {
                 },
             });
             companyid = personnel.company;
-            // Call a function or continue the logic here that depends on companyid
+            
         } catch (error) {
-            // Handle any errors that occurred during the query
+            
         }
     } else {
         companyid = req.query.userid;
@@ -362,6 +364,91 @@ exports.getUsergroups = async (req, res) => {
         res.status(500).send({message: error.message});
     })
 }
+exports.createJobPostings = async (req, res) => {
+    var companyid;
+    if (req.query.user_type === '0') {
+        try {
+            const personnel = await Personnel.findOne({
+                where: {
+                    id: req.body.userid,
+                },
+            });
+            companyid = personnel.company;
+            
+        } catch (error) {
+            
+        }
+    }else{
+        companyid = req.body.userid;
+    }
+    JobPosting.create({
+        companyid: companyid,       
+        jobtitle:req.body.jobtitle,    
+        deadline: req.body.deadline,
+        location:req.body.location,
+        description: req.body.description,
+        requirements:req.body.requirements,
+        benefits:req.body.benefits,
+    }).then(() => {
+        res.status(200).send("job posting created successfully");
+    }).catch(error =>{
+        res.status(500).send({message: error.message});
+    })
+}
+exports.getJobPostings = async (req, res) => {
+    var companyid;
+    if (req.query.user_type === '0') {
+        try {
+            const personnel = await Personnel.findOne({
+                where: {
+                    id: req.query.userid,
+                },
+            });
+            companyid = personnel.company;
+           
+        } catch (error) {
+            
+        }
+    } else {
+        companyid = req.query.userid;
+    }
+    JobPosting.findAll({
+        where: {
+            companyid: companyid
+        }
+    }).then(jobpostings =>{
+        if(jobpostings){
+            res.status(200).send(jobpostings)
+        }
+    }).catch(error =>{
+        res.status(500).send({message: error.message});
+    })
+}
+exports.editSelectedJobPosting = (req, res) =>{
+    JobPosting.update({
+        description: req.body.description,
+        requirements: req.body.requirements,
+        benefits: req.body.benefits
+    },
+        {
+            where: {id: req.body.id}
+        }).then(() =>{
+            res.status(200).send("Job Posting Updated Successfully");
+    }).catch(error =>{
+        res.status(500).send({message: error.message})
+    })
+}
+exports.deleteJobPosting = (req, res) =>{
+    JobPosting.destroy({
+        where:{
+            id:req.body.id
+        }
+    }).then(() =>{
+        res.status(200).send("Job Posting Deleted")
+    }).catch(error =>{
+        res.status(500).send({message: error.message})
+    })
+}
 exports.getRolegroups = async (req, res) =>{
     var companyid;
     if (req.query.user_type === '0') {
@@ -372,9 +459,9 @@ exports.getRolegroups = async (req, res) =>{
                 },
             });
             companyid = personnel.company;
-            // Call a function or continue the logic here that depends on companyid
+           
         } catch (error) {
-            // Handle any errors that occurred during the query
+           
         }
     } else {
         companyid = req.query.userid;
@@ -408,9 +495,9 @@ exports.createRolegroup = async (req, res) => {
                 },
             });
             companyid = personnel.company;
-            // Call a function or continue the logic here that depends on companyid
+            
         } catch (error) {
-            // Handle any errors that occurred during the query
+            
         }
     } else {
         companyid = req.body.userid;

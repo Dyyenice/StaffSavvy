@@ -5,18 +5,33 @@
       <div><label class="labelheader">CREATE ROLE GROUP</label></div>
       <div v-if="currentUser && !message">
         <Form @submit="saveData" :validation-schema="schema" >
-          <div class="form-group col-md-4">
+          <div class="form-group col-md-12">
             <label for="rolegroupname" class="label" >Name</label>
             <Field id="rolegroupname" name="rolegroupname" type="text" class="form-control"/>
             <ErrorMessage name="rolegroupname" class="error-feedback" />
           </div>
-          <div class="form-row" v-for="role in roles" :key="role.id">
-            <div class="form-group col-md-4">
-              <input type="checkbox" :id="role.id"  :value="role" v-model="checkedRoles">
-              <label :for="role.id">{{role.name}}</label>
-            </div>
-          </div>
-          <button class="btn btn-primary" type="submit">
+         
+
+         <div class="checkbox-form"  >
+         <div class="roles">
+        <label
+          v-for="role in roles" :key="role.id"
+          class="item"
+        >
+          <span :for="role.id">{{ role.name }}</span>
+          <input
+            :id="role.id"
+            v-model="checkedRoles"
+            type="checkbox"
+            :value="role"
+            @change="onChange"
+          >
+          <span class="checkmark" />
+        </label>
+      </div>
+    </div>
+
+          <button class="btn btn-primary btn-block" type="submit">
             <span>Save</span>
           </button>
         </Form>
@@ -98,6 +113,9 @@ export default {
 
 
     },
+    onChange() {
+      this.$emit('input', this.checked);
+    },
 
     saveData(name) {
       CompanyService.createRolegroup(name, this.checkedRoles, this.currentUser).then(
@@ -121,18 +139,89 @@ export default {
 </script>
 
 <style scoped>
-.profile-img-card {
-  width: 150px;
-  height: 150px;
-  object-fit: cover;
-  border-radius: 50%;
-  transition: box-shadow 0.3s ease-in-out;
-}
+
 
 .hover-shadow {
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
 }
 .id{
   margin: auto;
+}
+.checkbox-form {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+.checkbox-form .answers {
+	display: flex;
+	flex-direction: column;
+	align-items: left;
+	width: 100%;
+}
+
+
+
+.checkbox-form .item {
+	display: block;
+	position: relative;
+	padding-left: 35px;
+	margin-bottom: 12px;
+	cursor: pointer;
+	font-size: 1em;
+	height: 25px;
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+	display: flex;
+	align-items: center;
+}
+
+.checkbox-form .item input {
+	position: absolute;
+	opacity: 0;
+	cursor: pointer;
+	height: 0;
+	width: 0;
+}
+
+.checkbox-form .checkmark {
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 25px;
+	width: 25px;
+	background-color: #c2c2c2;
+}
+
+.checkbox-form .item:hover input ~ .checkmark {
+	background-color: #949494;
+}
+
+.checkbox-form .item input:checked ~ .checkmark {
+	background-color: #D8A22E;
+}
+
+.checkbox-form .checkmark:after {
+	content: "";
+	position: absolute;
+	display: none;
+}
+
+.checkbox-form .item input:checked ~ .checkmark:after {
+	display: block;
+}
+
+.checkbox-form .item .checkmark:after {
+	left: 9px;
+	top: 5px;
+	width: 5px;
+	height: 10px;
+	border: solid white;
+	border-width: 0 3px 3px 0;
+	-webkit-transform: rotate(45deg);
+	-ms-transform: rotate(45deg);
+	transform: rotate(45deg);
 }
 </style>
