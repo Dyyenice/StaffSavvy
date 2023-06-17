@@ -32,10 +32,13 @@ const CompanyRolegroups =()=> import("./components/Rolegroups/companyRolegroups.
 const RolegroupDetails =()=> import("./components/Rolegroups/RolegroupDetails.vue")
 const JobPostings = ()=> import("./components/JobPostings.vue")
 const JobPostingInDetail=()=> import("./components/JobPostingInDetail.vue") 
-const Events=()=> import("./components/Events.vue")
 const UserGroupsOfPersonnel=()=> import("./components/UserGroups/UserGroupsOfPersonnel.vue")
 const TasksOfPersonnel=()=> import("./components/Tasks/TasksOfPersonnel.vue")
 const CreateJobPostings=()=> import("./components/createJobPostings.vue")
+const CreateEvent=()=> import("./components/CreateEvent.vue")
+const Events=()=> import("./components/Events.vue")
+const EventsDetail =()=> import("./components/EventsDetail.vue")
+
 const routes = [
     {
         path: "/",
@@ -248,6 +251,24 @@ const routes = [
         name: "CreateJobPostings",
         // lazy-loaded
         component: CreateJobPostings,
+    },
+    {
+        path: "/CreateEvent",
+        name: "CreateEvent",
+        // lazy-loaded
+        component: CreateEvent,
+    },
+    {
+        path: "/Events",
+        name: "Events",
+        // lazy-loaded
+        component: Events,
+    },
+    {
+        path: "/EventsDetail",
+        name: "EventsDetail",
+        // lazy-loaded
+        component: EventsDetail,
     },
 ];
 

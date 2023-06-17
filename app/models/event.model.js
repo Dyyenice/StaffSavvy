@@ -1,10 +1,6 @@
 module.exports = (sequelize, Sequelize) => {
     const Event = sequelize.define("events", {
 
-        id: {
-            type: Sequelize.INTEGER,
-            primaryKey: true
-        },
         name: {
             type: Sequelize.STRING
         },
@@ -21,7 +17,7 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.DATEONLY
         },
         multimedia:{
-            type: Sequelize.BLOB
+            type: Sequelize.BLOB('long')
         },
         
     });

@@ -86,6 +86,52 @@ class CompanyService {
             headers: authHeader(),
         });
     }
+    createEvent(event, currentuser){
+
+        return axios.post(API_URL + 'createEvent' , {
+            companyid: event.companyid,       
+            name:event.name,    
+            desc: event.desc,
+            date_start: event.date_start,
+            date_end: event.date_end,
+            multimedia: event.multimedia,
+            userid: currentuser.id,
+            user_type: currentuser.user_type
+
+        },{
+            headers: authHeader(),
+        });
+    }
+    getEvents(currentuser){
+
+        return axios.get(API_URL + 'getEvents' , {
+            headers: authHeader(),
+            params: {
+                userid: currentuser.id,
+                user_type: currentuser.user_type
+            }
+
+        });
+    }
+    editSelectedEvent(id, event){
+        return axios.post(API_URL + 'editSelectedEvent', {
+            id:id.id,
+            desc: event.desc,
+            date_start: event.date_start,
+            date_end: event.date_end,
+            multimedia: event.multimedia,
+        },{
+            headers: authHeader(),
+        });
+    }
+    deleteEvent(event){
+        return axios.delete(API_URL + 'deleteEvent' , {
+            headers: authHeader(),
+            data:{
+                id: event.id,
+            }
+        });
+    }
     giveTaskToUser(task, personnel){
         return axios.post(API_URL + 'giveTaskToUser' , {
             taskid: task,
@@ -231,6 +277,22 @@ class CompanyService {
             headers: authHeader(),
             params:{
                 id: task.id,
+            }
+        });
+    }
+    getSelectedEvent(event){
+        return axios.get(API_URL + 'getSelectedEvent' , {
+            headers: authHeader(),
+            params:{
+                id: event.id,
+            }
+        });
+    }
+    getSelectedJobPosting(jobposting){
+        return axios.get(API_URL + 'getSelectedJobPosting' , {
+            headers: authHeader(),
+            params:{
+                id: jobposting.id,
             }
         });
     }

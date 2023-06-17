@@ -75,6 +75,10 @@ function initial() {
         id: 10,
         name: "companyJobPostingsAdmin"
     });
+    Role.create({
+        id: 11,
+        name: "EventAdmin"
+    });
     Rolegroup.create({
         id: 1,
         name:"default"

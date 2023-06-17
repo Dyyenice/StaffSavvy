@@ -66,6 +66,10 @@
           <span v-show="loading" class="spinner-border spinner-border-sm"></span>
           <span>Create Task</span>
         </button>
+        <button class="btn btn-primary sidebar-button" :disabled="loading" type="submit" @click="this.$router.push('/createEvent')" >
+          <span v-show="loading" class="spinner-border spinner-border-sm"></span>
+          <span>Create Event</span>
+        </button>
         <button class="btn btn-primary sidebar-button" :disabled="loading" type="submit" @click="this.$router.push('/createJobPostings')" >
           <span v-show="loading" class="spinner-border spinner-border-sm"></span>
           <span>Create Job Postings</span>

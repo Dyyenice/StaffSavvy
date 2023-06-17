@@ -68,6 +68,12 @@ module.exports = function(app) {
     app.post("/api/company/createJobPostings",[authJwt.verifyToken, authJwt.JobPostingAccess], controller.createJobPostings)
     app.delete("/api/company/deleteJobPosting", [authJwt.verifyToken,authJwt.JobPostingAccess], controller.deleteJobPosting)
     app.post("/api/company/editSelectedJobPosting",[authJwt.verifyToken, authJwt.JobPostingAccess], controller.editSelectedJobPosting)
+    app.get( "/api/company/getEvents",[authJwt.verifyToken, authJwt.EventAccess],controller.getEvents)
+    app.post("/api/company/createEvent",[authJwt.verifyToken, authJwt.EventAccess], controller.createEvent)
+    app.delete("/api/company/deleteEvent", [authJwt.verifyToken,authJwt.EventAccess], controller.deleteEvent)
+    app.post("/api/company/editSelectedEvent",[authJwt.verifyToken, authJwt.EventAccess], controller.editSelectedEvent)
+    app.get("/api/company/getSelectedJobPosting", [authJwt.verifyToken, authJwt.JobPostingAccess], controller.getSelectedJobPosting)
+    app.get("/api/company/getSelectedEvent", [authJwt.verifyToken, authJwt.EventAccess], controller.getSelectedEvent)
     
 
 

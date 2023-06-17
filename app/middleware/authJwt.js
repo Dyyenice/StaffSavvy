@@ -244,6 +244,50 @@ JobPostingAccess = (req, res, next) => {
             });
         });
 };
+EventAccess = (req, res, next) => {
+    User.findByPk(req.userId)
+        .then(user => {
+            user.getRolegroups()
+                .then(rolegroup => {
+                    rolegroup[0].getRoles()
+                        .then(roles => {
+                            console.log(roles);
+                            let hasAccess = false;
+                            for (let i = 0; i < roles.length; i++) {
+                                if (roles[i].name === "EventAdmin" || roles[i].name === "admin") {
+                                    hasAccess = true;
+                                    break;
+                                }
+                            }
+                            if (hasAccess) {
+                                next();
+                            } else {
+                                res.status(403).send({
+                                    message: "Page Access is Denied!"
+                                });
+                            }
+                        })
+                        .catch(() => {
+
+                            res.status(500).send({
+                                message: "An error has occured during retrieving roles"
+                            });
+                        });
+                })
+                .catch(() => {
+
+                    res.status(500).send({
+                        message: "An error has occured during retrieving rolegroups"
+                    });
+                });
+        })
+        .catch(() => {
+
+            res.status(500).send({
+                message: "An error has occured during retrieving the user"
+            });
+        });
+};
 userGroupAccess = (req, res, next) => {
     User.findByPk(req.userId)
         .then(user => {
@@ -342,6 +386,7 @@ const authJwt = {
     userGroupAccess:userGroupAccess,
     companyPersonnelsAccess: companyPersonnelsAccess,
     JobPostingAccess: JobPostingAccess,
+    EventAccess: EventAccess,
 
 };
 module.exports = authJwt;

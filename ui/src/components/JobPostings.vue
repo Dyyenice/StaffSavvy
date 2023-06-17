@@ -34,11 +34,11 @@
                          </div>
                          <v-list-item-subtitle :class="active ? 'white--text' : 'black--text'"></v-list-item-subtitle>
                          <v-list-item-title class="headline mb-1" :class="active ? 'white--text' : 'black--text'" >
-                          <h2>{{ jobpostings.jobtitle }}</h2>
+                          <h2>{{ jobposting.jobtitle }}</h2>
                            
                           
                          </v-list-item-title>
-                          <h2>{{ jobpostings.description }}</h2>
+                          <h2>{{ jobposting.description }}</h2>
                         
                        </v-list-item-content>
                      </v-list-item>

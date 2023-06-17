@@ -5,12 +5,13 @@ const e = require("express");
 const Company = db.company;
 const User = db.user;
 const Personnel = db.personnel;
-const PersonnelCompanyInfo = db.personneldetails
-const Task = db.task
+const PersonnelCompanyInfo = db.personneldetails;
+const Task = db.task;
 const UserGroup = db.usergroups;
 const Rolegroup = db.rolegroups;
 const Role = db.role;
 const JobPosting = db.jobpostings;
+const Event = db.event;
 
 var companyid;
 exports.pendingPersonnelRequests = async (req, res) => {
@@ -221,7 +222,7 @@ exports.editselectedPersonnelCompanyInfo = (req, res) => {
 }
 exports.createTask = async (req, res) => {
     var companyid;
-    if (req.body.user_type === '0') {
+    if (req.body.user_type === 0) {
         try {
             const personnel = await Personnel.findOne({
                 where: {
@@ -280,7 +281,7 @@ exports.getTasks = async (req, res) => {
 exports.createUserGroup = async (req, res) => {
     console.log(req.body)
     var companyid;
-    if (req.body.user_type === '0') {
+    if (req.body.user_type === 0) {
         try {
             const personnel = await Personnel.findOne({
                 where: {
@@ -449,6 +450,111 @@ exports.deleteJobPosting = (req, res) =>{
         res.status(500).send({message: error.message})
     })
 }
+exports.getSelectedJobPosting = (req, res) =>{
+    JobPosting.findByPk(req.query.id).then(jobpostings =>{
+        if(jobpostings){
+
+            res.status(200).send(jobpostings);
+        }
+    }).catch(error =>{
+        res.status(500).send({message: error.message});
+    })
+}
+exports.createEvent = async (req, res) => {
+    var companyid;
+    if (req.query.user_type === '0') {
+        try {
+            const personnel = await Personnel.findOne({
+                where: {
+                    id: req.body.userid,
+                },
+            });
+            companyid = personnel.company;
+            
+        } catch (error) {
+            
+        }
+    }else{
+        companyid = req.body.userid;
+    }
+    Event.create({
+        companyid: companyid,       
+        name:req.body.name,    
+        desc: req.body.desc,
+        date_start: req.body.date_start,
+        date_end: req.body.date_end,
+        multimedia: req.body.multimedia,
+    }).then(() => {
+        res.status(200).send("event created successfully");
+    }).catch(error =>{
+        res.status(500).send({message: error.message});
+    })
+}
+exports.getEvents = async (req, res) => {
+    var companyid;
+    if (req.query.user_type === '0') {
+        try {
+            const personnel = await Personnel.findOne({
+                where: {
+                    id: req.query.userid,
+                },
+            });
+            companyid = personnel.company;
+           
+        } catch (error) {
+            
+        }
+    } else {
+        companyid = req.query.userid;
+    }
+    Event.findAll({
+        where: {
+            companyid: companyid
+        }
+    }).then(event =>{
+        if(event){
+            res.status(200).send(event)
+        }
+    }).catch(error =>{
+        res.status(500).send({message: error.message});
+    })
+}
+exports.editSelectedEvent = (req, res) =>{
+    Event.update({
+        desc: req.body.desc,
+        date_start: req.body.date_start,
+        date_end: req.body.date_end,
+        multimedia:req.body.multimedia,
+    },
+        {
+            where: {id: req.body.id}
+        }).then(() =>{
+            res.status(200).send("Event Updated Successfully");
+    }).catch(error =>{
+        res.status(500).send({message: error.message})
+    })
+}
+exports.deleteEvent = (req, res) =>{
+    Event.destroy({
+        where:{
+            id:req.body.id
+        }
+    }).then(() =>{
+        res.status(200).send("Event Deleted")
+    }).catch(error =>{
+        res.status(500).send({message: error.message})
+    })
+}
+exports.getSelectedEvent = (req, res) =>{
+    Event.findByPk(req.query.id).then(event =>{
+        if(event){
+
+            res.status(200).send(event);
+        }
+    }).catch(error =>{
+        res.status(500).send({message: error.message});
+    })
+}
 exports.getRolegroups = async (req, res) =>{
     var companyid;
     if (req.query.user_type === '0') {
@@ -487,7 +593,7 @@ exports.getUserRoles = (req, res) =>{
 }
 exports.createRolegroup = async (req, res) => {
     var companyid;
-    if (req.body.user_type === '0') {
+    if (req.body.user_type === 0) {
         try {
             const personnel = await Personnel.findOne({
                 where: {

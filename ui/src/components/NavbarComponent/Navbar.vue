@@ -34,7 +34,7 @@
             </router-link>
         </li>
         <li class="nav-item" v-if="currentUser">
-            <router-link to="/home" class="nav-link">
+            <router-link to="/Events" class="nav-link">
             <font-awesome-icon  /> Events
             </router-link>
         </li>
