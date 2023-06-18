@@ -319,14 +319,31 @@ exports.giveTaskToUser = (req, res) =>{
     console.log(req.body)
     User.findByPk(req.body.personnelid).then(user =>{
         if(user){
-            user.addTask([req.body.taskid]).then(() =>{
-                res.status(200).send("Task Given Successfully")
-            })
+            user.getTasks().then(tasks=>{
+                var count = 0;
+                for (let i = 0; i < tasks.length; i++) {
+                    if(tasks[i].id === req.body.taskid){
+                        res.status(400).send({message: "Task is already given to this user"})
+                        count++;
+                    }
+                }
+                if(count === 0){
+                    user.addTask([req.body.taskid]).then(() =>{
+                        res.status(200).send("Task Given Successfully")
+                    }).catch(error =>{
+                        res.status(500).send({message: error.message})
+                    });
+                }
+
+            }).catch(error =>{
+                res.status(500).send({message: error.message})
+            });
+
         }
 
     }).catch(error =>{
         res.status(500).send({message: error.message})
-    })
+    });
 }
 exports.giveTaskToUsergroup = (req, res) =>{
     console.log(req.body)
@@ -644,11 +661,42 @@ exports.getTasksOfPersonnel = (req, res) =>{
     User.findByPk(req.query.id).then(user =>{
         if(user){
             user.getTasks().then(tasks=>{
-                res.status(200).send(tasks);
-            })
+                user.getUsergroups().then(usergroups =>{
+                    var taskss = [];
+                    for (let i = 0; i < usergroups.length; i++) {
+                        usergroups[i].getTasks().then(usergrouptasks =>{
+                            for (let j = 0; j < usergrouptasks.length; j++) {
+                                if(!tasks.includes(usergrouptasks[i])){
+                                    taskss.push(usergrouptasks[i]);
+                                }
+                            }
+                        })
+                    }
+                })
+            });
         }
     }).catch(error =>{
         res.status(500).send({message: error.message})
+    })
+}
+exports.deletePersonnel = (req, res) =>{
+    Personnel.update({
+        company: null
+    },{where: {id:req.body.id}}).catch(error =>{
+        res.status(500).send({message: error.message})
+    })
+    PersonnelCompanyInfo.update({
+        salary:null,
+        allowance: null,
+    },{where:{id: req.body.id}}).catch(error =>{
+        res.status(500).send({message: error.message})
+    })
+    User.findByPk(req.body.id).then(user =>{
+        user.setRolegroups([2]).then(()=>{
+            res.status(200).send("Personel deleted successfully")
+        }).catch(error =>{
+            res.status(500).send({message: error.message})
+        })
     })
 }
 exports.getUserGroupsOfPersonnel = (req, res) =>{
@@ -758,7 +806,7 @@ exports.editSelectedRolegroup = (req, res) =>{
             if (rolegroup) {
                 let counter = 0;
                 for (let i = 0; i < req.body.roles.length; i++) {
-                    rolegroup.setRoles([req.body.roles[i]]);
+                    rolegroup.setRoles([req.body.roles[i].id]);
                     counter++;
                 }
                 if (counter === req.body.roles.length) {

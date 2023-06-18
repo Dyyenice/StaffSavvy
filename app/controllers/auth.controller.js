@@ -136,46 +136,56 @@ exports.signin = (req, res) => {
                             id : user.id,
                         }
                     }).then(personnel =>{
-                        Company.findOne({
+                        PersonnelCompanyInfo.findOne({
                             where: {
-                                id: personnel.company
+                                id : personnel.id,
                             }
-                        }).then(company =>{
-                            if(company){
-                                res.status(200).send({
-                                    id: user.id,
-                                    email: user.email,
-                                    name: personnel.name,
-                                    surname: personnel.surname,
-                                    phone: personnel.phone,
-                                    company: company.name,
-                                    date_of_birth: personnel.date_of_birth,
-                                    identification: personnel.identification,
-                                    user_type: user.user_type,
-                                    roles: authorities,
-                                    accessToken: token
-                                });
-                            }
-                            else{
-                                console.log("asdasdasd")
-                                res.status(200).send({
-                                    id: user.id,
-                                    email: user.email,
-                                    name: personnel.name,
-                                    surname: personnel.surname,
-                                    phone: personnel.phone,
-                                    company: null,
-                                    date_of_birth: personnel.date_of_birth,
-                                    identification: personnel.identification,
-                                    user_type: user.user_type,
-                                    roles: authorities,
-                                    accessToken: token
-                                });
-                            }
+                        }).then(personnelcompanyinfo =>{
+                            Company.findOne({
+                                where: {
+                                    id: personnel.company
+                                }
+                            }).then(company =>{
+                                if(company){
+                                    res.status(200).send({
+                                        id: user.id,
+                                        email: user.email,
+                                        name: personnel.name,
+                                        surname: personnel.surname,
+                                        phone: personnel.phone,
+                                        company: company.name,
+                                        date_of_birth: personnel.date_of_birth,
+                                        identification: personnel.identification,
+                                        user_type: user.user_type,
+                                        salary: personnelcompanyinfo.salary,
+                                        allowance: personnelcompanyinfo.allowance,
+                                        roles: authorities,
+                                        accessToken: token
+                                    });
+                                }
+                                else{
+                                    res.status(200).send({
+                                        id: user.id,
+                                        email: user.email,
+                                        name: personnel.name,
+                                        surname: personnel.surname,
+                                        phone: personnel.phone,
+                                        company: null,
+                                        salary: personnelcompanyinfo.salary,
+                                        allowance: personnelcompanyinfo.allowance,
+                                        date_of_birth: personnel.date_of_birth,
+                                        identification: personnel.identification,
+                                        user_type: user.user_type,
+                                        roles: authorities,
+                                        accessToken: token
+                                    });
+                                }
+
+                            })
 
                         })
-
                     })
+
                 }else{
                     Company.findOne({
                         where: {
@@ -201,38 +211,7 @@ exports.signin = (req, res) => {
         });
 };
 
-/*exports.editProfile = (req, res) => {
-    User.findOne({
-        where: {
-            email: req.body.email
-        }
-    })
-        .then(user => {
-            if (!user) {
-                return res.status(404).send({ message: "User Not found." });
-            }
-                if(user.user_type === 0){
-                    Personnel.update({
-                        name: req.body.name,
-                        surname: req.body.surname,
-                        phone: req.body.phone
-                    },
-                        { where: {id: user.id } }).then(personnel =>{
-                        res.status(200).send({
 
-                            name: personnel.name,
-                            surname: personnel.surname,
-                            phone: personnel.phone,
-
-                        });
-                    })
-}
-
-        })
-        .catch(err => {
-            res.status(500).send({ message: err.message });
-        });
-};*/
 exports.editProfile = (req, res) => {
     User.findOne({
         where: {
@@ -283,4 +262,13 @@ exports.editProfile = (req, res) => {
         .catch(err => {
             res.status(500).send({ message: err.message });
         });
+}
+exports.changePassword = (req, res) => {
+   User.update({
+       password: bcrypt.hashSync(req.body.password, 8)
+   }, {where: {email: req.body.email}}).then(()=>{
+       res.status(200).send("Your password is changed")
+   }).catch(error =>{
+       res.status(500).send({message: error.message});
+   })
 }

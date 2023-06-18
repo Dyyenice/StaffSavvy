@@ -62,24 +62,22 @@
           <button class="btn btn-primary" type="submit">
             <span>Save</span>
           </button>
+          <button class="btn btn-primary" type="button" @click="deletePersonnel">
+            <span>Delete Personnel</span>
+          </button>
+
         </Form>
         <label class="labelheader">Teams that Personnel in</label>
         <table class="table">
           <thead>
           <tr>
             <th>Team Name</th>
-            <th></th>
           </tr>
           </thead>
           <tbody>
           <tr v-for="usergroup in usergroups" :key="usergroup.id">
             <td>{{ usergroup.name }}</td>
-            <td>
-              <button class="btn btn-primary form-group" :disabled="loading" type="submit"  @click="teamDetails(usergroup)"  >
-                <span v-show="loading" class="spinner-border spinner-border-sm"></span>
-                <span>Details</span>
-              </button>
-            </td>
+
           </tr>
           </tbody>
         </table>
@@ -90,7 +88,6 @@
           <tr>
             <th>Description</th>
             <th>Deadline</th>
-            <th></th>
           </tr>
           </thead>
           <tbody>
@@ -98,10 +95,6 @@
             <td>{{ task.taskdesc }}</td>
             <td>{{ task.deadline}}</td>
             <td>
-              <button class="btn btn-primary form-group" :disabled="loading" type="submit"  @click="taskDetails(task)"  >
-                <span v-show="loading" class="spinner-border spinner-border-sm"></span>
-                <span>Details</span>
-              </button>
             </td>
           </tr>
           </tbody>
@@ -219,24 +212,22 @@ export default {
           });
 
     },
-    personnelDetails(personnel){
-    localStorage.setItem("selectedPersonnel", JSON.stringify(personnel));
-    console.log(JSON.parse(localStorage.getItem("selectedPersonnel")));
-    this.$router.push("/personnelDetails");
-  }  ,
+    deletePersonnel() {
 
-  teamDetails(usergroup){
-    localStorage.setItem("selectedUserGroup", JSON.stringify(usergroup));
-    console.log(JSON.parse(localStorage.getItem("selectedUserGroup")));
-    this.$router.push("/UserGroupDetails");
-  }  ,
-  taskDetails(task){
-        localStorage.setItem("selectedTask", JSON.stringify(task));
-        console.log(JSON.parse(localStorage.getItem("selectedTask")));
-        this.$router.push("/taskDetails");
-      }
+      CompanyService.deletePersonnel(this.selectedPersonnel).then(
+          (response) => {
+            this.message = response.data;
+            this.successful  = true;
+          },
+          (error) => {
+            this.message = (error.response &&
+                    error.response.data &&
+                    error.response.data.message) ||
+                error.message ||
+                error.toString();
+          });
 
-   
+    },
   },
 
 };

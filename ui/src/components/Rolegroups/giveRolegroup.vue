@@ -11,8 +11,9 @@
               <div class="form-group col-md-6">
                 <label for="personnels" class="personnels">Select Personnel</label>
                 <select id="personnels" name="personnels" v-model="selectedPersonnel">
-                  <option v-for="personnel in companyPersonnels" :key="personnel.id">
-                    {{personnel}}
+                  <option disabled value="">Please Select a Personnel</option>
+                  <option v-for="personnel in companyPersonnels" :key="personnel.id" :value="personnel.id">
+                    {{personnel.name}}  {{personnel.surname}}
                   </option>
                 </select>
                 <ErrorMessage name="personnels" class="error-feedback" />
@@ -22,8 +23,9 @@
               <div class="form-group col-md-6">
                 <label for="rolegroups" class="label">Select Role Group</label>
                 <select id="rolegroups" name="rolegroups" v-model="selectedRoleGroup">
-                  <option v-for="rolegroup in roleGroups" :key="rolegroup.id" >
-                    {{rolegroup}}
+                  <option disabled value="">Please Select a Role Group</option>
+                  <option v-for="rolegroup in roleGroups" :key="rolegroup.id" :value="rolegroup.id" >
+                    {{rolegroup.name}}
                   </option>
                 </select>
                 <ErrorMessage name="rolegroups" class="error-feedback" />

@@ -23,7 +23,7 @@
             <ErrorMessage name="email" class="error-feedback" />
           </div>
           <div class="form-group">
-            <label for="password" class="label">Password</label>
+            <label for="password" class="label">New Password</label>
             <div class="input-group">
               <div class="input-group-prepend">
                 <div class="input-group-text">
@@ -35,7 +35,7 @@
                 name="password"
                 type="password"
                 class="form-control"
-                placeholder="Enter your password"
+                placeholder="Enter new password"
               />
             </div>
             <ErrorMessage name="password" class="error-feedback" />
@@ -47,12 +47,14 @@
               <span>Change </span>
             </button>
           </div>
-  
-  
-          <div class="form-group">
-            <div v-if="message" class="alert alert-danger" role="alert">
-              {{ message }}
-            </div>
+
+
+          <div
+              v-if="message"
+              class="alert"
+              :class="successful ? 'alert-success' : 'alert-danger'"
+          >
+            {{ message }}
           </div>
         </Form>
       </div>
@@ -66,7 +68,7 @@
   import "bootstrap/dist/css/bootstrap.min.css";
   import "@fortawesome/fontawesome-free/css/all.min.css";
   import "./css/style.css";
-  import axios from "axios";
+  import AuthService from "@/services/auth.service";
   export default {
     name: "ChangePassword",
     components: {
@@ -77,13 +79,18 @@
     data() {
       const schema = yup.object().shape({
         email: yup.string().required("Email is required!"),
-        password: yup.string().required("Password is required!"),
+        password: yup
+            .string()
+            .required("Password is required!")
+            .min(6, "Must be at least 6 characters!")
+            .max(40, "Must be maximum 40 characters!"),
       });
   
       return {
         loading: false,
         message: "",
         schema,
+        successfull: ""
       };
     },
     computed: {
@@ -97,19 +104,21 @@
       }
     },
     methods: {
-        handleChangePassword() {
-  
-        const { email, password } = this.form;
+        handleChangePassword(data) {
+          AuthService.changePassword(data).then(
+              (response) => {
+                this.message = response.data;
+                this.successfull = true;
 
-        axios
-        .post("/api/change-password", { email, password })
-        .then(() => {
-        this.message = "Your password has been changed successfully.";
-        this.$router.push("/login");
-    })
-    .catch((error) => {
-      this.message = error.response.data.message || "An error occurred.";
-    });
+              },
+              (error) => {
+                this.message = (error.response &&
+                        error.response.data &&
+                        error.response.data.message) ||
+                    error.message ||
+                    error.toString();
+              }
+          );
     },
   },
   };

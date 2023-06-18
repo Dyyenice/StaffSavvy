@@ -135,7 +135,7 @@ class CompanyService {
     giveTaskToUser(task, personnel){
         return axios.post(API_URL + 'giveTaskToUser' , {
             taskid: task,
-            personnelid: personnel.id,
+            personnelid: personnel,
 
         },{
             headers: authHeader(),
@@ -144,12 +144,13 @@ class CompanyService {
     giveTaskToUsergroup(task, usergroup){
         return axios.post(API_URL + 'giveTaskToUserGroup' , {
             taskid: task,
-            usergroupid: usergroup.id,
+            usergroupid: usergroup,
 
         },{
             headers: authHeader(),
         });
     }
+
     createUserGroup(name, selectedPersonnels, currentuser){
 
         return axios.post(API_URL + 'createUserGroup' , {
@@ -225,6 +226,14 @@ class CompanyService {
             }
         });
     }
+    deletePersonnel(personnel){
+        return axios.delete(API_URL + 'deletePersonnel' , {
+            headers: authHeader(),
+            data:{
+                id: personnel.id,
+            }
+        });
+    }
 
     createRolegroup(name,roles, currentuser){
         return axios.post(API_URL + 'createRoleGroup', {
@@ -239,8 +248,8 @@ class CompanyService {
 
     giveRolegroupToUser(rolegroup, personnel){
         return axios.post(API_URL + 'giveRolegroupToUser' , {
-            rolegroupid: rolegroup.id,
-            personnelid: personnel.id,
+            rolegroupid: rolegroup,
+            personnelid: personnel,
 
         },{
             headers: authHeader(),

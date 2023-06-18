@@ -63,6 +63,19 @@
             </div>
 
           </div>
+          <div class="form-row">
+            <div class="form-group col-md-6">
+              <label for="salary" class="label">Salary</label>
+              <Field id="salary" type="text" name="salary"  class="form-control" v-model="currentUser.salary" disabled/>
+              <ErrorMessage name="salary" class="error-feedback" />
+            </div>
+            <div class="form-group col-md-6">
+              <label for="allowance" class="label">Allowance</label>
+              <Field id="allowance" name="allowance" type="text" class="form-control" v-model="currentUser.allowance" disabled/>
+              <ErrorMessage name="allowance" class="error-feedback" />
+            </div>
+
+          </div>
         </div>
 
         </div>

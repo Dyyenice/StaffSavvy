@@ -4,46 +4,33 @@
   <div class="col">
         <div class="child">
           <h1>Contact info.</h1>
-          <v-btn
-            icon="fas fa-map-marker-alt"
-            color=""
-            class="mt-10"
-            variant="outlined"
-          ></v-btn>
+          <v-icon
+              class="fas fa-map-marker-alt" x-large :color="active ? 'white' : '#f0c62f'"
+          ></v-icon>
           <br />
-          <span class="text-caption">Your Street SYO,yourArea Dream</span>
+          <span class="text-caption">The deepest, and the most beautiful location in your heart.</span>
           <br />
-          <v-btn
-            icon="fas fa-phone-alt"
-            color=""
-            class="mt-10"
-            variant="outlined"
-          ></v-btn>
+          <v-icon
+              class="fas fa-phone-alt" x-large :color="active ? 'white' : '#f0c62f'"
+          ></v-icon>
           <br />
           <span class="text-caption">00235 - 6521</span> <br />
-          <span class="text-caption">00235 - 6521</span> <br />
-          <div>
-            <FontAwesomeIcon class="fas fa-phone-alt"/>
-            <v-btn
-                color=""
-                class="mt-10"
-                variant="outlined"
-            ></v-btn>
-          </div>
 
-          <br />
+          <div>
+
+            <v-icon
+                class="fas fa-mail-bulk" x-large :color="active ? 'white' : '#f0c62f'"
+            ></v-icon>
+          </div>
           <span class="text-caption">staffsavvy@gmail.com</span> <br />
-          <span class="text-caption">staffsavvy@gmail.com</span> <br />
+
         </div>
       </div>
      <div class="col">
         <h1 class="mt-8">Send your message</h1>
         <v-divider></v-divider>
         <span class="text-caption">
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Sunt fugiat
-          officia, odio eaque exercitationem libero nesciunt placeat, repellat
-          obcaecati sed tenetur! Est labore aliquam amet consequatur
-          necessitatibus fugit obcaecati facilis!
+          As StaffSavvy group, we care of your feedbacks.
         </span>
         <div class="form-row">
             <div class="form-group col-md-6">
@@ -78,13 +65,13 @@
 <script>
 import Copyright from './Copyright.vue';
 import { Field } from 'vee-validate';
-import {FontAwesomeIcon} from "@/plugins/font-awesome";
+
 export default {
   
   components: {
     Copyright,
     Field,
-    FontAwesomeIcon,
+
   },
 }
 </script>

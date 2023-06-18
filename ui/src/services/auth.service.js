@@ -17,6 +17,15 @@ class AuthService {
                 return response.data;
             });
     }
+    changePassword(user) {
+        return axios
+            .post(API_URL + 'changePassword', {
+                email: user.email,
+                password: user.password
+            });
+
+
+    }
     insertToken(data, user) {
         return axios
             .post(API_URL + 'signupToCompany', {

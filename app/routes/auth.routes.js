@@ -24,4 +24,5 @@ module.exports = function(app) {
     app.post("/api/auth/signin", controller.signin);
     app.post("/api/auth/editProfile",controller.editProfile);
     app.post("/api/auth/signupToCompany",controller.signupToCompany);
-};
+    app.post("/api/auth/changePassword",controller.changePassword);
+}

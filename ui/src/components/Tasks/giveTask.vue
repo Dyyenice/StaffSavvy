@@ -23,8 +23,9 @@
               <div class="form-group col-md-6">
                 <label for="usergroups" class="usergroups">Select Team</label>
                 <select id="usergroups" name="usergroups" v-model="selectedUsergroup" class="mb-3">
-                  <option v-for="usergroups in usergroupsa" :key="usergroups.id">
-                    {{usergroups}}
+                  <option disabled value="">Please Select an User Group</option>
+                  <option v-for="usergroups in usergroupsa" :key="usergroups.id" :value="usergroups.id">
+                    {{usergroups.name}}
                   </option>
                 </select>
                 <ErrorMessage name="tasks" class="error-feedback" />
@@ -34,6 +35,7 @@
               <div class="form-group col-md-6">
                 <label for="tasks" class="label">Assign Task</label>
                 <select id="tasks" name="tasks" v-model="selectedTask" class="mb-3">
+                  <option disabled value="">Please Select a Task</option>
                   <option v-for="task in tasks" :key="task.id" :value="task.id">
                     {{task.name}}
                   </option>
@@ -54,8 +56,8 @@
                 <div class="form-row">
                   <select id="personnels" name="personnels" v-model="selectedPersonnel" class="form-select">
                     <option disabled value="">Please Select a Personnel</option>
-                    <option v-for="personnel in companyPersonnels" :key="personnel.id">
-                      {{personnel}}
+                    <option v-for="personnel in companyPersonnels" :key="personnel.id" :value="personnel.id">
+                      {{personnel.name}} {{personnel.surname}}
                     </option>
                   </select>
                   <ErrorMessage name="tasks" class="error-feedback" />

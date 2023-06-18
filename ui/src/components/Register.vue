@@ -38,7 +38,7 @@
              </div>
              <div class="form-group col-md-6">
                <label for="date_of_birth" class="label">Date of Birth</label>
-               <Field id="date_of_birth" type="date" name="date_of_birth"  class="form-control" />
+               <Field id="date_of_birth" type="date" name="date_of_birth" :max="maxDate"  class="form-control" />
                <ErrorMessage name="date_of_birth" class="error-feedback" />
              </div>
          </div>
@@ -78,7 +78,7 @@
 <script>
 import {ErrorMessage, Field, Form} from "vee-validate";
 import * as yup from "yup";
-
+import moment from 'moment'
 
 export default {
   name: "Register",
@@ -103,7 +103,7 @@ export default {
           .email("Email is invalid!")
           .max(50, "Must be maximum 50 characters!"),
       phone: yup
-          .number()
+          .number().test('len', 'Must be exactly 10 characters without starting with 0', val => val && val.toString().length === 10 )
           .required("Phone number is required!")
           ,
       date_of_birth: yup
@@ -111,8 +111,9 @@ export default {
           .required("Date of Birth is required!")
       ,
       identification: yup
-          .number()
+          .number().test('len', 'Must be exactly 11 characters', val => val && val.toString().length === 11 )
           .required("Identification is required!")
+
       ,
       password: yup
           .string()
@@ -136,6 +137,11 @@ export default {
   computed: {
     loggedIn() {
       return this.$store.state.auth.status.loggedIn;
+    },
+    maxDate()
+    {
+      console.log(moment().format('YYYY-MM-DD'))
+      return moment().subtract(18, 'years').format('YYYY-MM-DD')
     },
   },
   mounted() {

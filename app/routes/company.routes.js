@@ -75,6 +75,6 @@ module.exports = function(app) {
     app.get("/api/company/getSelectedJobPosting", [authJwt.verifyToken, authJwt.JobPostingAccess], controller.getSelectedJobPosting)
     app.get("/api/company/getSelectedEvent", [authJwt.verifyToken, authJwt.EventAccess], controller.getSelectedEvent)
     app.get("/api/company/getSelectedCompanyJobPosting", [authJwt.verifyToken, authJwt.JobPostingAccess], controller.getSelectedCompanyJobPosting)
-
+    app.delete("/api/company/deletePersonnel", [authJwt.verifyToken,authJwt.companyPersonnelsAccess], controller.deletePersonnel)
 
 };

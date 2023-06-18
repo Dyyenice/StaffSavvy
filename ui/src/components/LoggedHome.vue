@@ -603,6 +603,18 @@
                   error.toString();
             }
         );
+        companyService.getUsergroups(this.currentUser).then(
+            (response) => {
+              this.companyteams = response.data;
+            },
+            (error) => {
+              this.message = (error.response &&
+                      error.response.data &&
+                      error.response.data.message) ||
+                  error.message ||
+                  error.toString();
+            }
+        );
         companyService.getCompanyJobPostings(this.currentUser).then(
             (response) => {
               this.companyjobpostings = response.data;
