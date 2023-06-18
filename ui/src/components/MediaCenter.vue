@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import UserService from "../services/public.service";
+
 export default {
  
   data() {
@@ -51,19 +51,7 @@ export default {
   },
   mounted() {
     this.startSlideShow();
-    UserService.getPublicContent().then(
-        (response) => {
-          this.content = response.data;
-        },
-        (error) => {
-          this.content =
-              (error.response &&
-                  error.response.data &&
-                  error.response.data.message) ||
-              error.message ||
-              error.toString();
-        }
-    );
+
   },
   methods: {
     startSlideShow() {

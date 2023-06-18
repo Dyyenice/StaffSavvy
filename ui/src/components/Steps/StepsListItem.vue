@@ -5,7 +5,7 @@
       <div class="card__side card__side--back" :style="{'background-color': `black`, 'border': `0.4rem solid #fff`}" >
         <div>
          <h3 class="card__side__title">Manage Your Projects</h3>
-         <p class="card__side__description">Yousmdlkfsldsdlkmlksdmvslkmvlsmfvlfm</p>
+          <p class="card__side__description" style="color: black;">Yousmdlkfsldsdlkmlksdmvslkmvlsmfvlfm</p>
         </div>
       </div>
     </div>
@@ -14,7 +14,7 @@
       <div class="card__side card__side--back" :style="{'background-color': `black`, 'border': `0.4rem solid #fff`}" >
         <div>
          <h3 class="card__side__title">Follow Up Work</h3>
-         <p class="card__side__description">Yousmdlkfsldsdlkmlksdmvslkmvlsmfvlfm</p>
+         <p class="card__side__description" style="color: black;">Yousmdlkfsldsdlkmlksdmvslkmvlsmfvlfm</p>
        </div>
       </div>
    </div>
@@ -23,7 +23,7 @@
      <div class="card__side card__side--back" :style="{'background-color': `black`, 'border': `0.4rem solid #fff`}" >
        <div>
          <h3 class="card__side__title">Teamwork</h3>
-         <p class="card__side__description">Yousmdlkfsldsdlkmlksdmvslkmvlsmfvlfm</p>
+         <p class="card__side__description" style="color: black;">Yousmdlkfsldsdlkmlksdmvslkmvlsmfvlfm</p>
       </div>
     </div>
   </div>
@@ -32,7 +32,7 @@
      <div class="card__side card__side--back" :style="{'background-color': `black`, 'border': `0.4rem solid #fff`}" >
        <div>
          <h3 class="card__side__title">Efficient Work</h3>
-         <p class="card__side__description">Yousmdlkfsldsdlkmlksdmvslkmvlsmfvlfm</p>
+         <p class="card__side__description" style="color: black;">Yousmdlkfsldsdlkmlksdmvslkmvlsmfvlfm</p>
       </div>
     </div>
   </div>

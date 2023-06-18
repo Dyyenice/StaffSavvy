@@ -681,7 +681,7 @@
       },
         components: {
           SideBar,
-          
+
        VChart
           
         },
