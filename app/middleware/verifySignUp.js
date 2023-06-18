@@ -4,36 +4,41 @@ const User = db.user;
 const Personnel = db.personnel;
 const Company = db.company;
 
-checkDuplicateEmail = (req, res, next) => {
+checkDuplicateEmail = async (req, res, next) => {
     // Username
-    User.findOne({
-        where: {
-            email: req.body.email
-        }
-    }).then(user => {
-        if (user) {
-            res.status(400).send({
+    try {
+        const existingUser = await User.findOne({
+            where: {
+                email: req.body.email
+            }
+        });
+
+        if (existingUser) {
+            return res.status(403).send({
                 message: "Failed! Email is already in use!"
             });
+        }
 
-        }
-if(req.user_type === 0){
-    Personnel.findOne({
-        where: {
-            identification: req.body.identification
-        }
-    }).then(personnel => {
-        if (personnel) {
-            res.status(400).send({
-                message: "Failed! Identification is already in use!"
+        if (req.user_type === 0) {
+            const existingPersonnel = await Personnel.findOne({
+                where: {
+                    identification: req.body.identification
+                }
             });
 
+            if (existingPersonnel) {
+                return res.status(400).send({
+                    message: "Failed! Identification is already in use!"
+                });
+            }
         }
-    });
-}
 
-    });
-    next();
+        next();
+    } catch (error) {
+        res.status(500).send({
+            message: error.message
+        });
+    }
 };
 
 checkRolesExisted = (req, res, next) => {

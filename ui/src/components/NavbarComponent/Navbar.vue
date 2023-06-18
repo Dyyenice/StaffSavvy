@@ -16,9 +16,9 @@
           </router-link>
         </li>
         </div>
-        <div v-if="currentUser">
+        <div v-if="!currentUser">
         <li class="nav-item">
-            <router-link to="/jobpostings" class="nav-link">
+            <router-link to="/jobPostings" class="nav-link">
             <font-awesome-icon  /> Job Postings
           </router-link>
         </li>
@@ -38,12 +38,12 @@
             <font-awesome-icon  /> Events
             </router-link>
         </li>
-        <li v-if="showAdminBoard" class="nav-item">
-          <router-link to="/admin" class="nav-link">Admin Board</router-link>
+        <li class="nav-item" v-if="currentUser">
+          <router-link to="/insertToken" class="nav-link">
+            <font-awesome-icon  /> Insert Token
+          </router-link>
         </li>
-        <li v-if="showModeratorBoard" class="nav-item">
-          <router-link to="/mod" class="nav-link">Moderator Board</router-link>
-        </li>
+
         
       </div>
 
@@ -83,20 +83,7 @@ export default {
     currentUser() {
       return this.$store.state.auth.user;
     },
-    showAdminBoard() {
-      if (this.currentUser && this.currentUser['roles']) {
-        return this.currentUser['roles'].includes('ROLE_ADMIN');
-      }
 
-      return false;
-    },
-    showModeratorBoard() {
-      if (this.currentUser && this.currentUser['roles']) {
-        return this.currentUser['roles'].includes('ROLE_MODERATOR');
-      }
-
-      return false;
-    }
   },
   methods: {
     logOut() {

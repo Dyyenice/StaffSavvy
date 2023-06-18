@@ -17,6 +17,13 @@ class AuthService {
                 return response.data;
             });
     }
+    insertToken(data, user) {
+        return axios
+            .post(API_URL + 'signupToCompany', {
+                token: data.token,
+                id: user.id
+            });
+    }
 
     logout() {
         localStorage.removeItem('user');

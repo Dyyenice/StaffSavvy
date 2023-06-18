@@ -1,11 +1,11 @@
 <template>
     <v-app id="inspire"  >
      
-    <div v-if="message">  <label class="labelheader">{{ message }}</label></div>
-    <div v-if="!message"><label class="labelheader">JOB POSTINGS</label></div>
+
+    <div><label class="labelheader">COMPANY JOB POSTINGS</label></div>
     
    
-   <div class="form-row">
+   <div v-if="!message" class="form-row">
      <v-container>
       <v-item-group mandatory class="form-group">
       
@@ -54,8 +54,15 @@
        
     
    </div>
-
+      <div
+          v-if="message"
+          class="alert"
+          :class="successful ? 'alert-success' : 'alert-danger'"
+      >
+        {{ message }}
+      </div>
    </v-app>
+
  </template>
  
  <script>
@@ -96,9 +103,8 @@
   },
   methods: {
     JobPostingInDetails(jobposting){
-    localStorage.setItem("selectedJobPosting", JSON.stringify(jobposting));
-    console.log(JSON.parse(localStorage.getItem("selectedJobPosting")));
-    this.$router.push("/jobpostingdetail");
+    localStorage.setItem("selectedCompanyJobPosting", JSON.stringify(jobposting));
+    this.$router.push("/companyJobPostingDetails");
   }
   }
    

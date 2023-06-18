@@ -101,6 +101,19 @@ export default {
     if (!this.currentUser) {
       this.$router.push('/login');
     }
+    CompanyService.getTasks(this.currentUser).then(
+        (response) => {
+          this.tasks = response.data;
+
+        },
+        (error) => {
+          this.message = (error.response &&
+                  error.response.data &&
+                  error.response.data.message) ||
+              error.message ||
+              error.toString();
+        }
+    );
   },
   methods: {
 

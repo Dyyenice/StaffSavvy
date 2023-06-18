@@ -173,6 +173,17 @@ class CompanyService {
 
         });
     }
+
+    getSelectedCompanyJobPosting(jobposting){
+
+        return axios.get(API_URL + 'getSelectedCompanyJobPosting' , {
+            headers: authHeader(),
+            params: {
+               id: jobposting.id
+            }
+
+        });
+    }
     getCompanyJobPostings(currentuser){
 
         return axios.get(API_URL + 'getCompanyJobPostings' , {
@@ -261,17 +272,19 @@ class CompanyService {
             headers: authHeader(),
         });
     }
-    editSelectedJobPosting(id, jobposting){
-        return axios.post(API_URL + 'editSelectedJobPosting', {
+    editSelectedCompanyJobPosting(id, jobposting){
+        return axios.post(API_URL + 'editSelectedCompanyJobPosting', {
             id:id.id,
             jobtitle: jobposting.jobtitle,
             description: jobposting.description,
             requirements: jobposting.requirements,
-            benefits:jobposting.benefits,
+            benefits: jobposting.benefits,
+            location: jobposting.location
         },{
             headers: authHeader(),
         });
     }
+
     getSelectedTask(task){
         return axios.get(API_URL + 'getSelectedTask' , {
             headers: authHeader(),
@@ -297,6 +310,7 @@ class CompanyService {
         });
     }
     deleteJobPosting(jobposting){
+
         return axios.delete(API_URL + 'deleteJobPosting' , {
             headers: authHeader(),
             data:{
@@ -403,6 +417,8 @@ class CompanyService {
             }
         });
     }
+
+
 }
 
 export default new CompanyService();

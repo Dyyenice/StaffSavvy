@@ -38,7 +38,7 @@
                 </div>
                 <div class="form-group col-md-6 id">
                   <label for="multimedia" class="label">Add Multimedia</label>
-                  <Field id="multimedia" name="multimedia" type="file" class="form-control" />
+                  <Field id="multimedia" name="multimedia" type="file" class="form-control" accept="image/png, image/gif, image/jpeg"/>
                   <ErrorMessage name="multimedia" class="error-feedback" />
                 </div>
   

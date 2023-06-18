@@ -33,25 +33,20 @@ exports.signup = (req, res) => {
         password: bcrypt.hashSync(req.body.password, 8)
     }).then(user => {
         if (req.body.user_type === 0) {
-            Company.findOne({
-                where: {
-                    token: req.body.companyToken
-                }
-            }).then(company =>{
-                Personnel.create({
-                    id: user.id,
-                    name: req.body.name,
-                    surname: req.body.surname,
-                    phone: req.body.phone,
-                    date_of_birth:  req.body.date_of_birth,
-                    identification: req.body.identification,
-                    company: company.id,
-                });
-                PersonnelCompanyInfo.create({
-                    id: user.id,
-                    date_start: new DATEONLY()
-                });
-            })
+            Personnel.create({
+                id: user.id,
+                name: req.body.name,
+                surname: req.body.surname,
+                phone: req.body.phone,
+                date_of_birth:  req.body.date_of_birth,
+                identification: req.body.identification,
+                status: 0
+            });
+            PersonnelCompanyInfo.create({
+                id: user.id,
+                date_start: new DATEONLY()
+            });
+
             user.setRolegroups([2]).then(() =>{
                 res.send({message: "User was registered successfully!"});
             })
@@ -68,6 +63,34 @@ exports.signup = (req, res) => {
 
 
     });
+};
+exports.signupToCompany = (req, res) => {
+    console.log(req.body)
+    Company.findOne({
+        where: {
+            token: req.body.token
+        }
+    }).then(company =>{
+        if(company){
+            Personnel.update({
+                company: company.id,
+                status: 1
+            }, {
+                where: {
+                    id: req.body.id
+                }
+            }).then(()=>{
+                res.status(200).send("Signup To Company Successfull. Please login again to access the user panel.");
+            })
+                .catch(error =>{
+                    res.status(500).send({message: error.message})
+                })
+        }else{
+            res.status(404).send("Token is incorrect")
+        }
+    }).catch(() =>{
+        res.status(404).send("Token is incorrect")
+    })
 };
 
 exports.signin = (req, res) => {
@@ -107,7 +130,6 @@ exports.signin = (req, res) => {
                         }
                     });
                 }
-
                 if(user.user_type === 0){
                     Personnel.findOne({
                         where: {
@@ -119,19 +141,38 @@ exports.signin = (req, res) => {
                                 id: personnel.company
                             }
                         }).then(company =>{
-                            res.status(200).send({
-                                id: user.id,
-                                email: user.email,
-                                name: personnel.name,
-                                surname: personnel.surname,
-                                phone: personnel.phone,
-                                company: company.name,
-                                date_of_birth: personnel.date_of_birth,
-                                identification: personnel.identification,
-                                user_type: user.user_type,
-                                roles: authorities,
-                                accessToken: token
-                            });
+                            if(company){
+                                res.status(200).send({
+                                    id: user.id,
+                                    email: user.email,
+                                    name: personnel.name,
+                                    surname: personnel.surname,
+                                    phone: personnel.phone,
+                                    company: company.name,
+                                    date_of_birth: personnel.date_of_birth,
+                                    identification: personnel.identification,
+                                    user_type: user.user_type,
+                                    roles: authorities,
+                                    accessToken: token
+                                });
+                            }
+                            else{
+                                console.log("asdasdasd")
+                                res.status(200).send({
+                                    id: user.id,
+                                    email: user.email,
+                                    name: personnel.name,
+                                    surname: personnel.surname,
+                                    phone: personnel.phone,
+                                    company: null,
+                                    date_of_birth: personnel.date_of_birth,
+                                    identification: personnel.identification,
+                                    user_type: user.user_type,
+                                    roles: authorities,
+                                    accessToken: token
+                                });
+                            }
+
                         })
 
                     })
@@ -151,6 +192,7 @@ exports.signin = (req, res) => {
                         });
                     })
                 }
+
 
             });
         })

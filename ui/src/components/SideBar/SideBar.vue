@@ -8,11 +8,11 @@
               <span v-show="loading" class="spinner-border spinner-border-sm"></span>
               <span>Permission & Request</span>
         </button>
-        <button v-if="currentUserRoles == 'companyPersonnelsAdmin'"  class="btn btn-primary sidebar-button" :disabled="loading" type="submit" @click="this.$router.push('/CompanyPersonnels')" >
+        <button v-if="currentUserRoles.includes('companyPersonnelsAdmin')"  class="btn btn-primary sidebar-button" :disabled="loading" type="submit" @click="this.$router.push('/CompanyPersonnels')" >
           <span v-show="loading" class="spinner-border spinner-border-sm"></span>
           <span>Personnels</span>
         </button>
-        <button v-if="currentUserRoles == 'pendingPersonnelsAdmin'" class="btn btn-primary sidebar-button" :disabled="loading" type="submit" @click="this.$router.push('/PendingPersonnels')" >
+        <button v-if="currentUserRoles.includes('pendingPersonnelsAdmin')" class="btn btn-primary sidebar-button" :disabled="loading" type="submit" @click="this.$router.push('/PendingPersonnels')" >
           <span v-show="loading" class="spinner-border spinner-border-sm"></span>
           <span>Pending Personnels</span>
         </button>
@@ -73,6 +73,10 @@
         <button class="btn btn-primary sidebar-button" :disabled="loading" type="submit" @click="this.$router.push('/createJobPostings')" >
           <span v-show="loading" class="spinner-border spinner-border-sm"></span>
           <span>Create Job Postings</span>
+        </button>
+        <button class="btn btn-primary sidebar-button" :disabled="loading" type="submit" @click="this.$router.push('/companyJobPostings')" >
+          <span v-show="loading" class="spinner-border spinner-border-sm"></span>
+          <span>Company Job Postings</span>
         </button>
         <button class="btn btn-primary sidebar-button" :disabled="loading" type="submit" @click="this.$router.push('/giveTask')" >
           <span v-show="loading" class="spinner-border spinner-border-sm"></span>

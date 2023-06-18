@@ -6,7 +6,7 @@ module.exports = (sequelize, Sequelize) => {
             type: Sequelize.STRING
         },
         companyid: {
-            type: Sequelize.STRING
+            type: Sequelize.INTEGER
         },
         location: {
             type: Sequelize.STRING

@@ -91,12 +91,25 @@
       currentUser() {
         return this.$store.state.auth.user;
       },
+
   
     },
     mounted() {
       if (!this.currentUser) {
         this.$router.push('/login');
       }
+      CompanyService.getCompanyJobPostings(this.currentUser).then(
+          (response) => {
+            this.jobpostings = response.data;
+          },
+          (error) => {
+            this.message = (error.response &&
+                    error.response.data &&
+                    error.response.data.message) ||
+                error.message ||
+                error.toString();
+          }
+      );
     },
     methods: {
   

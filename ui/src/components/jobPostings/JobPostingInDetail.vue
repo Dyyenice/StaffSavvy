@@ -9,42 +9,37 @@
     <h1>Job Posting Detail</h1>
     <div class="job-info">
       <p class="label">Job Title:</p>
-      <p>Software Engineer</p>
+      <p>{{ selectedJobPosting.jobposting.jobtitle }}</p>
     </div>
     <div class="job-info">
       <p class="label">Company:</p>
-      <p>ABC Company</p>
+      <p>{{ selectedJobPosting.companyname }}</p>
     </div>
     <div class="job-info">
       <p class="label">Location:</p>
-      <p>New York, NY</p>
+      <p>{{ selectedJobPosting.jobposting.location }}</p>
     </div>
     <div class="job-info">
       <p class="label">Description:</p>
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed aliquam tellus id fringilla luctus. Fusce vitae bibendum leo. Morbi interdum, mauris eget lobortis sagittis, arcu mi posuere velit, eget faucibus risus purus ac lorem.</p>
+      <p>{{ selectedJobPosting.jobposting.description }}</p>
     </div>
     <div class="job-info">
       <p class="label">Requirements:</p>
       <ul>
-        <li>Bachelor's degree in Computer Science or related field</li>
-        <li>2+ years of experience in software development</li>
-        <li>Strong knowledge of HTML, CSS, and JavaScript</li>
+        <li>{{ selectedJobPosting.jobposting.requirements }}</li>
+
       </ul>
     </div>
     <div class="job-info">
       <p class="label">Benefits:</p>
       <ul>
-        <li>Competitive salary</li>
-        <li>Health insurance</li>
-        <li>Flexible working hours</li>
+        <li>{{ selectedJobPosting.jobposting.benefits }}</li>
+
       </ul>
     </div>
     <div class="job-info">
       <p class="label">Apply for this role:</p>
-      <button class="btn btn-primary btn-block" :disabled="loading">
-            <span v-show="loading" class="spinner-border spinner-border-sm"></span>
-            <span>Apply with my profile</span>
-          </button>
+      <p>{{ selectedJobPosting.email }}</p>
     </div>
   </div>
 
@@ -52,13 +47,24 @@
 </template>
 
 <script>
-import FooterComponent from './Footer/FooterComponent.vue';
+import FooterComponent from '../Footer/FooterComponent.vue';
 
 export default{
     name:'jobpostingdetail',
   components:{
     FooterComponent,
    },
+
+
+
+  computed: {
+    selectedJobPosting(){
+      return JSON.parse(localStorage.getItem("selectedJobPosting"))
+    }
+  }
+
+
+
 
 };
 </script>

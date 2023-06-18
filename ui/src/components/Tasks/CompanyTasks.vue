@@ -36,6 +36,13 @@
           </tbody>
         </table>
       </div>
+      <div
+          v-if="message"
+          class="alert"
+          :class="successful ? 'alert-success' : 'alert-danger'"
+      >
+        {{ message }}
+      </div>
 
     </div>
   
@@ -55,6 +62,7 @@
         tasks: [],
         isEditmode:false,
         message: "",
+        requestmessage: "",
         searchText: ''
       };
     },
@@ -100,7 +108,8 @@
         localStorage.setItem("selectedTask", JSON.stringify(task));
         console.log(JSON.parse(localStorage.getItem("selectedTask")));
         this.$router.push("/taskDetails");
-      }
+      },
+
   
   
   

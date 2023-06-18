@@ -19,6 +19,7 @@
                     <v-list-item-subtitle :class="active ? 'white--text' : 'black--text'"></v-list-item-subtitle>
                     <v-list-item-title class="headline mb-1" :class="active ? 'white--text' : 'black--text'">
                     <h2>{{ event.name }}</h2>
+                      <img src="../assets/img/indir.png" alt="Image"/>
                     </v-list-item-title>
                     
                     
@@ -58,6 +59,7 @@
     CompanyService.getEvents(this.currentUser).then(
         (response) => {
           this.events = response.data;
+          console.log(this.events);
         },
          (error) => {
           this.message = (error.response &&
@@ -74,7 +76,14 @@
     localStorage.setItem("selectedEvent", JSON.stringify(event));
     console.log(JSON.parse(localStorage.getItem("selectedEvent")));
     this.$router.push("/EventsDetail");
-  }
+  },
+    displayImage(data){
+      const byteArray = new Uint8Array(data);
+      const blob = new Blob([byteArray], { type: 'image/jpeg' });
+      const imageUrl = URL.createObjectURL(blob);
+      return imageUrl;
+    }
+
   }
    
  }

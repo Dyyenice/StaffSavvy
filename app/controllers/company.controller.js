@@ -12,7 +12,7 @@ const Rolegroup = db.rolegroups;
 const Role = db.role;
 const JobPosting = db.jobpostings;
 const Event = db.event;
-
+const AccessRequest = db.accessrequest;
 var companyid;
 exports.pendingPersonnelRequests = async (req, res) => {
     companyid;
@@ -425,11 +425,13 @@ exports.getJobPostings = async (req, res) => {
         res.status(500).send({message: error.message});
     })
 }
-exports.editSelectedJobPosting = (req, res) =>{
+exports.editSelectedCompanyJobPosting = (req, res) =>{
     JobPosting.update({
+        jobtitle: req.body.jobtitle,
         description: req.body.description,
         requirements: req.body.requirements,
-        benefits: req.body.benefits
+        benefits: req.body.benefits,
+        location: req.body.location
     },
         {
             where: {id: req.body.id}
@@ -926,6 +928,18 @@ exports.getSelectedUserGroup = (req, res) =>{
        res.status(500).send({message: error.message});
    })
 }
+exports.getSelectedCompanyJobPosting = (req, res) =>{
+    JobPosting.findByPk(req.query.id).then(jobposting =>{
+        if(jobposting){
+            res.status(200).send(jobposting);
+        } else {
+            res.status(404).send("JobPosting not found");
+        }
+    }).catch(error=>{
+        res.status(500).send({message: error.message})
+    })
+}
+
   
 
 

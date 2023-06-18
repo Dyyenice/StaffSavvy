@@ -8,6 +8,7 @@ import CompanyRegister from "./components/CompanyRegister.vue";
 import UserGuide from "./components/UserGuide.vue";
 import AboutUs from "./components/AboutUs.vue";
 import MediaCenter from "./components/MediaCenter.vue";
+import InsertToken from "./components/insertToken.vue"
 
 // lazy-loaded
 const Profile = () => import("./components/Profile.vue")
@@ -30,14 +31,17 @@ const UserGroups=()=> import("./components/UserGroups/CompanyUserGroups.vue")
 const UserGroupDetails=()=> import("./components/UserGroups/UserGroupDetails.vue")
 const CompanyRolegroups =()=> import("./components/Rolegroups/companyRolegroups.vue")
 const RolegroupDetails =()=> import("./components/Rolegroups/RolegroupDetails.vue")
-const JobPostings = ()=> import("./components/JobPostings.vue")
-const JobPostingInDetail=()=> import("./components/JobPostingInDetail.vue") 
+const CompanyJobPostings = ()=> import("./components/jobPostings/companyJobPostings.vue")
+const JobPostingInDetail=()=> import("./components/jobPostings/JobPostingInDetail.vue")
 const UserGroupsOfPersonnel=()=> import("./components/UserGroups/UserGroupsOfPersonnel.vue")
 const TasksOfPersonnel=()=> import("./components/Tasks/TasksOfPersonnel.vue")
-const CreateJobPostings=()=> import("./components/createJobPostings.vue")
+const CreateJobPostings=()=> import("./components/jobPostings/createJobPostings.vue")
 const CreateEvent=()=> import("./components/CreateEvent.vue")
 const Events=()=> import("./components/Events.vue")
 const EventsDetail =()=> import("./components/EventsDetail.vue")
+const JobPostings =() => import("./components/jobPostings/jobPostings.vue")
+const CompanyJobPostingDetails =() => import("./components/jobPostings/selectedJobPostingDetailsForAdmin.vue")
+
 
 const routes = [
     {
@@ -67,7 +71,10 @@ const routes = [
         path: "/register",
         component: Register,
     },
-
+    {
+        path: "/insertToken",
+        component: InsertToken,
+    },
 
     {
         path: "/registerChoose",
@@ -95,8 +102,13 @@ const routes = [
         component: JobPostingInDetail,
     },
     {
-        path: "/jobpostings",
-        name:"jobpostings",
+        path: "/companyJobPostings",
+        name:"CompanyJobPostings",
+        component: CompanyJobPostings,
+    },
+    {
+        path: "/jobPostings",
+        name:"JobPostings",
         component: JobPostings,
     },
     {
@@ -265,11 +277,18 @@ const routes = [
         component: Events,
     },
     {
+        path: "/companyJobPostingDetails",
+        name: "CompanyJobPostingDetails",
+        // lazy-loaded
+        component: CompanyJobPostingDetails,
+    },
+    {
         path: "/EventsDetail",
         name: "EventsDetail",
         // lazy-loaded
         component: EventsDetail,
     },
+
 ];
 
 const router = createRouter({
@@ -278,7 +297,7 @@ const router = createRouter({
 });
 
 router.beforeEach((to, from, next) => {
-    const publicPages = ['/login', '/register','/registerChoose','/companyRegister', '/home','/forgotpassword','/aboutus','/mediacenter','/companyregister','/UserGuide',];
+    const publicPages = ['/login', '/register','/registerChoose','/companyRegister', '/home','/forgotpassword','/aboutus','/jobPostings','/jobpostingdetail','/mediacenter','/companyregister','/UserGuide',];
     const authRequired = !publicPages.includes(to.path);
     const loggedIn = localStorage.getItem('user');
 
